@@ -4,6 +4,6 @@ data class UserDto(
     val id: Int,
     val name: String,
     val email: String,
-    val coins: List<CryptoCurrencyDto>,
+    val coins: Unit,
     val balance: Double
 )
