@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "718169333858",
+    "project_id": "cryptowallet-a6228",
+    "storage_bucket": "cryptowallet-a6228.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718169333858:android:fdb6d1ac84b039dbe3713b",
+        "android_client_info": {
+          "package_name": "com.akendardi.cryptowallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVLgsXkvDn8RVEDnF1pKFlOJWCp0b6_N8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

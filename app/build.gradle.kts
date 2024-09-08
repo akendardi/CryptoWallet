@@ -3,10 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.parcelize)
+    id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.akendardi.cryptowallet"
+
     compileSdk = 34
 
     defaultConfig {
@@ -83,5 +85,7 @@ dependencies {
     implementation(libs.icons)
 
     implementation(libs.androidx.navigation.compose)
+
+    implementation(platform(libs.firebase.bom))
 
 }
