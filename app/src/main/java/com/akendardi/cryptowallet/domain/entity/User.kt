@@ -5,5 +5,7 @@ data class User(
     val name: String,
     val email: String,
     val coins: List<CryptoCurrency>,
-    val balance: Double
+    val balance: Double,
+    val balanceHistory: List<Double> = listOf(0.0),
+    val transactions: List<Transaction> = listOf()
 )

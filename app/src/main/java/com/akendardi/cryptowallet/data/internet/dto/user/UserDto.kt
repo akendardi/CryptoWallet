@@ -5,5 +5,6 @@ data class UserDto(
     val name: String,
     val email: String,
     val coins: List<CoinDto>,
-    val balance: Double
+    val balance: Double,
+    val balanceHistory: List<Double>
 )

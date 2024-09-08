@@ -6,17 +6,16 @@ interface CryptoRepository {
 
     suspend fun loadAllCoinsList(page: Int = 0): List<CryptoCurrency>
 
-    suspend fun loadUsersCoinsList(): List<CryptoCurrency>
-
     suspend fun buyCoin(
+        transactionId: Int,
         currencyId: Int,
         count: Double
     ): Boolean
 
     suspend fun sellCoin(
+        transactionId: Int,
         currencyId: Int,
         count: Double
     ): Boolean
-
 
 }

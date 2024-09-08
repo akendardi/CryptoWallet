@@ -21,8 +21,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         lifecycleScope.launch {
-            val answer = apiService.loadlCurrencies()
-            Log.d("TEST_TEST", answer.data[0].coinInfo.imageUrl)
+            val answer = apiService.loadHistoricalInfo(
+                fsym = "BTC"
+            )
+            Log.d("TEST_TEST", answer.data.listPrices[0].toString())
         }
 
         setContent {
