@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.data.internet.dto
+package com.akendardi.cryptowallet.data.internet.dto.crypto
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,6 +1,6 @@
 package com.akendardi.cryptowallet.data.internet.api
 
-import com.akendardi.cryptowallet.data.internet.dto.CoinsApiResponseDto
+import com.akendardi.cryptowallet.data.internet.dto.crypto.CoinsApiResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
