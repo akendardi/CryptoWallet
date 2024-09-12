@@ -18,4 +18,8 @@ interface AuthRepository {
     )
 
     suspend fun logOutFromAccount()
+
+    suspend fun resetPasswordWithEmail(
+        email: String
+    )
 }

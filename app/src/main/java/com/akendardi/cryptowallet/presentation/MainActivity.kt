@@ -22,14 +22,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         lifecycleScope.launch {
-            authRepository.createAccount(
-                name = "Das",
+            authRepository.logInAccount(
                 email = "email@mail.ru",
                 password = "12345678"
             )
             authRepository.authState.collect{
                 Log.d("COLLECTOR TEST", it.toString())
             }
+
         }
 
 
