@@ -1,21 +1,23 @@
 package com.akendardi.cryptowallet.domain.repository
 
-import com.akendardi.cryptowallet.domain.entity.CryptoCurrency
+import com.akendardi.cryptowallet.domain.entity.CryptoCoin
+import com.akendardi.cryptowallet.domain.entity.Transaction
+import kotlinx.coroutines.flow.Flow
 
 interface CryptoRepository {
 
-    suspend fun loadAllCoinsList(page: Int = 0): List<CryptoCurrency>
+    suspend fun loadAllCoinsList(page: Int = 0): Flow<List<CryptoCoin>>
 
     suspend fun buyCoin(
-        transactionId: Int,
+        userId: Int,
         currencyId: Int,
         count: Double
-    ): Boolean
+    ): Transaction
 
     suspend fun sellCoin(
-        transactionId: Int,
+        userId: Int,
         currencyId: Int,
         count: Double
-    ): Boolean
+    ): Transaction
 
 }

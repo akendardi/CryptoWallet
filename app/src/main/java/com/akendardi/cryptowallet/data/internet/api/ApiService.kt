@@ -2,7 +2,6 @@ package com.akendardi.cryptowallet.data.internet.api
 
 import com.akendardi.cryptowallet.data.internet.dto.crypto.CoinsApiResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto.plot.CryptoPlotInfoResponseDto
-import com.akendardi.cryptowallet.domain.entity.CryptoCurrency
 import retrofit2.http.GET
 import retrofit2.http.Query
 

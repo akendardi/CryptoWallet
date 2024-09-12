@@ -1,27 +1,15 @@
 package com.akendardi.cryptowallet.domain.repository
 
-import com.akendardi.cryptowallet.domain.entity.CryptoCurrency
+import com.akendardi.cryptowallet.domain.entity.CryptoCoin
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
 
-    suspend fun loadUsersCoinsListRemote(userId: Int): Flow<List<CryptoCurrency>>
+    suspend fun loadUsersCoinsListRemote(userId: Int): Flow<List<CryptoCoin>>
 
-    suspend fun loadUsersCoinsListLocal(): Flow<List<CryptoCurrency>>
+    suspend fun loadUsersCoinsListLocal(): Flow<List<CryptoCoin>>
 
-    suspend fun createAccount(
-        name: String,
-        password: String,
-        email: String
-    )
-
-    suspend fun logInAccount(
-        email: String,
-        password: String
-    )
-
-    suspend fun logOutFromAccount()
 
     suspend fun addToBalance(
         userId: Int,
