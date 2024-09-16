@@ -22,4 +22,8 @@ interface AuthRepository {
     suspend fun resetPasswordWithEmail(
         email: String
     )
+
+     fun checkCurrentUserIsLogged(): Boolean
+
+    fun checkInternetConnection(): Boolean
 }

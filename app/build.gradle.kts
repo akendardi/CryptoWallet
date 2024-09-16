@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.parcelize)
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -44,7 +47,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.5"
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
     packaging {
         resources {
@@ -88,6 +91,18 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
 
-    implementation (libs.firebase.auth)
+    implementation(libs.firebase.auth)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation (libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    ksp(libs.androidx.lifecycle.compiler)
+
+    implementation (libs.androidx.navigation.compose.v280)
+
+    implementation (libs.material3)
+
 
 }
