@@ -67,6 +67,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.domain.states.auth.AuthResult
+import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_screen_ui.button.AuthButton
 import kotlinx.coroutines.delay
 
 @Composable
@@ -84,7 +85,6 @@ fun AuthScreen(
             Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(paddingValues)
         ) {
             SnackbarHost(
                 hostState = snackbarHostState,
@@ -649,62 +649,5 @@ fun AuthCard(
 }
 
 
-@Composable
-fun AuthButton(
-    authType: AuthType,
-    onButtonClick: () -> Unit
-) {
-    val context = LocalContext.current
 
-    val animationDuration = 100
-
-    val targetWidth = when (authType) {
-        AuthType.SIGN_IN -> 150.dp
-        AuthType.SIGN_UP -> 200.dp
-        AuthType.RESET_PASSWORD -> 200.dp
-    }
-
-    val buttonWidth by animateDpAsState(
-        targetValue = targetWidth,
-        animationSpec = tween(durationMillis = 100), label = ""
-    )
-
-    val authLabel = when (authType) {
-        AuthType.SIGN_IN -> context.getString(R.string.sign_in)
-        AuthType.SIGN_UP -> context.getString(R.string.sign_up)
-        AuthType.RESET_PASSWORD -> context.getString(R.string.reset_password)
-    }
-
-
-    var currentLabel by remember { mutableStateOf(context.getString(R.string.sign_in)) }
-
-    var isTextVisible by remember { mutableStateOf(true) }
-
-    val textAlpha by animateFloatAsState(
-        targetValue = if (isTextVisible) 1f else 0f,
-        animationSpec = tween(durationMillis = animationDuration),
-        finishedListener = {
-            if (!isTextVisible) {
-                currentLabel = authLabel
-                isTextVisible = true
-            }
-        }, label = ""
-    )
-
-    LaunchedEffect(authType) {
-        isTextVisible = false
-    }
-
-    Button(
-        onClick = { onButtonClick() },
-        modifier = Modifier.width(buttonWidth)
-    ) {
-        Text(
-            text = currentLabel,
-            modifier = Modifier.alpha(textAlpha),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
-}
 
