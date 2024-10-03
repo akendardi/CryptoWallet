@@ -1,29 +1,29 @@
 package com.akendardi.cryptowallet.domain.repository
 
-import com.akendardi.cryptowallet.domain.states.AuthState
-import kotlinx.coroutines.flow.StateFlow
+import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 
 interface AuthRepository {
-    val authState: StateFlow<AuthState>
 
     suspend fun createAccount(
         name: String,
-        password: String,
-        email: String
-    )
+        email: String,
+        password: String
+
+    ): AuthResult
 
     suspend fun logInAccount(
         email: String,
         password: String
-    )
+    ): AuthResult
 
     suspend fun logOutFromAccount()
 
     suspend fun resetPasswordWithEmail(
         email: String
-    )
+    ): AuthResult
 
-     fun checkCurrentUserIsLogged(): Boolean
+    fun checkCurrentUserIsLogged(): Boolean
+
 
     fun checkInternetConnection(): Boolean
 }

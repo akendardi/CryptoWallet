@@ -1,6 +1,11 @@
 package com.akendardi.cryptowallet.presentation.splash
 
-import android.util.Log
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
@@ -12,11 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,60 +30,81 @@ import kotlin.system.exitProcess
 
 @Composable
 fun SplashScreen(
+    viewModel: SplashScreenViewModel = hiltViewModel(),
     successLogin: () -> Unit,
     unLogin: () -> Unit,
 ) {
-    val viewModel: SplashScreenViewModel = hiltViewModel()
     val state = viewModel.state.collectAsState()
-    var showDialog by remember { mutableStateOf(false) }
     Surface(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "Логотип",
-            modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(Alignment.Center)
-        )
-    }
-    LaunchedEffect(Unit) {
-        delay(2000)
-        when(val currentState = state.value){
+        when (val currentState = state.value) {
             SplashState.Initial -> {
-
-            }
-            SplashState.NetworkError -> {
-                Log.d("TEST_TEST", "Network Error")
-                showDialog = true
-            }
-            is SplashState.Success -> {
-                if (currentState.nextScreen == NextScreen.Main){
-                    successLogin()
-                }else {
-                    unLogin()
+                AnimateLogo()
+                LaunchedEffect(Unit) {
+                    delay(2000)
+                    viewModel.checkLogState()
                 }
+            }
+
+            SplashState.NetworkError -> {
+                ShowDialog()
+            }
+
+            is SplashState.Success -> {
+                LaunchedEffect(Unit) {
+                    if (currentState.nextScreen == NextScreen.Main) {
+                        successLogin()
+                    } else {
+                        unLogin()
+                    }
+                }
+
             }
         }
     }
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = {
-                showDialog = false
+}
+
+
+@Composable
+fun ShowDialog() {
+    AlertDialog(
+        onDismissRequest = {
+            exitProcess(0)
+        },
+        title = { Text("Ошибка подключения") },
+        text = { Text("Отсутствует подключение к интернету. Пожалуйста, проверьте настройки сети.") },
+        confirmButton = {
+            Button(onClick = {
                 exitProcess(0)
-            },
-            title = { Text("Ошибка подключения") },
-            text = { Text("Отсутствует подключение к интернету. Пожалуйста, проверьте настройки сети.") },
-            confirmButton = {
-                Button(onClick = {
-                    showDialog = false
-                    exitProcess(0)
-                }) {
-                    Text("Выход")
-                }
-            },
-            properties = DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false
-            )
+            }) {
+                Text("Выход")
+            }
+        },
+        properties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
         )
-    }
+    )
+}
+
+@Composable
+fun AnimateLogo() {
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val rotationValue by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart,
+        ), label = ""
+    )
+    Image(
+        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        contentDescription = "Логотип",
+        modifier = Modifier
+            .fillMaxSize()
+            .rotate(rotationValue)
+            .wrapContentSize(Alignment.Center)
+    )
+
+
 }
