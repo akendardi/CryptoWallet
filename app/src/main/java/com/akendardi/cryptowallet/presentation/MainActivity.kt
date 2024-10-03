@@ -16,10 +16,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CryptoWalletTheme {
-
                 val rootNavController = rememberNavController()
                 RootNavGraph(rootNavController)
             }
+
         }
     }
 }
