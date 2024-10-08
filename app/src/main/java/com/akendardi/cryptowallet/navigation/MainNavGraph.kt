@@ -1,23 +1,40 @@
 package com.akendardi.cryptowallet.navigation
 
-import androidx.navigation.NavGraphBuilder
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
-import com.akendardi.cryptowallet.presentation.main.MainScreen
+import com.akendardi.cryptowallet.presentation.main.main_screen_content.MainScreenContent
+import com.akendardi.cryptowallet.presentation.main.SendScreenContent
+import com.akendardi.cryptowallet.presentation.main.WalletScreenContent
 
 
-fun NavGraphBuilder.mainNavGraph(
+@Composable
+fun MainNavGraph(
     navHostController: NavHostController
 ) {
-    navigation(
-        startDestination = Screen.MainScreen.route,
-        route = Screen.MainScreenNavGraph.route
-    ) {
-        composable(Screen.MainScreen.route) {
-            MainScreen()
+
+
+    NavHost(navHostController, startDestination = Screen.BottomBarScreen.MainScreen.route) {
+        composable(
+            route = Screen.BottomBarScreen.MainScreen.route,
+        ) {
+            MainScreenContent()
+        }
+
+        composable(
+            route = Screen.BottomBarScreen.SendScreen.route,
+        ) {
+            SendScreenContent()
+        }
+
+        composable(
+            route = Screen.BottomBarScreen.WalletScreen.route,
+        ) {
+            WalletScreenContent()
         }
     }
-
-
 }
+
+
+

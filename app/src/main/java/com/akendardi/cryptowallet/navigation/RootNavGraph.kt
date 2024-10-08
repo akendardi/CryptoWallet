@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthScreen
 import com.akendardi.cryptowallet.presentation.auth.hello_screen.HelloScreen
+import com.akendardi.cryptowallet.presentation.main.MainScreen
 import com.akendardi.cryptowallet.presentation.splash.SplashScreen
 
 @Composable
@@ -15,7 +16,7 @@ fun RootNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route
+        startDestination = Screen.MainScreenNavGraph.route
     ) {
         composable(route = Screen.AuthScreen.route) {
             AuthScreen(
@@ -50,7 +51,9 @@ fun RootNavGraph(
             )
         }
 
-        mainNavGraph(navController)
+        composable(route = Screen.MainScreenNavGraph.route) {
+            MainScreen()
+        }
 
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(

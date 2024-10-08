@@ -21,7 +21,7 @@ class PasswordValidator @Inject constructor() {
 
 class EmailValidator @Inject constructor() {
     operator fun invoke(email: String): EmailValidationResult {
-        return if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        return if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             EmailValidationResult.CORRECT
         } else EmailValidationResult.INCORRECT_FORMAT
     }

@@ -1,8 +1,9 @@
 package com.akendardi.cryptowallet.presentation.auth.auth_screen
 
-import android.util.Log
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.akendardi.cryptowallet.domain.usecase.auth.CreateAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.LogInAccountUseCase
@@ -14,6 +15,7 @@ import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.Pas
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.UserNameValidator
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.UsernameValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,11 +23,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val NOT_LONG_ENOUGH = "Пароль слишком короткий"
-private const val NOT_ENOUGH_DIGITS = "Пароль должен содержать хотя бы 1 цифру"
-private const val NOT_ENOUGH_UPPERCASE = "Пароль должен содержать заглавную букву"
-private const val INCORRECT_FORMAT = "Некорректный формат Email"
-private const val IS_EMPTY = "Никнейм не должен быть пустым"
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -34,40 +31,58 @@ class AuthViewModel @Inject constructor(
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val passwordValidator: PasswordValidator,
     private val emailValidator: EmailValidator,
-    private val userNameValidator: UserNameValidator
+    private val userNameValidator: UserNameValidator,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(UiAuthState())
+
+    private val _state = MutableStateFlow(UiAuthState(authButtonText = "Войти"))
     val state: StateFlow<UiAuthState>
         get() = _state.asStateFlow()
 
+    private fun getEmail(): String {
+        return _state.value.textFieldsState.email
+    }
+
+    private fun getPassword(): String {
+        return _state.value.textFieldsState.password
+    }
+
+    private fun getUserName(): String {
+        return _state.value.textFieldsState.userName
+    }
+
+    private fun getAuthType(): AuthType{
+        return _state.value.authType
+    }
     private var isFirstAttempt = false
 
     private fun createAccount() {
         isFirstAttempt = true
-        validateFields()
 
-        if (hasErrors()) return
+        if (isHasErrorsForRegister()) return
 
-        val name = _state.value.textFieldsState.userName
-        val email = _state.value.textFieldsState.email
-        val password = _state.value.textFieldsState.password
+        val name = getUserName()
+        val email = getEmail()
+        val password = getPassword()
 
         viewModelScope.launch {
-            _state.update { it.copy(authResult = AuthResult.Loading) }
+            startLoading()
             val result = createAccountUseCase(name, email, password)
-            _state.update { it.copy(authResult = result) }
+            updateAuthResult(result)
         }
     }
 
     fun sendAuthRequest() {
-        when(_state.value.authType){
+        when (getAuthType()) {
             AuthType.SIGN_IN -> {
                 loginWithEmailAndPassword()
             }
+
             AuthType.SIGN_UP -> {
                 createAccount()
             }
+
             AuthType.RESET_PASSWORD -> {
                 resetPassword()
             }
@@ -78,175 +93,308 @@ class AuthViewModel @Inject constructor(
 
     private fun resetPassword() {
         isFirstAttempt = true
-        validateEmail(_state.value.textFieldsState.email)
-        if (_state.value.textFieldsErrorsState.emailError.isNotEmpty()) return
-        val email = _state.value.textFieldsState.email
+        if (isHasErrorsForResetPassword()) return
+        val email = getEmail()
         viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    authResult = AuthResult.Loading
-                )
-            }
+            startLoading()
             val result = resetPasswordUseCase(email)
-            _state.update {
-                it.copy(
-                    authResult = result
-                )
-            }
+            updateAuthResult(result)
         }
     }
 
     private fun loginWithEmailAndPassword() {
         isFirstAttempt = true
-        validateFields()
 
-        if (hasErrors()) return
+        if (isHasErrorsForLogin()) return
 
-        val email = state.value.textFieldsState.email
-        val password = state.value.textFieldsState.password
+        val email = getEmail()
+        val password = getPassword()
 
         viewModelScope.launch {
-            _state.update { it.copy(authResult = AuthResult.Loading) }
+            startLoading()
             val result = logInAccountUseCase(email, password)
-            Log.d("PIZDA", result.toString())
-            _state.update { it.copy(authResult = result) }
+            updateAuthResult(result)
+        }
+    }
+
+    private fun updateAuthResult(result: AuthResult) {
+        _state.update { it.copy(authResult = result) }
+    }
+
+    private fun startLoading() {
+        _state.update { it.copy(authResult = AuthResult.Loading) }
+    }
+
+
+    fun actionTextField(type: FieldType) {
+        when (type) {
+            FieldType.USERNAME -> userNameIconAction()
+            FieldType.EMAIL -> emailIconAction()
+            FieldType.PASSWORD -> passwordIconAction()
+        }
+    }
+
+    private fun userNameIconAction() {
+        clearUserNameTextField()
+    }
+
+    private fun emailIconAction() {
+        clearEmailTextField()
+    }
+
+    private fun passwordIconAction() {
+        _state.update {
+            it.copy(
+                textFieldsState = it.textFieldsState.copy(
+                    isPasswordVisible = !it.textFieldsState.isPasswordVisible
+                )
+            )
         }
     }
 
     fun onPassword(password: String) {
         val clearPassword = password.trim()
-        _state.update {
-            it.copy(
-                textFieldsState = it.textFieldsState.copy(password = clearPassword)
-            )
-        }
-        if (isFirstAttempt) validatePassword(clearPassword)
+        setPassword(clearPassword)
+        if (isFirstAttempt) isPasswordTextFieldHasError()
     }
 
-    fun actionTextField(type: FieldType){
-        when(type){
-            FieldType.USERNAME -> {
-                _state.update {
-                    it.copy(
-                        textFieldsState = it.textFieldsState.copy(
-                            userName = ""
-                        )
-                    )
-                }
-            }
-            FieldType.EMAIL -> {
-                _state.update {
-                    it.copy(
-                        textFieldsState = it.textFieldsState.copy(
-                            email = ""
-                        )
-                    )
-                }
-            }
-            FieldType.PASSWORD -> {
-                _state.update {
-                    it.copy(
-                        textFieldsState = it.textFieldsState.copy(
-                            isPasswordVisible = !it.textFieldsState.isPasswordVisible
-                        )
-                    )
-                }
-            }
+    private fun setPassword(password: String) {
+        _state.update {
+            it.copy(
+                textFieldsState = it.textFieldsState.copy(password = password)
+            )
         }
     }
 
     fun onEmail(email: String) {
         val clearEmail = email.trim()
+        setEmail(clearEmail)
+        if (isFirstAttempt) isEmailTextFieldHasError()
+    }
+
+    private fun setEmail(email: String) {
         _state.update {
             it.copy(
-                textFieldsState = it.textFieldsState.copy(email = clearEmail)
+                textFieldsState = it.textFieldsState.copy(email = email)
             )
         }
-        if (isFirstAttempt) validateEmail(clearEmail)
     }
 
     fun onUsername(username: String) {
         val clearName = username.trim()
-        _state.update {
-            it.copy(
-                textFieldsState = it.textFieldsState.copy(userName = clearName)
-            )
-        }
-        if (isFirstAttempt) validateUsername(clearName)
+        setUserName(clearName)
+        if (isFirstAttempt) isUsernameTextFieldHasError()
     }
 
-    private fun validateFields() {
-        validatePassword(state.value.textFieldsState.password)
-        validateEmail(state.value.textFieldsState.email)
-        validateUsername(state.value.textFieldsState.userName)
-    }
-
-    private fun validatePassword(password: String) {
-        val result = when (passwordValidator(password)) {
-            PasswordValidationResult.NOT_LONG_ENOUGH -> NOT_LONG_ENOUGH
-            PasswordValidationResult.NOT_ENOUGH_DIGITS -> NOT_ENOUGH_DIGITS
-            PasswordValidationResult.NOT_ENOUGH_UPPERCASE -> NOT_ENOUGH_UPPERCASE
-            PasswordValidationResult.CORRECT -> ""
-        }
+    private fun setUserName(username: String) {
         _state.update {
             it.copy(
-                textFieldsErrorsState = it.textFieldsErrorsState.copy(passwordError = result)
+                textFieldsState = it.textFieldsState.copy(userName = username)
             )
         }
     }
 
-    private fun validateEmail(email: String) {
-        val result = when (emailValidator(email)) {
-            EmailValidationResult.INCORRECT_FORMAT -> INCORRECT_FORMAT
-            EmailValidationResult.CORRECT -> ""
-        }
-        _state.update {
-            it.copy(
-                textFieldsErrorsState = it.textFieldsErrorsState.copy(emailError = result)
-            )
-        }
-    }
-
-    private fun validateUsername(username: String) {
-        val result = when (userNameValidator(username)) {
-            UsernameValidationResult.IS_EMPTY -> IS_EMPTY
-            UsernameValidationResult.CORRECT -> ""
-        }
-        _state.update {
-            it.copy(
-                textFieldsErrorsState = it.textFieldsErrorsState.copy(userNameError = result)
-            )
-        }
-    }
 
     fun changeAuthType(authType: AuthType) {
-        val textFields = when (authType) {
-            AuthType.SIGN_IN -> TextFieldsState(email = _state.value.textFieldsState.email)
-            AuthType.SIGN_UP -> TextFieldsState(
-                email = _state.value.textFieldsState.email,
-                password = _state.value.textFieldsState.password
-            )
+        clearAllErrors()
+        when (authType) {
+            AuthType.SIGN_IN -> {
+                clearUserNameTextField()
+                setSignInAuthType()
+            }
 
-            AuthType.RESET_PASSWORD -> TextFieldsState(email = _state.value.textFieldsState.email)
-        }
-        _state.update {
-            it.copy(
-                authType = authType,
-                textFieldsErrorsState = TextFieldsErrorsState(),
-                textFieldsState = textFields
-            )
+            AuthType.SIGN_UP -> {
+                setRegisterAuthType()
+            }
+            AuthType.RESET_PASSWORD -> {
+                clearPasswordTextField()
+                clearUserNameTextField()
+                setResetPasswordAuthType()
+            }
         }
         isFirstAttempt = false
     }
 
-    private fun hasErrors(): Boolean {
-        return if (_state.value.authType == AuthType.SIGN_IN) {
-            !(_state.value.textFieldsErrorsState.emailError == "" &&
-                    _state.value.textFieldsErrorsState.passwordError == "")
-        } else {
-            !(_state.value.textFieldsErrorsState.emailError == "" &&
-                    _state.value.textFieldsErrorsState.passwordError == "" &&
-                    _state.value.textFieldsErrorsState.userNameError == "")
+    private fun setRegisterAuthType(){
+        _state.update {
+            it.copy(
+                authType = AuthType.SIGN_UP
+            )
+        }
+    }
+
+    private fun setResetPasswordAuthType(){
+        _state.update {
+            it.copy(
+                authType = AuthType.RESET_PASSWORD
+            )
+        }
+    }
+
+    private fun setSignInAuthType(){
+        _state.update {
+            it.copy(
+                authType = AuthType.SIGN_IN
+            )
+        }
+    }
+
+    private fun clearPasswordTextField() {
+        _state.update {
+            it.copy(
+                textFieldsState = it.textFieldsState.copy(
+                    password = ""
+                )
+            )
+        }
+    }
+
+    private fun clearEmailTextField() {
+        _state.update {
+            it.copy(
+                textFieldsState = it.textFieldsState.copy(
+                    email = ""
+                )
+            )
+        }
+    }
+
+    private fun clearUserNameTextField() {
+        _state.update {
+            it.copy(
+                textFieldsState = it.textFieldsState.copy(
+                    userName = ""
+                )
+            )
+        }
+    }
+
+    private fun isHasErrorsForResetPassword(): Boolean {
+        return !isEmailTextFieldHasError()
+    }
+
+    private fun isHasErrorsForRegister(): Boolean {
+        val isEmailError = isEmailTextFieldHasError()
+        val isPasswordError = isPasswordTextFieldHasError()
+        val isUserError = isUsernameTextFieldHasError()
+        return !(isEmailError
+                && isPasswordError
+                && isUserError)
+    }
+
+    private fun isHasErrorsForLogin(): Boolean {
+        val isEmailError = isEmailTextFieldHasError()
+        val isPasswordError = isPasswordTextFieldHasError()
+        return !(isEmailError
+                && isPasswordError)
+    }
+
+    private fun isPasswordTextFieldHasError(): Boolean {
+        val passwordValidationResult = passwordValidator(
+            getPassword()
+        )
+        val passwordError = getPasswordError(passwordValidationResult)
+        setPasswordError(passwordError)
+        return passwordValidationResult == PasswordValidationResult.CORRECT
+    }
+
+    private fun getPasswordError(passwordValidationResult: PasswordValidationResult): String {
+        return when (passwordValidationResult) {
+            PasswordValidationResult.NOT_LONG_ENOUGH -> {
+                context.getString(R.string.not_long_enough)
+            }
+
+            PasswordValidationResult.NOT_ENOUGH_DIGITS -> {
+                context.getString(R.string.not_enough_digits)
+            }
+
+            PasswordValidationResult.NOT_ENOUGH_UPPERCASE -> {
+                context.getString(R.string.not_enough_uppercase)
+            }
+
+            PasswordValidationResult.CORRECT -> {
+                ""
+            }
+        }
+    }
+
+    private fun setPasswordError(error: String) {
+        _state.update {
+            it.copy(
+                textFieldsErrorsState = it.textFieldsErrorsState.copy(
+                    passwordError = error
+                )
+            )
+        }
+    }
+
+    private fun isEmailTextFieldHasError(): Boolean {
+        val emailValidationResult = emailValidator(
+            getEmail()
+        )
+        val emailError = getEmailError(emailValidationResult)
+        setEmailError(emailError)
+        return emailValidationResult == EmailValidationResult.CORRECT
+    }
+
+    private fun getEmailError(emailValidationResult: EmailValidationResult): String {
+        return when (emailValidationResult) {
+            EmailValidationResult.INCORRECT_FORMAT -> {
+                context.getString(R.string.incorrect_format_email)
+            }
+
+            EmailValidationResult.CORRECT -> {
+                ""
+            }
+        }
+    }
+
+    private fun setEmailError(error: String) {
+        _state.update {
+            it.copy(
+                textFieldsErrorsState = it.textFieldsErrorsState.copy(
+                    emailError = error
+                )
+            )
+        }
+    }
+
+    private fun isUsernameTextFieldHasError(): Boolean {
+        val userNameValidationResult = userNameValidator(
+            getUserName()
+        )
+        val userNameError = getUsernameError(userNameValidationResult)
+        setUsernameError(userNameError)
+        return userNameValidationResult == UsernameValidationResult.CORRECT
+    }
+
+    private fun getUsernameError(usernameValidationResult: UsernameValidationResult): String {
+        return when (usernameValidationResult) {
+            UsernameValidationResult.IS_EMPTY -> {
+                context.getString(R.string.is_empty_nickname)
+            }
+
+            UsernameValidationResult.CORRECT -> {
+                ""
+            }
+        }
+    }
+
+    private fun setUsernameError(error: String) {
+        _state.update {
+            it.copy(
+                textFieldsErrorsState = it.textFieldsErrorsState.copy(
+                    userNameError = error
+                )
+            )
+        }
+    }
+
+    private fun clearAllErrors(){
+        _state.update {
+            it.copy(
+                textFieldsErrorsState = TextFieldsErrorsState()
+            )
         }
     }
 }
