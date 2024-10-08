@@ -10,4 +10,9 @@
     <string name="not_enough_uppercase">Пароль должен содержать заглавную букву</string>
     <string name="incorrect_format_email">Некорректный формат Email</string>
     <string name="is_empty_nickname">Никнейм не должен быть пустым</string>
+    <string name="userName">Имя пользователя</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="hello_info_text">Начните торговать криптовалютой без лишних усилий. Покупайте, продавайте или конвертируйте свою криптовалюту одним кликом!</string>
+    <string name="welcome">Добро пожаловать</string>
 </resources>
