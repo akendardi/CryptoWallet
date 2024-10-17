@@ -15,8 +15,8 @@ private val DarkColorScheme = darkColorScheme(
     primary = Pink40,  // Розовый для заголовков и кнопок
     secondary = Color.White, // Лиловый для графиков и акцентов
     tertiary = Pink80,  // Дополнительный розовый для иконок
-    background = Color(0xFF121212), // Чёрный фон
-    surface = Color(0xFF1E1E1E),   // Тёмная поверхность
+    surface = Color(0xFF121212), // Чёрный фон
+    background = Color(0xFF1E1E1E),   // Тёмная поверхность
     onPrimary = Color.White,       // Белый текст на розовом
     onSecondary = Color.White,     // Белый текст на лиловом
     onTertiary = Color.White,      // Белый текст на дополнительном
@@ -46,6 +46,7 @@ fun CryptoWalletTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current

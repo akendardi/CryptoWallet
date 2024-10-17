@@ -13,16 +13,22 @@ sealed class Screen(val route: String) {
 
     data object HelloScreen: Screen(ROUTE_HELLO_SCREEN)
 
+    data object HomeScreen: Screen(ROUTE_HOME_SCREEN)
+    data object ProfileScreen: Screen(ROUTE_PROFILE_SCREEN)
+
     data object MainScreenNavGraph: Screen(ROUTE_MAIN_SCREEN_NAV_GRAPH)
+
+
 
     sealed class BottomBarScreen(
         val route: String,
         val icon: ImageVector,
     ){
-        data object MainScreen: BottomBarScreen(
-            route = ROUTE_MAIN_SCREEN,
+        data object HomeScreenNavGraph: BottomBarScreen(
+            route = ROUTE_HOME_SCREEN_NAV_GRAPH,
             icon = Icons.Default.Home
         )
+
 
         data object WalletScreen: BottomBarScreen(
             route = ROUTE_WALLET_SCREEN,
@@ -35,6 +41,8 @@ sealed class Screen(val route: String) {
         )
     }
 
+
+
     private companion object{
         const val ROUTE_SPLASH_SCREEN = "splashScreen"
 
@@ -43,7 +51,11 @@ sealed class Screen(val route: String) {
         const val ROUTE_HELLO_SCREEN= "helloScreen"
 
         const val ROUTE_MAIN_SCREEN_NAV_GRAPH = "mainScreenNavGraph"
-        const val ROUTE_MAIN_SCREEN = "mainScreen"
+        const val ROUTE_HOME_SCREEN_NAV_GRAPH = "homeScreenNavGraph"
+
+        const val ROUTE_HOME_SCREEN = "homeScreen"
+        const val ROUTE_PROFILE_SCREEN = "profileScreen"
+
         const val ROUTE_WALLET_SCREEN = "walletScreen"
         const val ROUTE_SEND_SCREEN = "sendScreen"
     }

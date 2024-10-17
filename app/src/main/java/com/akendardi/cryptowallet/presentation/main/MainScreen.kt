@@ -30,9 +30,14 @@ import com.akendardi.cryptowallet.navigation.Screen
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
     Scaffold(
         bottomBar = {
-            BottomBar(navController)
+            if (currentDestination?.route != Screen.ProfileScreen.route) {
+                BottomBar(navController)
+            }
+
         }
     ) { paddingValues ->
         Box(
@@ -51,7 +56,7 @@ fun MainScreen() {
 @Composable
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
-        Screen.BottomBarScreen.MainScreen,
+        Screen.BottomBarScreen.HomeScreenNavGraph,
         Screen.BottomBarScreen.SendScreen,
         Screen.BottomBarScreen.WalletScreen
     )

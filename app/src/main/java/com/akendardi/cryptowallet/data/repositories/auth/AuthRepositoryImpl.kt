@@ -1,8 +1,6 @@
 package com.akendardi.cryptowallet.data.repositories.auth
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
+import com.akendardi.cryptowallet.data.repositories.internet_usecase.CheckInternetConnectionUseCase
 import com.akendardi.cryptowallet.domain.repository.AuthRepository
 import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.google.firebase.FirebaseException
@@ -12,13 +10,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.UserProfileChangeRequest
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
-    @ApplicationContext private val context: Context
+    private val checkInternetConnectionUseCase: CheckInternetConnectionUseCase
 ) : AuthRepository {
     override suspend fun createAccount(name: String, email: String, password: String): AuthResult {
         return try {
@@ -81,15 +78,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun checkCurrentUserIsLogged(): Boolean {
-        return (auth.currentUser != null)
+        return (auth.currentUser?.reload() != null)
     }
 
-    override fun checkInternetConnection(): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities =
-            connectivityManager.getNetworkCapabilities(network) ?: return false
-        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
+    override fun checkInternetConnection(): Boolean = checkInternetConnectionUseCase()
 }

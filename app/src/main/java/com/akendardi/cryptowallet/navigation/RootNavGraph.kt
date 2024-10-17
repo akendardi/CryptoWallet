@@ -12,11 +12,11 @@ import com.akendardi.cryptowallet.presentation.splash.SplashScreen
 
 @Composable
 fun RootNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.MainScreenNavGraph.route
+        startDestination = Screen.SplashScreen.route
     ) {
         composable(route = Screen.AuthScreen.route) {
             AuthScreen(

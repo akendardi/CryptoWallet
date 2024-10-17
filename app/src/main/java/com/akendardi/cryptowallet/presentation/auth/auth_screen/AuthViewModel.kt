@@ -3,17 +3,16 @@ package com.akendardi.cryptowallet.presentation.auth.auth_screen
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.akendardi.cryptowallet.domain.usecase.auth.CreateAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.LogInAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.ResetPasswordUseCase
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.EmailValidationResult
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.EmailValidator
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.PasswordValidationResult
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.PasswordValidator
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.UserNameValidator
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.auth_usecase.UsernameValidationResult
+import com.akendardi.cryptowallet.domain.usecase.validators.EmailValidationResult
+import com.akendardi.cryptowallet.domain.usecase.validators.EmailValidator
+import com.akendardi.cryptowallet.domain.usecase.validators.PasswordValidationResult
+import com.akendardi.cryptowallet.domain.usecase.validators.PasswordValidator
+import com.akendardi.cryptowallet.domain.usecase.validators.UserNameValidator
+import com.akendardi.cryptowallet.domain.usecase.validators.UsernameValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,9 +51,10 @@ class AuthViewModel @Inject constructor(
         return _state.value.textFieldsState.userName
     }
 
-    private fun getAuthType(): AuthType{
+    private fun getAuthType(): AuthType {
         return _state.value.authType
     }
+
     private var isFirstAttempt = false
 
     private fun createAccount() {
@@ -206,6 +206,7 @@ class AuthViewModel @Inject constructor(
             AuthType.SIGN_UP -> {
                 setRegisterAuthType()
             }
+
             AuthType.RESET_PASSWORD -> {
                 clearPasswordTextField()
                 clearUserNameTextField()
@@ -215,7 +216,7 @@ class AuthViewModel @Inject constructor(
         isFirstAttempt = false
     }
 
-    private fun setRegisterAuthType(){
+    private fun setRegisterAuthType() {
         _state.update {
             it.copy(
                 authType = AuthType.SIGN_UP
@@ -223,7 +224,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun setResetPasswordAuthType(){
+    private fun setResetPasswordAuthType() {
         _state.update {
             it.copy(
                 authType = AuthType.RESET_PASSWORD
@@ -231,7 +232,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun setSignInAuthType(){
+    private fun setSignInAuthType() {
         _state.update {
             it.copy(
                 authType = AuthType.SIGN_IN
@@ -293,29 +294,9 @@ class AuthViewModel @Inject constructor(
         val passwordValidationResult = passwordValidator(
             getPassword()
         )
-        val passwordError = getPasswordError(passwordValidationResult)
+        val passwordError = passwordValidator.getPasswordError(passwordValidationResult)
         setPasswordError(passwordError)
         return passwordValidationResult == PasswordValidationResult.CORRECT
-    }
-
-    private fun getPasswordError(passwordValidationResult: PasswordValidationResult): String {
-        return when (passwordValidationResult) {
-            PasswordValidationResult.NOT_LONG_ENOUGH -> {
-                context.getString(R.string.not_long_enough)
-            }
-
-            PasswordValidationResult.NOT_ENOUGH_DIGITS -> {
-                context.getString(R.string.not_enough_digits)
-            }
-
-            PasswordValidationResult.NOT_ENOUGH_UPPERCASE -> {
-                context.getString(R.string.not_enough_uppercase)
-            }
-
-            PasswordValidationResult.CORRECT -> {
-                ""
-            }
-        }
     }
 
     private fun setPasswordError(error: String) {
@@ -332,22 +313,11 @@ class AuthViewModel @Inject constructor(
         val emailValidationResult = emailValidator(
             getEmail()
         )
-        val emailError = getEmailError(emailValidationResult)
+        val emailError = emailValidator.getEmailError(emailValidationResult)
         setEmailError(emailError)
         return emailValidationResult == EmailValidationResult.CORRECT
     }
 
-    private fun getEmailError(emailValidationResult: EmailValidationResult): String {
-        return when (emailValidationResult) {
-            EmailValidationResult.INCORRECT_FORMAT -> {
-                context.getString(R.string.incorrect_format_email)
-            }
-
-            EmailValidationResult.CORRECT -> {
-                ""
-            }
-        }
-    }
 
     private fun setEmailError(error: String) {
         _state.update {
@@ -363,22 +333,11 @@ class AuthViewModel @Inject constructor(
         val userNameValidationResult = userNameValidator(
             getUserName()
         )
-        val userNameError = getUsernameError(userNameValidationResult)
+        val userNameError = userNameValidator.getUsernameError(userNameValidationResult)
         setUsernameError(userNameError)
         return userNameValidationResult == UsernameValidationResult.CORRECT
     }
 
-    private fun getUsernameError(usernameValidationResult: UsernameValidationResult): String {
-        return when (usernameValidationResult) {
-            UsernameValidationResult.IS_EMPTY -> {
-                context.getString(R.string.is_empty_nickname)
-            }
-
-            UsernameValidationResult.CORRECT -> {
-                ""
-            }
-        }
-    }
 
     private fun setUsernameError(error: String) {
         _state.update {
@@ -390,7 +349,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun clearAllErrors(){
+    private fun clearAllErrors() {
         _state.update {
             it.copy(
                 textFieldsErrorsState = TextFieldsErrorsState()
