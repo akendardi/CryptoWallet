@@ -15,4 +15,10 @@
     <string name="password">Пароль</string>
     <string name="hello_info_text">Начните торговать криптовалютой без лишних усилий. Покупайте, продавайте или конвертируйте свою криптовалюту одним кликом!</string>
     <string name="welcome">Добро пожаловать</string>
+    <string name="theme_auto_enabled">✔ Авто</string>
+    <string name="theme_auto">Авто</string>
+    <string name="theme_light_enabled">✔ Светлая</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark_enabled">✔ Темная</string>
+    <string name="theme_dark">Темная</string>
 </resources>

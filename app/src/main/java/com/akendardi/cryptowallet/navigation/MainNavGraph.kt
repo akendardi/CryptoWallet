@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.akendardi.cryptowallet.presentation.main.main_screen_content.MainScreenContent
 import com.akendardi.cryptowallet.presentation.main.SendScreenContent
 import com.akendardi.cryptowallet.presentation.main.WalletScreenContent
+import com.akendardi.cryptowallet.presentation.main.home_screen.HomeScreen
 
 
 @Composable
@@ -15,12 +15,9 @@ fun MainNavGraph(
 ) {
 
 
-    NavHost(navHostController, startDestination = Screen.BottomBarScreen.MainScreen.route) {
-        composable(
-            route = Screen.BottomBarScreen.MainScreen.route,
-        ) {
-            MainScreenContent()
-        }
+    NavHost(navHostController, startDestination = Screen.BottomBarScreen.HomeScreenNavGraph.route) {
+
+        homeNavGraph(navHostController)
 
         composable(
             route = Screen.BottomBarScreen.SendScreen.route,

@@ -93,6 +93,8 @@ dependencies {
     implementation(platform(libs.firebase.bom))
 
     implementation(libs.firebase.auth)
+    implementation ("com.google.firebase:firebase-storage-ktx")
+
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -106,7 +108,7 @@ dependencies {
 
     implementation (libs.androidx.animation)
     implementation ("com.google.accompanist:accompanist-navigation-animation:0.32.0")
-
-
-
+    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation ("androidx.datastore:datastore-preferences:1.1.1")
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.0-alpha")
 }
