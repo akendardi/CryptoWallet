@@ -30,7 +30,7 @@ fun Loading() {
 
 
 @Composable
-fun ShowSnackbarMessage(
+fun ShowSnackbarAuthMessage(
     snackbarHostState: SnackbarHostState,
     message: String,
     onAuthTypeChanged: (AuthType) -> Unit
@@ -56,7 +56,7 @@ fun HandleAuthResult(
 ) {
     when (authResult) {
         is AuthResult.Error -> {
-            ShowSnackbarMessage(
+            ShowSnackbarAuthMessage(
                 snackbarHostState,
                 message = authResult.e,
                 onAuthTypeChanged = { changeAuthType(AuthType.SIGN_IN) }
@@ -78,7 +78,7 @@ fun HandleAuthResult(
         }
 
         AuthResult.SuccessSentLink -> {
-            ShowSnackbarMessage(
+            ShowSnackbarAuthMessage(
                 snackbarHostState = snackbarHostState,
                 message = "Сообщение отправлено на вашу почту",
                 onAuthTypeChanged = { changeAuthType(AuthType.SIGN_IN) }

@@ -11,13 +11,17 @@ import com.akendardi.cryptowallet.presentation.main.home_screen.HomeScreen
 
 @Composable
 fun MainNavGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    goToLogInScreen: () -> Unit
 ) {
 
 
     NavHost(navHostController, startDestination = Screen.BottomBarScreen.HomeScreenNavGraph.route) {
 
-        homeNavGraph(navHostController)
+        homeNavGraph(
+            navHostController,
+            goToLogInScreen = goToLogInScreen
+        )
 
         composable(
             route = Screen.BottomBarScreen.SendScreen.route,

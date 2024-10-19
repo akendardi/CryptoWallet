@@ -1,6 +1,7 @@
 package com.akendardi.cryptowallet.presentation.main.profile
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -24,8 +26,10 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,6 +43,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.akendardi.cryptowallet.R
+import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
 import com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.email.AlertDialogEditEmail
 import com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.username.AlertDialogEditName
 import com.akendardi.cryptowallet.presentation.main.profile.components.ProfileInfo
@@ -48,9 +53,12 @@ import com.akendardi.cryptowallet.settings.ThemeMode
 @Composable
 fun Profile(
     viewModel: ProfileViewModel = hiltViewModel(),
-    onButtonBackClick: () -> Unit
+    onButtonBackClick: () -> Unit,
+    goToLogInScreen: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
+    Log.d("STATE_TEST", state.requestAnswer.toString())
+    val snackbarHostState = remember { SnackbarHostState() }
 
     ProfileContent(
         name = state.userInfo.userName,
@@ -60,16 +68,16 @@ fun Profile(
         isNotificationEnables = state.isNotificationsEnables,
         onThemeChanged = viewModel::changeTheme,
         onVerificationEmailClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.VERIFICATION_EMAIL)
+            viewModel.openSettingAlertScreen(ProfileScreen.VerificationEmail)
         },
         onEditNameClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.EDIT_NAME)
+            viewModel.openSettingAlertScreen(ProfileScreen.EditName)
         },
         onEditEmailClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.EDIT_EMAIL)
+            viewModel.openSettingAlertScreen(ProfileScreen.EditEmail)
         },
         onEditPasswordClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.EDIT_PASSWORD)
+            viewModel.openSettingAlertScreen(ProfileScreen.EditPassword)
         },
         onChangeNotificationsClick = viewModel::changeNotificationsMode,
 
@@ -78,26 +86,140 @@ fun Profile(
         },
     )
 
+    HandleProfileResult(
+        snackbarHostState = snackbarHostState,
+        requestAnswer = state.requestAnswer,
+        goToLogInScreen = goToLogInScreen,
+
+        closeAnswerScreen = viewModel::closeAnswerScreen
+    )
+
     when (state.currentScreen) {
-        ProfileScreen.PROFILE -> {}
-
-        ProfileScreen.EDIT_EMAIL -> {
+        ProfileScreen.EditEmail -> {
             AlertDialogEditEmail(
-                onDismiss = viewModel::closeEditScreen
+                onDismiss = viewModel::closeAlertScreen
             )
         }
 
-        ProfileScreen.EDIT_NAME -> {
+        ProfileScreen.EditName -> {
             AlertDialogEditName(
-                onDismiss = viewModel::closeEditScreen
+                onDismiss = viewModel::closeAlertScreen
             )
         }
 
-        ProfileScreen.EDIT_PASSWORD -> {
+        ProfileScreen.EditPassword -> {
 
         }
 
-        ProfileScreen.VERIFICATION_EMAIL -> {
+        ProfileScreen.Profile -> {
+
+        }
+
+        ProfileScreen.VerificationEmail -> {
+
+        }
+    }
+
+}
+
+@Composable
+fun ProfileAuthErrorAlertDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = {
+            onDismiss()
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onDismiss()
+            }) {
+                Text("Войти")
+            }
+        },
+        title = {
+            Text(text = "Ошибка авторизации")
+        },
+        text = {
+            Text(text = "Ваша сессия истекла. Пожалуйста, выполните повторный вход")
+        }
+    )
+}
+
+@Composable
+fun ProfileInternetErrorAlertDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = {
+            onDismiss()
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onDismiss()
+            }) {
+                Text("Понятно")
+            }
+        },
+        title = {
+            Text(text = "Ошибка соединения")
+        },
+        text = {
+            Text(text = "Отсутствует интернет соединение. Проверьте настройки сети и повторите попытку")
+        }
+    )
+}
+
+
+@Composable
+fun HandleProfileResult(
+    snackbarHostState: SnackbarHostState,
+    requestAnswer: UserProfileOperationResult,
+    goToLogInScreen: () -> Unit,
+    closeAnswerScreen: () -> Unit
+
+) {
+    when (requestAnswer) {
+        UserProfileOperationResult.AuthError -> {
+            ProfileAuthErrorAlertDialog(
+                onDismiss = {
+                    closeAnswerScreen()
+                    goToLogInScreen()
+                }
+            )
+        }
+
+        UserProfileOperationResult.Error -> {
+
+        }
+
+        UserProfileOperationResult.Initial -> {
+
+        }
+
+        UserProfileOperationResult.InternetError -> {
+            ProfileInternetErrorAlertDialog(
+                onDismiss = closeAnswerScreen
+            )
+        }
+
+        UserProfileOperationResult.Loading -> {
+
+        }
+
+        UserProfileOperationResult.SuccessChangeEmail -> {
+
+        }
+
+        UserProfileOperationResult.SuccessChangeName -> {
+
+        }
+
+        UserProfileOperationResult.SuccessChangePassword -> {
+
+        }
+
+        UserProfileOperationResult.SuccessChangeProfilePhoto -> {
 
         }
     }

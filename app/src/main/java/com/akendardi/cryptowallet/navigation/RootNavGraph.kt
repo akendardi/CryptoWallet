@@ -52,7 +52,15 @@ fun RootNavGraph(
         }
 
         composable(route = Screen.MainScreenNavGraph.route) {
-            MainScreen()
+            MainScreen(
+                goToLogInScreen = {
+                    navigateAndDeleteOldScreen(
+                        navController,
+                        newScreen = Screen.AuthScreen,
+                        oldScreen = Screen.MainScreenNavGraph
+                    )
+                }
+            )
         }
 
         composable(route = Screen.SplashScreen.route) {

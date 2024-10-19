@@ -7,7 +7,10 @@ import androidx.navigation.navigation
 import com.akendardi.cryptowallet.presentation.main.home_screen.HomeScreen
 import com.akendardi.cryptowallet.presentation.main.profile.Profile
 
-fun NavGraphBuilder.homeNavGraph(navHostController: NavHostController) {
+fun NavGraphBuilder.homeNavGraph(
+    navHostController: NavHostController,
+    goToLogInScreen: () -> Unit
+) {
     navigation(
         startDestination = Screen.HomeScreen.route,
         route = Screen.BottomBarScreen.HomeScreenNavGraph.route
@@ -18,7 +21,8 @@ fun NavGraphBuilder.homeNavGraph(navHostController: NavHostController) {
             Profile(
                 onButtonBackClick = {
                     navHostController.popBackStack()
-                }
+                },
+                goToLogInScreen = goToLogInScreen
             )
         }
         composable(

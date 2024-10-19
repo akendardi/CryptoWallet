@@ -1,8 +1,9 @@
 package com.akendardi.cryptowallet.domain.usecase.user.userInfo
 
-import android.util.Log
 import com.akendardi.cryptowallet.domain.entity.UserInfo
 import com.akendardi.cryptowallet.domain.repository.UserInfoRepository
+import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,8 +14,11 @@ class LoadUsersInfoUseCase @Inject constructor(
 ) {
     fun observeUserInfo(): StateFlow<UserInfo> = userInfoRepository.userInfoFlow
 
+    fun observeRequestAnswers(): SharedFlow<UserProfileOperationResult> = userInfoRepository.requestAnswer
+
+    suspend fun resetRequestAnswer() = userInfoRepository.resetRequestAnswer()
+
     suspend operator fun invoke() {
         userInfoRepository.loadProfileInfo()
-        Log.d("LoadUsersInfoUseCase", "Data loading triggered")
     }
 }
