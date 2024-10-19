@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.usecase.auth.CheckCurrentUserIsLoggedUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.CheckInternetConnectionUseCase
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.LoadUsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class SplashScreenViewModel @Inject constructor(
     private val checkCurrentUserIsLoggedUseCase: CheckCurrentUserIsLoggedUseCase,
     private val checkInternetConnectionUseCase: CheckInternetConnectionUseCase,
-    private val loadUsersInfoUseCase: LoadUsersInfoUseCase
+    private val usersInfoUseCase: UsersInfoUseCase
 ) : ViewModel() {
 
 
@@ -33,9 +33,9 @@ class SplashScreenViewModel @Inject constructor(
                 Log.d("AUTH_TEST", checkCurrentUserIsLoggedUseCase().toString())
                 viewModelScope.launch {
                     withContext(Dispatchers.IO) {
-                        loadUsersInfoUseCase()
+                        usersInfoUseCase()
                     }
-                    loadUsersInfoUseCase.observeUserInfo().collect {
+                    usersInfoUseCase.observeUserInfo().collect {
                         _state.value = SplashState.Success(NextScreen.Main)
 
                     }

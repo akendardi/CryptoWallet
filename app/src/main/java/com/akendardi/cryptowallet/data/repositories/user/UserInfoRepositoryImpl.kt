@@ -136,6 +136,16 @@ class UserInfoRepositoryImpl @Inject constructor(
         currentPassword: String
     ) {
         try {
+            if (!checkInternetConnectionUseCase()) {
+                _requestAnswer.emit(UserProfileOperationResult.InternetError)
+                return
+            }
+            val currentUser = getCurrentUser()
+            if (currentUser == null) {
+                _requestAnswer.emit(UserProfileOperationResult.AuthError)
+                return
+            }
+            _requestAnswer.emit(UserProfileOperationResult.Loading)
             withContext(Dispatchers.IO) {
                 val user = getCurrentUser()
                 val cred = EmailAuthProvider.getCredential(user?.email.toString(), currentPassword)
@@ -161,6 +171,7 @@ class UserInfoRepositoryImpl @Inject constructor(
                 _requestAnswer.emit(UserProfileOperationResult.AuthError)
                 return
             }
+            _requestAnswer.emit(UserProfileOperationResult.Loading)
             withContext(Dispatchers.IO) {
                 _requestAnswer.emit(UserProfileOperationResult.Loading)
                 currentUser.updatePassword(password)

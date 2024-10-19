@@ -2,7 +2,7 @@ package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.LoadUsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.change_info.ChangeUserInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.validators.EmailValidationResult
 import com.akendardi.cryptowallet.domain.usecase.validators.EmailValidator
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileAlertEmailViewModel @Inject constructor(
-    private val loadUsersInfoUseCase: LoadUsersInfoUseCase,
+    private val usersInfoUseCase: UsersInfoUseCase,
     private val changeUserInfoUseCase: ChangeUserInfoUseCase,
     private val emailValidator: EmailValidator,
     private val passwordValidator: PasswordValidator
@@ -35,7 +35,7 @@ class ProfileAlertEmailViewModel @Inject constructor(
 
     private fun observeUserInfo() {
         viewModelScope.launch {
-            loadUsersInfoUseCase.observeUserInfo().collect { userInfo ->
+            usersInfoUseCase.observeUserInfo().collect { userInfo ->
                 _state.update {
                     it.copy(
                         email = userInfo.email
@@ -50,7 +50,8 @@ class ProfileAlertEmailViewModel @Inject constructor(
         isFirstAttempt = true
         _state.update {
             it.copy(
-                email = tempEmail
+                email = tempEmail,
+                password = ""
             )
         }
     }

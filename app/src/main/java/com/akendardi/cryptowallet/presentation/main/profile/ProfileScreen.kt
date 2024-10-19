@@ -21,16 +21,21 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +43,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -60,37 +66,50 @@ fun Profile(
     Log.d("STATE_TEST", state.requestAnswer.toString())
     val snackbarHostState = remember { SnackbarHostState() }
 
-    ProfileContent(
-        name = state.userInfo.userName,
-        email = state.userInfo.email,
-        photoUri = state.userInfo.profileUri,
-        themeMode = state.themeMode,
-        isNotificationEnables = state.isNotificationsEnables,
-        onThemeChanged = viewModel::changeTheme,
-        onVerificationEmailClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.VerificationEmail)
-        },
-        onEditNameClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.EditName)
-        },
-        onEditEmailClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.EditEmail)
-        },
-        onEditPasswordClick = {
-            viewModel.openSettingAlertScreen(ProfileScreen.EditPassword)
-        },
-        onChangeNotificationsClick = viewModel::changeNotificationsMode,
+    Box(modifier = Modifier.fillMaxSize()) {
+        ProfileContent(
+            name = state.userInfo.userName,
+            email = state.userInfo.email,
+            photoUri = state.userInfo.profileUri,
+            themeMode = state.themeMode,
+            isNotificationEnables = state.isNotificationsEnables,
+            onThemeChanged = viewModel::changeTheme,
+            onVerificationEmailClick = {
+                viewModel.openSettingAlertScreen(ProfileScreen.VerificationEmail)
+            },
+            onEditNameClick = {
+                viewModel.openSettingAlertScreen(ProfileScreen.EditName)
+            },
+            onEditEmailClick = {
+                viewModel.openSettingAlertScreen(ProfileScreen.EditEmail)
+            },
+            onEditPasswordClick = {
+                viewModel.openSettingAlertScreen(ProfileScreen.EditPassword)
+            },
+            onChangeNotificationsClick = viewModel::changeNotificationsMode,
+            onButtonBackClick = {
+                onButtonBackClick()
+            }
+        )
 
-        onButtonBackClick = {
-            onButtonBackClick()
-        },
-    )
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter),
+            snackbar = { snackbarData ->
+                Snackbar(
+                    snackbarData = snackbarData,
+                    containerColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.onBackground,
+                    actionColor = MaterialTheme.colorScheme.primary
+                )
+            }
+        )
+    }
 
     HandleProfileResult(
         snackbarHostState = snackbarHostState,
         requestAnswer = state.requestAnswer,
         goToLogInScreen = goToLogInScreen,
-
         closeAnswerScreen = viewModel::closeAnswerScreen
     )
 
@@ -179,6 +198,7 @@ fun HandleProfileResult(
     closeAnswerScreen: () -> Unit
 
 ) {
+    Log.d("TEST_TEST", requestAnswer.toString())
     when (requestAnswer) {
         UserProfileOperationResult.AuthError -> {
             ProfileAuthErrorAlertDialog(
@@ -190,7 +210,13 @@ fun HandleProfileResult(
         }
 
         UserProfileOperationResult.Error -> {
-
+            LaunchedEffect(Unit) {
+                snackbarHostState.showSnackbar(
+                    message = "Произошла неизвестная ошибка",
+                    actionLabel = "Понятно",
+                    duration = SnackbarDuration.Short
+                )
+            }
         }
 
         UserProfileOperationResult.Initial -> {
@@ -204,23 +230,55 @@ fun HandleProfileResult(
         }
 
         UserProfileOperationResult.Loading -> {
-
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.Black.copy(alpha = 0.5f)),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
         }
 
         UserProfileOperationResult.SuccessChangeEmail -> {
-
+            LaunchedEffect(Unit) {
+                snackbarHostState.showSnackbar(
+                    message = "На вашу почту отправлено письмо",
+                    actionLabel = "Понятно",
+                    duration = SnackbarDuration.Short
+                )
+            }
         }
 
         UserProfileOperationResult.SuccessChangeName -> {
-
+            LaunchedEffect(Unit) {
+                snackbarHostState.showSnackbar(
+                    message = "Ваше имя успешно изменено",
+                    actionLabel = "Понятно",
+                    duration = SnackbarDuration.Short
+                )
+                closeAnswerScreen()
+            }
         }
 
         UserProfileOperationResult.SuccessChangePassword -> {
-
+            LaunchedEffect(Unit) {
+                snackbarHostState.showSnackbar(
+                    message = "Ваш пароль успешно изменен",
+                    actionLabel = "Понятно",
+                    duration = SnackbarDuration.Short
+                )
+            }
         }
 
         UserProfileOperationResult.SuccessChangeProfilePhoto -> {
-
+            LaunchedEffect(Unit) {
+                snackbarHostState.showSnackbar(
+                    message = "Ваше фото успешно изменено",
+                    actionLabel = "Понятно",
+                    duration = SnackbarDuration.Short
+                )
+            }
         }
     }
 }

@@ -3,9 +3,7 @@ package com.akendardi.cryptowallet.presentation.main.profile
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.LoadUsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import com.akendardi.cryptowallet.settings.SettingsManager
 import com.akendardi.cryptowallet.settings.ThemeMode
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val settingsManager: SettingsManager,
-    private val loadUsersInfoUseCase: LoadUsersInfoUseCase
+    private val usersInfoUseCase: UsersInfoUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileUiState())
@@ -52,11 +50,10 @@ class ProfileViewModel @Inject constructor(
     }
 
 
-    fun closeAnswerScreen(){
+    fun closeAnswerScreen() {
         viewModelScope.launch {
-            loadUsersInfoUseCase.resetRequestAnswer()
+            usersInfoUseCase.resetRequestAnswer()
         }
-
     }
 
 
@@ -75,7 +72,7 @@ class ProfileViewModel @Inject constructor(
     private fun subscribeUserInfoFlow() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                loadUsersInfoUseCase.observeUserInfo().collect { userInfo ->
+                usersInfoUseCase.observeUserInfo().collect { userInfo ->
                     _state.update {
                         it.copy(
                             userInfo = userInfo
@@ -90,7 +87,7 @@ class ProfileViewModel @Inject constructor(
     private fun subscribeRequestAnswer() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                loadUsersInfoUseCase.observeRequestAnswers().collect { answer ->
+                usersInfoUseCase.observeRequestAnswers().collect { answer ->
                     Log.d("TEST_ANSWER", answer.toString())
                     _state.update {
                         it.copy(

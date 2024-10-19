@@ -4,7 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.LoadUsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UpdateUserProfileImageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val loadUsersInfoUseCase: LoadUsersInfoUseCase,
+    private val usersInfoUseCase: UsersInfoUseCase,
     private val updateUserProfileImageUseCase: UpdateUserProfileImageUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeScreenUIState())
@@ -31,7 +31,7 @@ class HomeScreenViewModel @Inject constructor(
     private fun subscribeUserInfoFlow() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                loadUsersInfoUseCase.observeUserInfo().collect { userInfo ->
+                usersInfoUseCase.observeUserInfo().collect { userInfo ->
                     _state.update {
                         it.copy(
                             userInfoState = userInfo ?: throw RuntimeException()
@@ -48,7 +48,7 @@ class HomeScreenViewModel @Inject constructor(
     private fun refreshUserInfo() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                loadUsersInfoUseCase()
+                usersInfoUseCase()
             }
         }
 

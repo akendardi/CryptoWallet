@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoadUsersInfoUseCase @Inject constructor(
+class UsersInfoUseCase @Inject constructor(
     private val userInfoRepository: UserInfoRepository
 ) {
     fun observeUserInfo(): StateFlow<UserInfo> = userInfoRepository.userInfoFlow
