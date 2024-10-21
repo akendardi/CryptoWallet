@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.splash
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.usecase.auth.CheckCurrentUserIsLoggedUseCase
@@ -29,9 +28,8 @@ class SplashScreenViewModel @Inject constructor(
 
     fun checkLogState() {
         if (checkInternetConnectionUseCase()) {
-            if (checkCurrentUserIsLoggedUseCase()) {
-                Log.d("AUTH_TEST", checkCurrentUserIsLoggedUseCase().toString())
-                viewModelScope.launch {
+            viewModelScope.launch {
+                if (checkCurrentUserIsLoggedUseCase()) {
                     withContext(Dispatchers.IO) {
                         usersInfoUseCase()
                     }
@@ -39,9 +37,9 @@ class SplashScreenViewModel @Inject constructor(
                         _state.value = SplashState.Success(NextScreen.Main)
 
                     }
+                } else {
+                    _state.value = SplashState.Success(NextScreen.Login)
                 }
-            } else {
-                _state.value = SplashState.Success(NextScreen.Login)
             }
         } else {
             _state.value = SplashState.NetworkError

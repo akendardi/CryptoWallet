@@ -1,12 +1,15 @@
 package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.username
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.FieldType
-import com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.CustomAlertDialog
 
 @Composable
 fun AlertDialogEditName(
@@ -15,12 +18,12 @@ fun AlertDialogEditName(
 ) {
     val state by viewModel.state.collectAsState()
     Log.d("TEST_VIEWMODEL", viewModel.toString())
-    AlertDialogEditNameContent(
+    EditUserNameAlertDialogContent(
         value = state.name,
         error = state.error,
         onValueChanged = viewModel::onUserNameChanged,
         saveChangesClick = {
-            if(viewModel.saveChange()){
+            if (viewModel.saveChange()) {
                 onDismiss()
             }
         },
@@ -32,19 +35,38 @@ fun AlertDialogEditName(
 }
 
 @Composable
-fun AlertDialogEditNameContent(
+fun EditUserNameAlertDialogContent(
+    onDismiss: () -> Unit,
     value: String,
     error: String,
     onValueChanged: (String) -> Unit,
-    onDismiss: () -> Unit,
     saveChangesClick: () -> Unit
 ) {
-    CustomAlertDialog(
-        fieldType = FieldType.USERNAME,
-        onDismiss = onDismiss,
-        value = value,
-        error = error,
-        onValueChanged = onValueChanged,
-        saveChangesClick = saveChangesClick
+
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text(text = "Изменить имя") },
+        text = {
+            Column {
+                Text(text = "Введите новое имя")
+                TextField(
+                    value = value,
+                    onValueChange = onValueChanged,
+                    supportingText = { Text(text = error) }
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                saveChangesClick()
+            }) {
+                Text("Сохранить")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { onDismiss() }) {
+                Text("Отмена")
+            }
+        }
     )
 }

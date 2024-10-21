@@ -21,7 +21,7 @@ interface UserInfoRepository {
 
     suspend fun changeEmail(email: String, currentPassword: String)
 
-    suspend fun changePassword(password: String)
+    suspend fun changePassword(currentPassword: String, newPassword: String)
 
     suspend fun resetRequestAnswer()
 }

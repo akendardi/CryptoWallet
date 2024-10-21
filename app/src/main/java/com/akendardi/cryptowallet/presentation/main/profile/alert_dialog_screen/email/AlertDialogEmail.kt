@@ -1,11 +1,18 @@
 package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.email
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.EditEmailAlertDialogContent
 
 @Composable
 fun AlertDialogEditEmail(
@@ -14,7 +21,7 @@ fun AlertDialogEditEmail(
 ) {
     val state by viewModel.state.collectAsState()
     Log.d("TEST_VIEWMODEL", viewModel.toString())
-    EditEmailAlertDialog(
+    EditEmailAlertDialogContent(
         onDismiss = {
             viewModel.resetInfo()
             onDismiss()
@@ -33,7 +40,7 @@ fun AlertDialogEditEmail(
 }
 
 @Composable
-fun EditEmailAlertDialog(
+fun EditEmailAlertDialogContent(
     onDismiss: () -> Unit,
     email: String,
     errorEmail: String,
@@ -43,15 +50,40 @@ fun EditEmailAlertDialog(
     onPasswordChanged: (String) -> Unit,
     sendRequestClick: () -> Unit
 ) {
-
-    EditEmailAlertDialogContent(
-        onDismiss = onDismiss,
-        email = email,
-        errorEmail = errorEmail,
-        password = password,
-        passwordError = passwordError,
-        onEmailChanged = onEmailChanged,
-        onPasswordChanged = onPasswordChanged,
-        sendRequestClick = sendRequestClick,
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text(text = "Изменить Email") },
+        text = {
+            Column {
+                Text(text = "Введите новую почту")
+                TextField(
+                    value = email,
+                    onValueChange = onEmailChanged,
+                    supportingText = { Text(text = errorEmail) }
+                )
+                Text(text = "Введите пароль")
+                TextField(
+                    value = password,
+                    onValueChange = onPasswordChanged,
+                    supportingText = { Text(text = passwordError) },
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password
+                    )
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                sendRequestClick()
+            }) {
+                Text("Сохранить")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { onDismiss() }) {
+                Text("Отмена")
+            }
+        }
     )
 }

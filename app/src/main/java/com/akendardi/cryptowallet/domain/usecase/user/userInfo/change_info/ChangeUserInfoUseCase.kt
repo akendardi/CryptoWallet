@@ -8,7 +8,9 @@ class ChangeUserInfoUseCase @Inject constructor(
 ) {
     suspend fun changeName(name: String) = userInfoRepository.changeUserName(name)
 
-    suspend fun changeEmail(email: String, password: String) = userInfoRepository.changeEmail(email, password)
+    suspend fun changeEmail(email: String, password: String) =
+        userInfoRepository.changeEmail(email, password)
 
-    suspend fun changePassword(password: String) = userInfoRepository.changePassword(password)
+    suspend fun changePassword(oldPassword: String, newPassword: String) =
+        userInfoRepository.changePassword(oldPassword, newPassword)
 }

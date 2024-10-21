@@ -22,7 +22,7 @@ interface AuthRepository {
         email: String
     ): AuthResult
 
-    fun checkCurrentUserIsLogged(): Boolean
+    suspend fun checkCurrentUserIsLogged(): Boolean
 
 
     fun checkInternetConnection(): Boolean

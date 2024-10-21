@@ -77,8 +77,16 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun checkCurrentUserIsLogged(): Boolean {
-        return (auth.currentUser?.reload() != null)
+    override suspend fun checkCurrentUserIsLogged(): Boolean {
+        try {
+            auth.currentUser?.reload()?.await()
+
+            val curr = auth.currentUser
+
+            return curr != null
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     override fun checkInternetConnection(): Boolean = checkInternetConnectionUseCase()
