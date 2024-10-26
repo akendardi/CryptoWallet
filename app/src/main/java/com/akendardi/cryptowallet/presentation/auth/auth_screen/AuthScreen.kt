@@ -57,7 +57,6 @@ fun AuthScreen(
         )
 
         HandleAuthResult(
-            authType = state.authType,
             authResult = state.authResult,
             snackbarHostState = snackbarHostState,
             goToMainScreen = {

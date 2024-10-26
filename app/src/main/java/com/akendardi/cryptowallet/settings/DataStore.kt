@@ -1,6 +1,7 @@
 package com.akendardi.cryptowallet.settings
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -33,6 +34,7 @@ class SettingsManager @Inject constructor(@ApplicationContext val context: Conte
 
     val notificationsEnabledFlow: Flow<Boolean> = context.dataStore.data
         .map { preferences ->
+            Log.d("SETTINGS_TEST", preferences[SettingsKeys.NOTIFICATIONS_ENABLED].toString())
             preferences[SettingsKeys.NOTIFICATIONS_ENABLED] ?: true
         }
 

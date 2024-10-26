@@ -33,8 +33,9 @@ fun AlertDialogEditEmail(
         onEmailChanged = viewModel::onEmailChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
         sendRequestClick = {
-            viewModel.saveChange()
-            onDismiss()
+            if (viewModel.saveChange()){
+                onDismiss()
+            }
         },
     )
 }

@@ -2,6 +2,7 @@ package com.akendardi.cryptowallet.data.repositories.user
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.data.repositories.internet_usecase.CheckInternetConnectionUseCase
 import com.akendardi.cryptowallet.domain.entity.UserInfo
@@ -98,11 +99,13 @@ class UserInfoRepositoryImpl @Inject constructor(
         val name = currentUser.displayName ?: ""
         val profilePhotoUri = getProfilePhotoUri(currentUser)
         val email = currentUser.email ?: ""
+        val isVerification = currentUser.isEmailVerified
 
         val userInfo = UserInfo(
             userName = name,
             profileUri = profilePhotoUri,
-            email = email
+            email = email,
+            isVerificationAccount = isVerification
         )
 
         _userInfoFlow.emit(userInfo)
@@ -157,6 +160,7 @@ class UserInfoRepositoryImpl @Inject constructor(
 
             }
         } catch (e: Exception) {
+            Log.d("TEST_PIZDEC", e.message.toString())
             _requestAnswer.emit(UserProfileOperationResult.Error)
         }
     }
@@ -168,20 +172,14 @@ class UserInfoRepositoryImpl @Inject constructor(
         try {
             if (!isInternetAvailable()) return
             val currentUser = getValidatedCurrentUser() ?: return
-
-            val email = currentUser.email ?: return
-
-            val credential = EmailAuthProvider.getCredential(email, currentPassword)
-
             emitLoading()
-
+            val email = currentUser.email ?: return
             withContext(Dispatchers.IO) {
                 try {
+                    val credential = EmailAuthProvider.getCredential(email, currentPassword)
                     currentUser.reauthenticate(credential).await()
 
                     currentUser.updatePassword(newPassword).await()
-
-                    loadProfileInfo()
 
                     _requestAnswer.emit(UserProfileOperationResult.SuccessChangePassword)
                 } catch (e: Exception) {
@@ -210,5 +208,20 @@ class UserInfoRepositoryImpl @Inject constructor(
         return auth.currentUser
     }
 
+    override suspend fun verificateEmail() {
+        try {
+            if (!isInternetAvailable()) return
+
+            val currentUser = getValidatedCurrentUser() ?: return
+
+            _requestAnswer.emit(UserProfileOperationResult.Loading)
+
+            currentUser.sendEmailVerification().await()
+
+            _requestAnswer.emit(UserProfileOperationResult.SuccessVerificationEmail)
+        } catch (e: Exception) {
+            _requestAnswer.emit(UserProfileOperationResult.Error)
+        }
+    }
 
 }

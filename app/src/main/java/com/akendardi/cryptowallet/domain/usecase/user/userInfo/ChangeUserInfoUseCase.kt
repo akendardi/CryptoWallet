@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.domain.usecase.user.userInfo.change_info
+package com.akendardi.cryptowallet.domain.usecase.user.userInfo
 
 import com.akendardi.cryptowallet.domain.repository.UserInfoRepository
 import javax.inject.Inject

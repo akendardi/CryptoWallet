@@ -47,7 +47,6 @@ fun ShowSnackbarAuthMessage(
 
 @Composable
 fun HandleAuthResult(
-    authType: AuthType,
     authResult: AuthResult,
     snackbarHostState: SnackbarHostState,
     goToMainScreen: () -> Unit,
@@ -55,6 +54,18 @@ fun HandleAuthResult(
     changeAuthType: (AuthType) -> Unit
 ) {
     when (authResult) {
+        AuthResult.Initial -> {
+
+        }
+
+        AuthResult.SuccessCreatedAccount -> {
+            goToHelloScreen()
+        }
+
+        AuthResult.SuccessLogin -> {
+            goToMainScreen()
+        }
+
         is AuthResult.Error -> {
             ShowSnackbarAuthMessage(
                 snackbarHostState,
@@ -67,15 +78,6 @@ fun HandleAuthResult(
             Loading()
         }
 
-        AuthResult.Success -> {
-            LaunchedEffect(Unit) {
-                if (authType == AuthType.SIGN_IN) {
-                    goToMainScreen()
-                } else {
-                    goToHelloScreen()
-                }
-            }
-        }
 
         AuthResult.SuccessSentLink -> {
             ShowSnackbarAuthMessage(
@@ -84,7 +86,5 @@ fun HandleAuthResult(
                 onAuthTypeChanged = { changeAuthType(AuthType.SIGN_IN) }
             )
         }
-
-        else -> Unit
     }
 }

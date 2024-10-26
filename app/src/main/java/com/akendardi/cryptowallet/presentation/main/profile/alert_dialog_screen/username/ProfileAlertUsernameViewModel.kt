@@ -3,7 +3,7 @@ package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.change_info.ChangeUserInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.ChangeUserInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.validators.UserNameValidator
 import com.akendardi.cryptowallet.domain.usecase.validators.UsernameValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -73,11 +73,13 @@ class ProfileAlertUsernameViewModel @Inject constructor(
             viewModelScope.launch {
                 changeUserInfoUseCase.changeName(state.value.name)
             }
+            resetInfo()
             return true
+        } else {
+            val error = userNameValidator.getUsernameError(userNameValidator(state.value.name))
+            setUserNameError(error)
+            return false
         }
-        val error = userNameValidator.getUsernameError(userNameValidator(state.value.name))
-        setUserNameError(error)
-        return false
     }
 
     private fun setUserName(value: String) {

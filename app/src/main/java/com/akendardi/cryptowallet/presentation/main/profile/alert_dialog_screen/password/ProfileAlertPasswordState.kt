@@ -2,5 +2,6 @@ package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen
 
 data class ProfileAlertPasswordState(
     val oldPassword: String = "",
-    val newPassword: String = ""
+    val newPassword: String = "",
+    val newPasswordError: String = ""
 )

@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.presentation.main.profile
+package com.akendardi.cryptowallet.presentation.main.profile.setting_components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.akendardi.cryptowallet.presentation.icons.Shield_lock
-import com.akendardi.cryptowallet.presentation.icons.Verification_email
 
 sealed class SettingItem(
     val icon: ImageVector,

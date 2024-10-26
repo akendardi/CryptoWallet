@@ -1,8 +1,10 @@
 package com.akendardi.cryptowallet.presentation.main.profile
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UpdateUserProfileImageUseCase
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import com.akendardi.cryptowallet.settings.SettingsManager
 import com.akendardi.cryptowallet.settings.ThemeMode
@@ -18,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val settingsManager: SettingsManager,
-    private val usersInfoUseCase: UsersInfoUseCase
+    private val usersInfoUseCase: UsersInfoUseCase,
+    private val updateUserProfileImageUseCase: UpdateUserProfileImageUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileUiState())
@@ -51,6 +54,10 @@ class ProfileViewModel @Inject constructor(
 
 
     fun closeAnswerScreen() {
+        resetRequestAnswer()
+    }
+
+    fun resetRequestAnswer(){
         viewModelScope.launch {
             usersInfoUseCase.resetRequestAnswer()
         }
@@ -120,6 +127,14 @@ class ProfileViewModel @Inject constructor(
                         isNotificationsEnables = isEnabled,
                     )
                 }
+            }
+        }
+    }
+
+    fun uploadProfilePhoto(uri: Uri) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                updateUserProfileImageUseCase(uri)
             }
         }
     }

@@ -69,14 +69,14 @@ fun Title() {
         ) {
             Text(
                 text = "wallet",
-                textAlign = TextAlign.Start,
+                textAlign = TextAlign.End,
                 fontSize = 60.sp,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = 120.dp
+                        end = 60.dp
                     ),
                 color = MaterialTheme.colorScheme.primary
             )

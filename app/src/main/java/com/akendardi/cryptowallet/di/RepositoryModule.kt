@@ -21,9 +21,11 @@ interface RepositoryModule {
     @Binds
     fun bindCryptoRepository(impl: CryptoRepositoryImpl): CryptoRepository
 
+    @Singleton
     @Binds
     fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
+    @Singleton
     @Binds
     fun bindFirebaseRepository(impl: AuthRepositoryImpl): AuthRepository
 
