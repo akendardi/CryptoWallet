@@ -21,15 +21,16 @@ import com.akendardi.cryptowallet.presentation.auth.auth_screen.utils.HandleAuth
 
 @Composable
 fun AuthScreen(
-    viewModel: AuthViewModel = hiltViewModel(),
     goToMainScreen: () -> Unit,
-    goToHelloScreen: () -> Unit
+    goToHelloScreen: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val keyboardController = LocalSoftwareKeyboardController.current
     Box(
-        Modifier
+        modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
@@ -57,7 +58,6 @@ fun AuthScreen(
         )
 
         HandleAuthResult(
-            authType = state.authType,
             authResult = state.authResult,
             snackbarHostState = snackbarHostState,
             goToMainScreen = {

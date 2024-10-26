@@ -17,13 +17,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
-
+    @Singleton
     @Binds
     fun bindCryptoRepository(impl: CryptoRepositoryImpl): CryptoRepository
 
+    @Singleton
     @Binds
     fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
+    @Singleton
     @Binds
     fun bindFirebaseRepository(impl: AuthRepositoryImpl): AuthRepository
 

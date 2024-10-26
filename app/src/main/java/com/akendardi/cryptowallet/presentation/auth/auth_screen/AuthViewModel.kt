@@ -1,9 +1,10 @@
 package com.akendardi.cryptowallet.presentation.auth.auth_screen
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.states.auth.AuthResult
+import com.akendardi.cryptowallet.domain.repository.AuthRepository
 import com.akendardi.cryptowallet.domain.usecase.auth.CreateAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.LogInAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.ResetPasswordUseCase
@@ -31,13 +32,29 @@ class AuthViewModel @Inject constructor(
     private val passwordValidator: PasswordValidator,
     private val emailValidator: EmailValidator,
     private val userNameValidator: UserNameValidator,
-    @ApplicationContext private val context: Context
+    private val repository: AuthRepository
 ) : ViewModel() {
-
 
     private val _state = MutableStateFlow(UiAuthState(authButtonText = "Войти"))
     val state: StateFlow<UiAuthState>
         get() = _state.asStateFlow()
+
+    private fun observeAuthResult() {
+        viewModelScope.launch {
+            repository.authState.collect { result ->
+                _state.update {
+                    it.copy(
+                        authResult = result
+                    )
+                }
+            }
+        }
+    }
+
+    init {
+        observeAuthResult()
+    }
+
 
     private fun getEmail(): String {
         return _state.value.textFieldsState.email
@@ -67,9 +84,7 @@ class AuthViewModel @Inject constructor(
         val password = getPassword()
 
         viewModelScope.launch {
-            startLoading()
-            val result = createAccountUseCase(name, email, password)
-            updateAuthResult(result)
+            createAccountUseCase(name, email, password)
         }
     }
 
@@ -96,9 +111,7 @@ class AuthViewModel @Inject constructor(
         if (isHasErrorsForResetPassword()) return
         val email = getEmail()
         viewModelScope.launch {
-            startLoading()
-            val result = resetPasswordUseCase(email)
-            updateAuthResult(result)
+            resetPasswordUseCase(email)
         }
     }
 
@@ -111,18 +124,8 @@ class AuthViewModel @Inject constructor(
         val password = getPassword()
 
         viewModelScope.launch {
-            startLoading()
-            val result = logInAccountUseCase(email, password)
-            updateAuthResult(result)
+            logInAccountUseCase(email, password)
         }
-    }
-
-    private fun updateAuthResult(result: AuthResult) {
-        _state.update { it.copy(authResult = result) }
-    }
-
-    private fun startLoading() {
-        _state.update { it.copy(authResult = AuthResult.Loading) }
     }
 
 

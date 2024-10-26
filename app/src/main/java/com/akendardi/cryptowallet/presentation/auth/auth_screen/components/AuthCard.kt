@@ -31,7 +31,8 @@ fun AuthCard(
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onButtonClick: () -> Unit,
-    onTextFieldIconClick: (FieldType) -> Unit
+    onTextFieldIconClick: (FieldType) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     var isAnimated by remember { mutableStateOf(false) }
@@ -46,7 +47,7 @@ fun AuthCard(
     }
 
     ElevatedCard(
-        modifier = Modifier
+        modifier = modifier
             .padding(start = 30.dp, end = 30.dp)
             .offset {
                 IntOffset(0, offsetY.roundToPx())

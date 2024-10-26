@@ -18,7 +18,10 @@ import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
 import kotlinx.coroutines.delay
 
 @Composable
-fun CardFirstText(authType: AuthType) {
+fun CardFirstText(
+    authType: AuthType,
+    modifier: Modifier = Modifier
+) {
 
     var isTextVisible by remember { mutableStateOf(true) }
     val targetLabel = when (authType) {
@@ -45,7 +48,7 @@ fun CardFirstText(authType: AuthType) {
     )
     Text(
         text = currentLabel,
-        modifier = Modifier.alpha(textAlpha),
+        modifier = modifier.alpha(textAlpha),
         style = MaterialTheme.typography.titleLarge
     )
 }

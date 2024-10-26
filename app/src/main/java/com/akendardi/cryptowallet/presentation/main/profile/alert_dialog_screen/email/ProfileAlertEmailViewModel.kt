@@ -2,8 +2,8 @@ package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.LoadUsersInfoUseCase
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.change_info.ChangeUserInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.ChangeUserInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.validators.EmailValidationResult
 import com.akendardi.cryptowallet.domain.usecase.validators.EmailValidator
 import com.akendardi.cryptowallet.domain.usecase.validators.PasswordValidationResult
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileAlertEmailViewModel @Inject constructor(
-    private val loadUsersInfoUseCase: LoadUsersInfoUseCase,
+    private val usersInfoUseCase: UsersInfoUseCase,
     private val changeUserInfoUseCase: ChangeUserInfoUseCase,
     private val emailValidator: EmailValidator,
     private val passwordValidator: PasswordValidator
@@ -35,7 +35,7 @@ class ProfileAlertEmailViewModel @Inject constructor(
 
     private fun observeUserInfo() {
         viewModelScope.launch {
-            loadUsersInfoUseCase.observeUserInfo().collect { userInfo ->
+            usersInfoUseCase.observeUserInfo().collect { userInfo ->
                 _state.update {
                     it.copy(
                         email = userInfo.email
@@ -50,7 +50,9 @@ class ProfileAlertEmailViewModel @Inject constructor(
         isFirstAttempt = true
         _state.update {
             it.copy(
-                email = tempEmail
+                email = tempEmail,
+                password = "",
+                passwordError = ""
             )
         }
     }
@@ -68,13 +70,9 @@ class ProfileAlertEmailViewModel @Inject constructor(
     fun onPasswordChanged(value: String) {
         val password = value.trim()
         setPassword(password)
-        if (!isFirstAttempt) {
-            val error = passwordValidator.getPasswordError(passwordValidator(password))
-            setPasswordError(error)
-        }
     }
 
-    fun saveChange() {
+    fun saveChange(): Boolean {
         isFirstAttempt = false
         if (isEmailCorrect() && isPasswordCorrect()) {
             viewModelScope.launch {
@@ -83,11 +81,13 @@ class ProfileAlertEmailViewModel @Inject constructor(
                     state.value.password
                 )
             }
+            resetInfo()
+            return true
+        } else {
+            val emailError = emailValidator.getEmailError(emailValidator(state.value.email))
+            setEmailError(emailError)
+            return false
         }
-        val passwordError = passwordValidator.getPasswordError(passwordValidator(state.value.password))
-        setPasswordError(passwordError)
-        val emailError = emailValidator.getEmailError(emailValidator(state.value.email))
-        setEmailError(emailError)
     }
 
     private fun isPasswordCorrect(): Boolean {
@@ -122,13 +122,6 @@ class ProfileAlertEmailViewModel @Inject constructor(
         }
     }
 
-    private fun setPasswordError(error: String) {
-        _state.update {
-            it.copy(
-                passwordError = error
-            )
-        }
-    }
 
 
 }

@@ -1,11 +1,10 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen
 
-import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.LoadUsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.auth.LogOutFromAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UpdateUserProfileImageUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val loadUsersInfoUseCase: LoadUsersInfoUseCase,
-    private val updateUserProfileImageUseCase: UpdateUserProfileImageUseCase,
+    private val usersInfoUseCase: UsersInfoUseCase,
+    private val logOutFromAccountUseCase: LogOutFromAccountUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeScreenUIState())
     val state: StateFlow<HomeScreenUIState> = _state
@@ -31,16 +30,22 @@ class HomeScreenViewModel @Inject constructor(
     private fun subscribeUserInfoFlow() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                loadUsersInfoUseCase.observeUserInfo().collect { userInfo ->
+                usersInfoUseCase.observeUserInfo().collect { userInfo ->
                     _state.update {
                         it.copy(
                             userInfoState = userInfo ?: throw RuntimeException()
                         )
                     }
-                    Log.d("ViewModelTest", "Emitted $userInfo")
-                    Log.d("ViewModelTest", "State ${state.value}")
                 }
 
+            }
+        }
+    }
+
+    fun logOut() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                logOutFromAccountUseCase()
             }
         }
     }
@@ -48,17 +53,9 @@ class HomeScreenViewModel @Inject constructor(
     private fun refreshUserInfo() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                loadUsersInfoUseCase()
+                usersInfoUseCase()
             }
         }
 
-    }
-
-    fun updateUserProfileImage(uri: Uri) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                updateUserProfileImageUseCase(uri)
-            }
-        }
     }
 }

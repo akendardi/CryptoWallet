@@ -10,11 +10,13 @@ import com.akendardi.cryptowallet.R
 
 
 @Composable
-fun HelloImage() {
+fun HelloImage(
+    modifier: Modifier = Modifier
+) {
     Image(
         bitmap = ImageBitmap.imageResource(R.drawable.hello_screen),
         contentDescription = null,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     )
 
 }

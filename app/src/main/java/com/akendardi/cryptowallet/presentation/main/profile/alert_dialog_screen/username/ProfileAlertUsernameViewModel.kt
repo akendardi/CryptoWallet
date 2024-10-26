@@ -2,8 +2,8 @@ package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.LoadUsersInfoUseCase
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.change_info.ChangeUserInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.ChangeUserInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.validators.UserNameValidator
 import com.akendardi.cryptowallet.domain.usecase.validators.UsernameValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileAlertUsernameViewModel @Inject constructor(
-    private val loadUsersInfoUseCase: LoadUsersInfoUseCase,
+    private val usersInfoUseCase: UsersInfoUseCase,
     private val changeUserInfoUseCase: ChangeUserInfoUseCase,
     private val userNameValidator: UserNameValidator
 ) : ViewModel() {
@@ -32,7 +32,7 @@ class ProfileAlertUsernameViewModel @Inject constructor(
 
     private fun observeUserInfo(){
         viewModelScope.launch {
-            loadUsersInfoUseCase.observeUserInfo().collect { userInfo ->
+            usersInfoUseCase.observeUserInfo().collect { userInfo ->
                 _state.update {
                     it.copy(
                         name = userInfo.userName
@@ -73,11 +73,13 @@ class ProfileAlertUsernameViewModel @Inject constructor(
             viewModelScope.launch {
                 changeUserInfoUseCase.changeName(state.value.name)
             }
+            resetInfo()
             return true
+        } else {
+            val error = userNameValidator.getUsernameError(userNameValidator(state.value.name))
+            setUserNameError(error)
+            return false
         }
-        val error = userNameValidator.getUsernameError(userNameValidator(state.value.name))
-        setUserNameError(error)
-        return false
     }
 
     private fun setUserName(value: String) {

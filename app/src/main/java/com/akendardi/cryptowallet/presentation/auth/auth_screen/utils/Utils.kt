@@ -16,9 +16,11 @@ import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
 
 @Composable
-fun Loading() {
+fun Loading(
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
             .clickable(enabled = false) { },
@@ -30,7 +32,7 @@ fun Loading() {
 
 
 @Composable
-fun ShowSnackbarMessage(
+fun ShowSnackbarAuthMessage(
     snackbarHostState: SnackbarHostState,
     message: String,
     onAuthTypeChanged: (AuthType) -> Unit
@@ -47,7 +49,6 @@ fun ShowSnackbarMessage(
 
 @Composable
 fun HandleAuthResult(
-    authType: AuthType,
     authResult: AuthResult,
     snackbarHostState: SnackbarHostState,
     goToMainScreen: () -> Unit,
@@ -55,8 +56,23 @@ fun HandleAuthResult(
     changeAuthType: (AuthType) -> Unit
 ) {
     when (authResult) {
+        AuthResult.Initial -> {
+
+        }
+        AuthResult.SuccessCreatedAccount -> {
+            LaunchedEffect(Unit) {
+                goToHelloScreen()
+            }
+        }
+
+        AuthResult.SuccessLogin -> {
+            LaunchedEffect(Unit) {
+                goToMainScreen()
+            }
+        }
+
         is AuthResult.Error -> {
-            ShowSnackbarMessage(
+            ShowSnackbarAuthMessage(
                 snackbarHostState,
                 message = authResult.e,
                 onAuthTypeChanged = { changeAuthType(AuthType.SIGN_IN) }
@@ -67,24 +83,13 @@ fun HandleAuthResult(
             Loading()
         }
 
-        AuthResult.Success -> {
-            LaunchedEffect(Unit) {
-                if (authType == AuthType.SIGN_IN) {
-                    goToMainScreen()
-                } else {
-                    goToHelloScreen()
-                }
-            }
-        }
 
         AuthResult.SuccessSentLink -> {
-            ShowSnackbarMessage(
+            ShowSnackbarAuthMessage(
                 snackbarHostState = snackbarHostState,
                 message = "Сообщение отправлено на вашу почту",
                 onAuthTypeChanged = { changeAuthType(AuthType.SIGN_IN) }
             )
         }
-
-        else -> Unit
     }
 }

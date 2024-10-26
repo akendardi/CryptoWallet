@@ -14,6 +14,8 @@ sealed class UserProfileOperationResult {
 
     data object SuccessChangeProfilePhoto: UserProfileOperationResult()
 
+    data object SuccessVerificationEmail: UserProfileOperationResult()
+
     data object Error : UserProfileOperationResult()
 
     data object AuthError: UserProfileOperationResult()

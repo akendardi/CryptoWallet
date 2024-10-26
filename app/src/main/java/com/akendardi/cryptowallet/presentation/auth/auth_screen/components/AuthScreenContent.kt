@@ -27,10 +27,11 @@ fun AuthScreenContent(
     onPasswordChanged: (String) -> Unit,
     onEmailChanged: (String) -> Unit,
     onButtonClick: () -> Unit,
-    onTextFieldIconClick: (FieldType) -> Unit
+    onTextFieldIconClick: (FieldType) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .imePadding()
             .verticalScroll(rememberScrollState())

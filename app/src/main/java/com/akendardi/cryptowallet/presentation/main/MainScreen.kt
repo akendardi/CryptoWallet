@@ -28,7 +28,10 @@ import com.akendardi.cryptowallet.navigation.MainNavGraph
 import com.akendardi.cryptowallet.navigation.Screen
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    goToLogInScreen: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -41,12 +44,15 @@ fun MainScreen() {
         }
     ) { paddingValues ->
         Box(
-            Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
         ) {
-            MainNavGraph(navController)
+            MainNavGraph(
+                navHostController = navController,
+                goToLogInScreen = goToLogInScreen
+            )
         }
 
     }
