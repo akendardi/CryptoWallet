@@ -10,9 +10,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 
 @Composable
-fun AnimatedImageAndText(onButtonClick: () -> Unit) {
+fun AnimatedImageAndText(
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     var visible by remember {
         mutableStateOf(false)
     }
@@ -23,7 +27,9 @@ fun AnimatedImageAndText(onButtonClick: () -> Unit) {
         visible = visible,
         enter = fadeIn(animationSpec = tween(2000))
     ) {
-        Column {
+        Column(
+            modifier = modifier
+        ) {
             HelloImage()
             HeadText()
             InfoText()

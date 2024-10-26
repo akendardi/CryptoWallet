@@ -23,7 +23,8 @@ import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
 @Composable
 fun AuthButton(
     authType: AuthType,
-    onButtonClick: () -> Unit
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     val animationDuration = 100
@@ -68,7 +69,7 @@ fun AuthButton(
 
     Button(
         onClick = { onButtonClick() },
-        modifier = Modifier.width(buttonWidth)
+        modifier = modifier.width(buttonWidth)
     ) {
         Text(
             text = currentLabel,

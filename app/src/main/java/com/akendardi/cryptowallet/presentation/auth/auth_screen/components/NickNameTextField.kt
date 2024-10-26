@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.FieldType
 

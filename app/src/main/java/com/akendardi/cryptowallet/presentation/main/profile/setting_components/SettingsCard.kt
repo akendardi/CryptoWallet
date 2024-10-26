@@ -19,10 +19,11 @@ fun SettingCard(
     onVerificationEmailClick: () -> Unit,
     onEditNameClick: () -> Unit,
     onEditEmailClick: () -> Unit,
-    onEditPasswordClick: () -> Unit
+    onEditPasswordClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         shape = RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp),
         colors = CardDefaults.cardColors().copy(
             containerColor = MaterialTheme.colorScheme.surface

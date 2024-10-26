@@ -17,11 +17,12 @@ import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
 @Composable
 fun ChangeAuthAndReset(
     authType: AuthType,
-    onAuthTypeChanged: (AuthType) -> Unit
+    onAuthTypeChanged: (AuthType) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Row(
-        Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         when (authType) {
@@ -66,7 +67,8 @@ fun ChangeAuthAndReset(
 fun ChangeAuthTypeText(
     authType: AuthType,
     textAlign: TextAlign,
-    onAuthTypeChanged: (AuthType) -> Unit
+    onAuthTypeChanged: (AuthType) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val label = when (authType) {
         AuthType.SIGN_IN -> LocalContext.current.getString(R.string.sign_in)
@@ -74,7 +76,7 @@ fun ChangeAuthTypeText(
         AuthType.RESET_PASSWORD -> LocalContext.current.getString(R.string.reset_password)
     }
     Text(
-        modifier = Modifier
+        modifier = modifier
             .clickable {
                 onAuthTypeChanged(AuthType.SIGN_IN)
             },

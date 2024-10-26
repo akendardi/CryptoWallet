@@ -1,5 +1,6 @@
 package com.akendardi.cryptowallet.presentation.splash
 
+import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.akendardi.cryptowallet.R
@@ -40,7 +42,6 @@ fun SplashScreen(
             SplashState.Initial -> {
                 AnimateLogo()
                 LaunchedEffect(Unit) {
-                    delay(2000)
                     viewModel.checkLogState()
                 }
             }
@@ -51,6 +52,7 @@ fun SplashScreen(
 
             is SplashState.Success -> {
                 LaunchedEffect(Unit) {
+                    Log.d("TEST_TEST", "SplashScreen: ")
                     if (currentState.nextScreen == NextScreen.Main) {
                         successLogin()
                     } else {
@@ -65,18 +67,19 @@ fun SplashScreen(
 
 
 @Composable
-fun ShowDialog() {
+fun ShowDialog(modifier: Modifier = Modifier) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = {
             exitProcess(0)
         },
-        title = { Text("Ошибка подключения") },
-        text = { Text("Отсутствует подключение к интернету. Пожалуйста, проверьте настройки сети.") },
+        title = { Text(text = stringResource(R.string.internet_error)) },
+        text = { Text(text = stringResource(R.string.internet_error_description)) },
         confirmButton = {
             Button(onClick = {
                 exitProcess(0)
             }) {
-                Text("Выход")
+                Text(stringResource(R.string.exit))
             }
         },
         properties = DialogProperties(
@@ -87,7 +90,7 @@ fun ShowDialog() {
 }
 
 @Composable
-fun AnimateLogo() {
+fun AnimateLogo(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "")
     val rotationValue by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -100,7 +103,7 @@ fun AnimateLogo() {
     Image(
         painter = painterResource(id = R.drawable.ic_launcher_foreground),
         contentDescription = "Логотип",
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .rotate(rotationValue)
             .wrapContentSize(Alignment.Center)

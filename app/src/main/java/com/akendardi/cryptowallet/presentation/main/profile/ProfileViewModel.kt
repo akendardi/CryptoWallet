@@ -1,7 +1,6 @@
 package com.akendardi.cryptowallet.presentation.main.profile
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UpdateUserProfileImageUseCase
@@ -57,7 +56,7 @@ class ProfileViewModel @Inject constructor(
         resetRequestAnswer()
     }
 
-    fun resetRequestAnswer(){
+    fun resetRequestAnswer() {
         viewModelScope.launch {
             usersInfoUseCase.resetRequestAnswer()
         }
@@ -95,7 +94,6 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 usersInfoUseCase.observeRequestAnswers().collect { answer ->
-                    Log.d("TEST_ANSWER", answer.toString())
                     _state.update {
                         it.copy(
                             requestAnswer = answer

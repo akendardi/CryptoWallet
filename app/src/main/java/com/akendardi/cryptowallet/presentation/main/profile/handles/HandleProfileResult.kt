@@ -2,6 +2,8 @@ package com.akendardi.cryptowallet.presentation.main.profile.handles
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
 import com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.errors.ProfileAuthErrorAlertDialog
 import com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.errors.ProfileInternetErrorAlertDialog
@@ -29,7 +31,7 @@ fun HandleProfileResult(
         UserProfileOperationResult.Error -> {
             ShowSnackbarMessage(
                 snackbarHostState = snackbarHostState,
-                message = "Произошла ошибка. Проверьте данные и повторите попытку"
+                message = stringResource(R.string.error_profile)
             )
         }
 
@@ -50,35 +52,35 @@ fun HandleProfileResult(
         UserProfileOperationResult.SuccessChangeEmail -> {
             ShowSnackbarMessage(
                 snackbarHostState = snackbarHostState,
-                message = "На вашу почту отправлено письмо"
+                message = stringResource(R.string.sent_link_on_email)
             )
         }
 
         UserProfileOperationResult.SuccessChangeName -> {
             ShowSnackbarMessage(
                 snackbarHostState = snackbarHostState,
-                message = "Ваше имя успешно изменено"
+                message = stringResource(R.string.username_changed)
             )
         }
 
         UserProfileOperationResult.SuccessChangePassword -> {
             ShowSnackbarMessage(
                 snackbarHostState = snackbarHostState,
-                message = "Ваш пароль успешно изменен"
+                message = stringResource(R.string.password_changed)
             )
         }
 
         UserProfileOperationResult.SuccessChangeProfilePhoto -> {
             ShowSnackbarMessage(
                 snackbarHostState = snackbarHostState,
-                message = "Ваше фото успешно изменено"
+                message = stringResource(R.string.profile_photo_changed)
             )
         }
 
         UserProfileOperationResult.SuccessVerificationEmail -> {
             ShowSnackbarMessage(
                 snackbarHostState = snackbarHostState,
-                message = "На вашу почту отправлена ссылка для подтверждения"
+                message = stringResource(R.string.sent_link_on_email)
             )
         }
     }

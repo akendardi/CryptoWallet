@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.data.repositories.auth
 
-import android.util.Log
 import com.akendardi.cryptowallet.domain.repository.AuthRepository
 import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.google.firebase.FirebaseException
@@ -10,12 +9,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.UserProfileChangeRequest
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -26,16 +22,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     private val _authState = MutableStateFlow<AuthResult>(AuthResult.Initial)
     override val authState: StateFlow<AuthResult> = _authState.asStateFlow()
-//
-//    val scope = CoroutineScope(Dispatchers.IO)
-//
-//    init {
-//        scope.launch {
-//            _authState.collect {
-//                Log.d("AuthRepositoryImpl", it.toString())
-//            }
-//        }
-//    }
+
 
     override suspend fun createAccount(
         name: String,

@@ -19,10 +19,13 @@ fun HelloScreen(
 }
 
 @Composable
-fun HelloScreenContent(onButtonClick: () -> Unit) {
+fun HelloScreenContent(
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Scaffold { paddingValues ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .padding(paddingValues)
         ) {
             Title()

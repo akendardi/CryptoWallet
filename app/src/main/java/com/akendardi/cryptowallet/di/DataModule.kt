@@ -1,11 +1,9 @@
 package com.akendardi.cryptowallet.di
 
-import android.app.Application
 import android.content.Context
 import com.akendardi.cryptowallet.CryptoApp
 import com.akendardi.cryptowallet.data.internet.api.ApiFactory
 import com.akendardi.cryptowallet.data.internet.api.ApiService
-import com.akendardi.cryptowallet.settings.SettingsManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

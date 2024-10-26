@@ -16,14 +16,16 @@ import com.akendardi.cryptowallet.R
 
 
 @Composable
-fun InfoText() {
+fun InfoText(
+    modifier: Modifier = Modifier
+) {
     Text(
         text = stringResource(R.string.hello_info_text),
         textAlign = TextAlign.Start,
         fontSize = 15.sp,
         style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier
+        modifier = modifier
             .padding(
                 PaddingValues(
                     start = 20.dp
@@ -34,9 +36,9 @@ fun InfoText() {
 }
 
 @Composable
-fun HeadText() {
+fun HeadText(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier.padding(
+        modifier = modifier.padding(
             start = 20.dp,
             bottom = 10.dp
         )

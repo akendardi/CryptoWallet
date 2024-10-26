@@ -26,10 +26,11 @@ import coil.request.ImageRequest
 fun ProfileInfo(
     name: String,
     email: String,
-    photoUri: Uri
+    photoUri: Uri,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -49,9 +50,12 @@ fun ProfileInfo(
 }
 
 @Composable
-fun ProfilePhoto(photoUri: Uri) {
+fun ProfilePhoto(
+    photoUri: Uri,
+    modifier: Modifier = Modifier
+) {
     Image(
-        modifier = Modifier
+        modifier = modifier
             .clip(CircleShape)
             .size(120.dp),
         painter = rememberAsyncImagePainter(
@@ -68,8 +72,12 @@ fun ProfilePhoto(photoUri: Uri) {
 }
 
 @Composable
-fun ProfileName(name: String) {
+fun ProfileName(
+    name: String,
+    modifier: Modifier = Modifier
+) {
     Text(
+        modifier = modifier,
         text = name,
         style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.Bold,
@@ -78,8 +86,12 @@ fun ProfileName(name: String) {
 }
 
 @Composable
-fun ProfileEmail(email: String) {
+fun ProfileEmail(
+    email: String,
+    modifier: Modifier = Modifier
+) {
     Text(
+        modifier = modifier,
         text = email,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,

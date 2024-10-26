@@ -14,9 +14,10 @@ import androidx.compose.ui.Modifier
 @Composable
 fun TopButtons(
     onButtonBackClick: () -> Unit,
-    onEditPhotoClicked: () -> Unit
+    onEditPhotoClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         IconButton(onClick = {
             onButtonBackClick()
         }) {

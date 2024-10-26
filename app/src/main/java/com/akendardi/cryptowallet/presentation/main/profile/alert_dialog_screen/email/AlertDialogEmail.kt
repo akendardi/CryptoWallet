@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.main.profile.alert_dialog_screen.email
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
@@ -10,9 +9,12 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.akendardi.cryptowallet.R
 
 @Composable
 fun AlertDialogEditEmail(
@@ -20,7 +22,7 @@ fun AlertDialogEditEmail(
     onDismiss: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-    Log.d("TEST_VIEWMODEL", viewModel.toString())
+
     EditEmailAlertDialogContent(
         onDismiss = {
             viewModel.resetInfo()
@@ -33,7 +35,7 @@ fun AlertDialogEditEmail(
         onEmailChanged = viewModel::onEmailChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
         sendRequestClick = {
-            if (viewModel.saveChange()){
+            if (viewModel.saveChange()) {
                 onDismiss()
             }
         },
@@ -49,20 +51,22 @@ fun EditEmailAlertDialogContent(
     passwordError: String,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
-    sendRequestClick: () -> Unit
+    sendRequestClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Изменить Email") },
+        title = { Text(text = stringResource(R.string.change_email)) },
         text = {
             Column {
-                Text(text = "Введите новую почту")
+                Text(text = stringResource(R.string.input_new_email))
                 TextField(
                     value = email,
                     onValueChange = onEmailChanged,
                     supportingText = { Text(text = errorEmail) }
                 )
-                Text(text = "Введите пароль")
+                Text(text = stringResource(R.string.input_password))
                 TextField(
                     value = password,
                     onValueChange = onPasswordChanged,
@@ -78,12 +82,12 @@ fun EditEmailAlertDialogContent(
             TextButton(onClick = {
                 sendRequestClick()
             }) {
-                Text("Сохранить")
+                Text(stringResource(R.string.save))
             }
         },
         dismissButton = {
             TextButton(onClick = { onDismiss() }) {
-                Text("Отмена")
+                Text(stringResource(R.string.cancel))
             }
         }
     )

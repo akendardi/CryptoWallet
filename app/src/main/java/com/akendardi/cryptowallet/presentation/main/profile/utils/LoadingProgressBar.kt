@@ -11,9 +11,11 @@ import androidx.compose.ui.graphics.Color
 
 
 @Composable
-fun LoadingProgressBar() {
+fun LoadingProgressBar(
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = Color.Black.copy(alpha = 0.5f)),
         contentAlignment = Alignment.Center

@@ -4,12 +4,17 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.akendardi.cryptowallet.R
 
 @Composable
 fun ProfileAuthErrorAlertDialog(
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = {
             onDismiss()
         },
@@ -17,14 +22,14 @@ fun ProfileAuthErrorAlertDialog(
             TextButton(onClick = {
                 onDismiss()
             }) {
-                Text("Войти")
+                Text(text = stringResource(R.string.sign_in))
             }
         },
         title = {
-            Text(text = "Ошибка авторизации")
+            Text(text = stringResource(R.string.auth_error))
         },
         text = {
-            Text(text = "Ваша сессия истекла. Пожалуйста, выполните повторный вход")
+            Text(text = stringResource(R.string.session_canceled))
         }
     )
 }

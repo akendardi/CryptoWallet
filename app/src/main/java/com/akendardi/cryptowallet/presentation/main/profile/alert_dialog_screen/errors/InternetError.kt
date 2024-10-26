@@ -4,15 +4,18 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-
-
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.akendardi.cryptowallet.R
 
 
 @Composable
 fun ProfileInternetErrorAlertDialog(
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = {
             onDismiss()
         },
@@ -20,14 +23,14 @@ fun ProfileInternetErrorAlertDialog(
             TextButton(onClick = {
                 onDismiss()
             }) {
-                Text("Понятно")
+                Text(text = stringResource(R.string.understand))
             }
         },
         title = {
-            Text(text = "Ошибка соединения")
+            Text(text = stringResource(R.string.internet_error))
         },
         text = {
-            Text(text = "Отсутствует интернет соединение. Проверьте настройки сети и повторите попытку")
+            Text(text = stringResource(R.string.internet_error_description))
         }
     )
 }

@@ -9,9 +9,12 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.akendardi.cryptowallet.R
 
 @Composable
 fun AlertDialogEditPassword(
@@ -44,14 +47,16 @@ fun EditPasswordAlertDialogContent(
     newPasswordError: String,
     onOldPasswordChanged: (String) -> Unit,
     onNewPasswordChanged: (String) -> Unit,
-    sendRequestClick: () -> Unit
+    sendRequestClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Изменить пароль") },
+        title = { Text(text = stringResource(R.string.change_password)) },
         text = {
             Column {
-                Text(text = "Введите старый пароль")
+                Text(text = stringResource(R.string.input_old_password))
                 TextField(
                     value = oldPassword,
                     onValueChange = onOldPasswordChanged,
@@ -60,7 +65,7 @@ fun EditPasswordAlertDialogContent(
                         keyboardType = KeyboardType.Password
                     )
                 )
-                Text(text = "Введите новый пароль")
+                Text(text = stringResource(R.string.input_new_password))
                 TextField(
                     value = newPassword,
                     onValueChange = onNewPasswordChanged,
@@ -76,12 +81,12 @@ fun EditPasswordAlertDialogContent(
             TextButton(onClick = {
                 sendRequestClick()
             }) {
-                Text("Сохранить")
+                Text(text = stringResource(R.string.save))
             }
         },
         dismissButton = {
             TextButton(onClick = { onDismiss() }) {
-                Text("Отмена")
+                Text(text = stringResource(R.string.cancel))
             }
         }
     )

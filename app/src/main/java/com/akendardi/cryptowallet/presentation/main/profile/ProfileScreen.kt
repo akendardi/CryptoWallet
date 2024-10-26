@@ -29,9 +29,10 @@ import com.akendardi.cryptowallet.presentation.main.profile.handles.HandleProfil
 
 @Composable
 fun Profile(
-    viewModel: ProfileViewModel = hiltViewModel(),
     onButtonBackClick: () -> Unit,
-    goToLogInScreen: () -> Unit
+    goToLogInScreen: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -50,7 +51,7 @@ fun Profile(
 
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         ProfileContent(
             name = state.userInfo.userName,
             email = state.userInfo.email,

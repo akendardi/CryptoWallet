@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.akendardi.cryptowallet.R
 
 @Composable
 fun AlertDialogVerificateEmail(
@@ -60,18 +62,20 @@ fun VerificationEmailAlertDialogContent(
 }
 
 @Composable
-fun VerificationEmailAlert(onDismiss: () -> Unit) {
+fun VerificationEmailAlert(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Подтверждение Email") },
+        title = { Text(text = stringResource(R.string.verification_email)) },
         text = {
             Column {
-                Text(text = "Подтвержденый Email позволяет вам торговать на рынке.")
+                Text(text = stringResource(R.string.verification_email_description))
                 Spacer(
                     Modifier
                         .fillMaxWidth()
-                        .height(20.dp))
-                Text(text = "Ваш Email подтвержден!", style = MaterialTheme.typography.titleMedium)
+                        .height(20.dp)
+                )
+                Text(text = stringResource(R.string.email_verificated), style = MaterialTheme.typography.titleMedium)
             }
         },
         confirmButton = {}
@@ -81,20 +85,23 @@ fun VerificationEmailAlert(onDismiss: () -> Unit) {
 @Composable
 fun UnVerificationEmailAlert(
     onDismiss: () -> Unit,
-    onButtonClick: () -> Unit
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Подтверждение Email") },
+        title = { Text(text = stringResource(R.string.verification_email)) },
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "Подтвержденый Email позволяет вам торговать на рынке.")
+                Text(text = stringResource(R.string.verification_email_description))
                 Spacer(
                     Modifier
                         .fillMaxWidth()
-                        .height(20.dp))
+                        .height(20.dp)
+                )
                 Text(
-                    text = "Ваш Email не подтвержден!",
+                    text = stringResource(R.string.email_unverificated),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Button(
@@ -103,7 +110,7 @@ fun UnVerificationEmailAlert(
                         .padding(5.dp),
                     onClick = onButtonClick
                 ) {
-                    Text(text = "Подтвердить Email")
+                    Text(text = stringResource(R.string.verificate_email))
                 }
             }
         },

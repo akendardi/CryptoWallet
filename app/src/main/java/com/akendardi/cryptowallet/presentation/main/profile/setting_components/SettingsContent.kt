@@ -18,10 +18,11 @@ fun SettingsContent(
     onChangeNotificationsClick: () -> Unit,
     onEditNameClick: () -> Unit,
     onEditEmailClick: () -> Unit,
-    onEditPasswordClick: () -> Unit
+    onEditPasswordClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(15.dp),
     ) {

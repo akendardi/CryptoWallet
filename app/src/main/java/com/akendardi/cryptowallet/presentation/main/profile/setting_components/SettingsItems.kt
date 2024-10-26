@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -33,14 +32,15 @@ import com.akendardi.cryptowallet.settings.ThemeMode
 
 @Composable
 fun SettingsIconWithText(
-    settingItem: SettingItem
+    settingItem: SettingItem,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Icon(
-            modifier = Modifier.size(36.dp),
+            modifier = modifier.size(36.dp),
             imageVector = settingItem.icon,
             tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = null
@@ -56,10 +56,13 @@ fun SettingsIconWithText(
 @Composable
 fun SettingsItemWithDropDownMenu(
     currentTheme: ThemeMode,
-    onThemeChanged: (ThemeMode) -> Unit
+    onThemeChanged: (ThemeMode) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,9 +102,11 @@ fun ThemeDropDownMenu(
     expanded: Boolean,
     selectedTheme: ThemeMode,
     closeMenu: () -> Unit,
-    onThemeChanged: (ThemeMode) -> Unit
+    onThemeChanged: (ThemeMode) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     DropdownMenu(
+        modifier = modifier,
         offset = DpOffset(200.dp, 0.dp),
         expanded = expanded,
         onDismissRequest = {
@@ -138,9 +143,11 @@ fun ThemeDropDownMenu(
 @Composable
 fun ThemeDropDownMenuItem(
     text: String,
-    onThemeChanged: (ThemeMode) -> Unit
+    onThemeChanged: (ThemeMode) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     DropdownMenuItem(
+        modifier = modifier,
         text = {
             Text(text)
         },
@@ -154,10 +161,11 @@ fun ThemeDropDownMenuItem(
 fun SettingsItemWithSwitched(
     settingItem: SettingItem,
     isEnabled: Boolean,
-    onCheckedChange: () -> Unit
+    onCheckedChange: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -175,10 +183,11 @@ fun SettingsItemWithSwitched(
 @Composable
 fun SettingsItemWithArrow(
     settingItem: SettingItem,
-    onItemClick: () -> Unit
+    onItemClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(12.dp)
             .clickable { onItemClick() },

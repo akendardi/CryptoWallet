@@ -25,10 +25,11 @@ fun ProfileContent(
     onEditNameClick: () -> Unit,
     onEditEmailClick: () -> Unit,
     onEditPasswordClick: () -> Unit,
-    onEditPhotoClicked: () -> Unit
+    onEditPhotoClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        Modifier
+        modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally

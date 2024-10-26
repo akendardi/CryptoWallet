@@ -16,9 +16,11 @@ import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
 
 @Composable
-fun Loading() {
+fun Loading(
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
             .clickable(enabled = false) { },
@@ -57,13 +59,16 @@ fun HandleAuthResult(
         AuthResult.Initial -> {
 
         }
-
         AuthResult.SuccessCreatedAccount -> {
-            goToHelloScreen()
+            LaunchedEffect(Unit) {
+                goToHelloScreen()
+            }
         }
 
         AuthResult.SuccessLogin -> {
-            goToMainScreen()
+            LaunchedEffect(Unit) {
+                goToMainScreen()
+            }
         }
 
         is AuthResult.Error -> {

@@ -9,7 +9,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.akendardi.cryptowallet.R
 
 @Composable
 fun AlertDialogEditName(
@@ -40,15 +43,17 @@ fun EditUserNameAlertDialogContent(
     value: String,
     error: String,
     onValueChanged: (String) -> Unit,
-    saveChangesClick: () -> Unit
+    saveChangesClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Изменить имя") },
+        title = { Text(text = stringResource(R.string.change_username)) },
         text = {
             Column {
-                Text(text = "Введите новое имя")
+                Text(text = stringResource(R.string.input_new_name))
                 TextField(
                     value = value,
                     onValueChange = onValueChanged,
@@ -60,12 +65,12 @@ fun EditUserNameAlertDialogContent(
             TextButton(onClick = {
                 saveChangesClick()
             }) {
-                Text("Сохранить")
+                Text(text = stringResource(R.string.understand))
             }
         },
         dismissButton = {
             TextButton(onClick = { onDismiss() }) {
-                Text("Отмена")
+                Text(text = stringResource(R.string.cancel))
             }
         }
     )

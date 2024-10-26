@@ -34,7 +34,8 @@ fun NavGraphBuilder.homeNavGraph(
                         route = Screen.ProfileScreen.route,
 
                         )
-                }
+                },
+                logout = goToLogInScreen
             )
         }
     }
