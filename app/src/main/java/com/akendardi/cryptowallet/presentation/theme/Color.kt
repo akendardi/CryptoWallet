@@ -12,7 +12,8 @@ val PurpleGrey40 = Color(0xFF625b71)
 
 val Pink40 = Color(0xFFFF67C2)
 
-val PositiveDifferenceColor = Color(0xFF639A00)
+val PositiveDifferenceColor = Color(0xFF02BA62)
+val NegativeDifferenceColor = Color(0xFFED512E)
 
 val profileGradientColor = Brush.verticalGradient(
     listOf(Pink40, Pink80, Color.White),

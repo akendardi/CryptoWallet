@@ -3,8 +3,8 @@ package com.akendardi.cryptowallet.data.internet.dto.crypto
 import com.google.gson.annotations.SerializedName
 
 data class CoinInfoDto(
-    @SerializedName("Id") val id: String,
-    @SerializedName("Name") val shortName: String,
+    @SerializedName("Id") val id: Int,
+    @SerializedName("Name") val symbol: String,
     @SerializedName("FullName") val name: String,
     @SerializedName("ImageUrl") private val shortImageUrl: String
 ){

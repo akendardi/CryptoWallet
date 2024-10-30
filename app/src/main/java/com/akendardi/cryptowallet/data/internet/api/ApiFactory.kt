@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-object ApiFactory {
+object CoinsApiFactory {
 
     private const val BASE_URL = "https://min-api.cryptocompare.com/"
 
@@ -13,5 +13,17 @@ object ApiFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val apiService: ApiService = retrofit.create()
+    val coinsApiService: CoinsApiService = retrofit.create()
+}
+
+object SearchCoinsApiFactory {
+
+    private const val BASE_URL = "https://data-api.cryptocompare.com/"
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val searchCoinsApiService: SearchCoinsApiService = retrofit.create()
 }

@@ -16,7 +16,7 @@ fun NavGraphBuilder.homeNavGraph(
         route = Screen.BottomBarScreen.HomeScreenNavGraph.route
     ) {
         composable(
-            route = Screen.ProfileScreen.route
+            route = Screen.ProfileScreen.route,
         ) {
             Profile(
                 onButtonBackClick = {
@@ -31,9 +31,10 @@ fun NavGraphBuilder.homeNavGraph(
             HomeScreen(
                 onProfileClickListener = {
                     navHostController.navigate(
-                        route = Screen.ProfileScreen.route,
-
-                        )
+                        route = Screen.ProfileScreen.route
+                    ) {
+                        launchSingleTop = true
+                    }
                 },
                 logout = goToLogInScreen
             )

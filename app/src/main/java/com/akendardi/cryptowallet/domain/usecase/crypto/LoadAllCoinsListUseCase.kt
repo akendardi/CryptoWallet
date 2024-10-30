@@ -6,6 +6,6 @@ import javax.inject.Inject
 class LoadAllCoinsListUseCase @Inject constructor(
     private val cryptoRepository: CryptoRepository
 ) {
-    suspend operator fun invoke(page: Int = 0) =
+    suspend operator fun invoke(page: Int) =
         cryptoRepository.loadAllCoinsList(page)
 }

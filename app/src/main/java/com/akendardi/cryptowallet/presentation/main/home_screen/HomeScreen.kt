@@ -46,8 +46,23 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.domain.entity.UserInfo
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.BottomSheetSearch
 import com.akendardi.cryptowallet.presentation.theme.PositiveDifferenceColor
 import com.akendardi.cryptowallet.presentation.theme.profileGradientColor
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+
+    HomeScreenContent(
+        state = HomeScreenUIState(),
+        onProfileClickListener = {},
+        logout = {},
+        onSearchButtonClick = {},
+        loadNextPage = {}
+    )
+}
+
 
 @Composable
 fun HomeScreen(
@@ -55,19 +70,29 @@ fun HomeScreen(
     onProfileClickListener: () -> Unit,
     logout: () -> Unit
 ) {
-
     val state by viewModel.state.collectAsState()
 
     HomeScreenContent(
-        state,
+        state = state,
         onProfileClickListener = {
             onProfileClickListener()
         },
         logout = {
             viewModel.logOut()
             logout()
-        }
+        },
+        onSearchButtonClick = viewModel::launchSearchMode,
+        loadNextPage = viewModel::loadCoins
     )
+
+    if (state.screenMode == ScreenMode.SEARCH) {
+        BottomSheetSearch(
+            onDismiss = viewModel::exitSearchMode,
+            onQueryChanged = viewModel::onSearchQueryChange,
+            searchState = state.searchState,
+            startSearch = viewModel::startSearch
+        )
+    }
 }
 
 @Composable
@@ -214,3 +239,4 @@ fun RowScope.BalanceButton(
         Text(text = text, color = MaterialTheme.colorScheme.onBackground)
     }
 }
+
