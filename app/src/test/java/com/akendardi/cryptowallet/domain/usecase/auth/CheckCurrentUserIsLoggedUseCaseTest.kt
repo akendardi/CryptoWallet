@@ -36,7 +36,7 @@ class CheckCurrentUserIsLoggedUseCaseTest {
     }
 
     @Test
-    fun `should launch repository method`() = runBlocking {
+    fun `should launch repository method`(): Unit = runBlocking {
         checkCurrentUserIsLoggedUseCase()
         verify(repository, times(1)).checkCurrentUserIsLogged()
     }

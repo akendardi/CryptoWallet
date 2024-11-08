@@ -14,8 +14,8 @@ data class HomeScreenUIState(
 )
 
 data class BalanceInfo(
-    val totalBalance: String = "0.0$",
-    val differencePercentage: String = "0"
+    val totalBalance: String = "82,314.15$",
+    val differencePercentage: String = "+87.25%"
 )
 
 data class CoinsListState(

@@ -22,6 +22,7 @@ private val DarkColorScheme = darkColorScheme(
     onTertiary = Color.White,      // Белый текст на дополнительном
     onBackground = Color(0xFFE0E0E0), // Светло-серый текст на чёрном фоне
     onSurface = Color(0xFFE0E0E0),   // Светло-серый текст на тёмной поверхности
+
 )
 
 private val LightColorScheme = lightColorScheme(
