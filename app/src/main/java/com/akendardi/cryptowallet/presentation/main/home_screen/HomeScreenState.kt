@@ -6,16 +6,16 @@ import com.akendardi.cryptowallet.domain.entity.UserInfo
 
 data class HomeScreenUIState(
     val userInfoState: UserInfo = UserInfo(),
-    val balanceInfo: BalanceInfo = BalanceInfo(),
+    val userBalanceState: BalanceInfo = BalanceInfo(),
     val coinsListState: CoinsListState = CoinsListState(),
     val screenMode: ScreenMode = ScreenMode.DEFAULT,
-    val searchState: SearchState = SearchState()
+    val searchState: SearchState = SearchState(),
+    val isRefreshing: Boolean = false
 )
 
 data class BalanceInfo(
-    val balance: String = "0.0$",
-    val difference: String = "0",
-    val isPositiveDifference: Boolean = true
+    val totalBalance: String = "0.0$",
+    val differencePercentage: String = "0"
 )
 
 data class CoinsListState(

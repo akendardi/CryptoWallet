@@ -1,12 +1,16 @@
 package com.akendardi.cryptowallet.data.internet.api
 
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
+
 object CoinsApiFactory {
 
     private const val BASE_URL = "https://min-api.cryptocompare.com/"
+
+
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -19,6 +23,8 @@ object CoinsApiFactory {
 object SearchCoinsApiFactory {
 
     private const val BASE_URL = "https://data-api.cryptocompare.com/"
+
+
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)

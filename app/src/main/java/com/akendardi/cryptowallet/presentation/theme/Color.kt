@@ -18,3 +18,9 @@ val NegativeDifferenceColor = Color(0xFFED512E)
 val profileGradientColor = Brush.verticalGradient(
     listOf(Pink40, Pink80, Color.White),
 )
+
+val ShimmerColorShades = listOf(
+    Color.LightGray.copy(0.9f),
+    Color.LightGray.copy(0.2f),
+    Color.LightGray.copy(0.9f)
+)

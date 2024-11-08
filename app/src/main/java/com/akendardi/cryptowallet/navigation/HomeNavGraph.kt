@@ -16,7 +16,7 @@ fun NavGraphBuilder.homeNavGraph(
         route = Screen.BottomBarScreen.HomeScreenNavGraph.route
     ) {
         composable(
-            route = Screen.ProfileScreen.route,
+            route = Screen.ProfileScreen.route
         ) {
             Profile(
                 onButtonBackClick = {

@@ -7,5 +7,5 @@ class LoadAllCoinsListUseCase @Inject constructor(
     private val cryptoRepository: CryptoRepository
 ) {
     suspend operator fun invoke(page: Int) =
-        cryptoRepository.loadAllCoinsList(page)
+        cryptoRepository.loadAllCoins(page)
 }

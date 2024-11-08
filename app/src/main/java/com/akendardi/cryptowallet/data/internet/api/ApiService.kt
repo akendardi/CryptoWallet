@@ -18,7 +18,7 @@ interface CoinsApiService {
     suspend fun loadHistoricalInfo(
         @Query("fsym") fsym: String,
         @Query("tsym") tsym: String = "USD",
-        @Query("limit") limit: Int = 12,
+        @Query("limit") limit: Int = 23,
     ): CryptoPlotInfoResponseDto
 
 }

@@ -48,4 +48,13 @@
     <string name="profile_photo_changed">Ваше фото успешно изменено</string>
     <string name="exit">Выход</string>
     <string name="hello_comma">"Привет, "</string>
+    <string name="catalog">Каталог:</string>
+    <string name="search">Поиск</string>
+
+    <string name="error_wrong_password">Неверный пароль. Повторите попытку.</string>
+    <string name="error_invalid_credentials">Вы ввели неверные данные. Повторите попытку.</string>
+    <string name="error_user_not_found">Пользователь с такими учетными данными не найден.</string>
+    <string name="error_too_many_requests">Слишком много неудачных попыток входа. Попробуйте позже или сбросьте пароль.</string>
+    <string name="error_unknown">Неизвестная ошибка: %1$s</string>
+    <string name="error_user_collision">Пользователь с таким аккаунтом уже существует</string>
 </resources>

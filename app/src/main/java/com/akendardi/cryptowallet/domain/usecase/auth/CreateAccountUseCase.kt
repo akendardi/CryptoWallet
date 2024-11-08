@@ -7,7 +7,7 @@ class CreateAccountUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(name: String, email: String, password: String) =
-        authRepository.createAccount(
+        authRepository.createAccountWithEmail(
             name, email, password
         )
 }

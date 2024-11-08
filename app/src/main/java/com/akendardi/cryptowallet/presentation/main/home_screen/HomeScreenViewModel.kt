@@ -7,17 +7,16 @@ import com.akendardi.cryptowallet.domain.usecase.auth.LogOutFromAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.GetAllCoinsListUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.GetSearchCoinsListUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.LoadAllCoinsListUseCase
+import com.akendardi.cryptowallet.domain.usecase.crypto.RefreshCoinsListUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.SearchCoinsUseCase
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +26,8 @@ class HomeScreenViewModel @Inject constructor(
     private val loadAllCoinsListUseCase: LoadAllCoinsListUseCase,
     private val getAllCoinsListUseCase: GetAllCoinsListUseCase,
     private val searchCoinsUseCase: SearchCoinsUseCase,
-    private val getSearchCoinsListUseCase: GetSearchCoinsListUseCase
+    private val getSearchCoinsListUseCase: GetSearchCoinsListUseCase,
+    private val refreshCoinsListUseCase: RefreshCoinsListUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeScreenUIState())
     val state: StateFlow<HomeScreenUIState> = _state
@@ -35,26 +35,24 @@ class HomeScreenViewModel @Inject constructor(
     private val queryFlow = MutableStateFlow("")
 
     init {
-        subscribeUserInfoFlow()
-        refreshUserInfo()
-        subscribeCoinsListFlow()
-        subscribeSearchInfoFlow()
-        startSearch()
+        viewModelScope.launch {
+            subscribeUserInfoFlow()
+            subscribeCoinsListFlow()
+            subscribeSearchInfoFlow()
+            refreshUserInfo()
+            startSearch()
+        }
     }
-
 
 
     private fun subscribeUserInfoFlow() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                usersInfoUseCase.observeUserInfo().collect { userInfo ->
-                    _state.update {
-                        it.copy(
-                            userInfoState = userInfo
-                        )
-                    }
+            usersInfoUseCase.observeUserInfo().collect { userInfo ->
+                _state.update {
+                    it.copy(
+                        userInfoState = userInfo
+                    )
                 }
-
             }
         }
     }
@@ -72,6 +70,35 @@ class HomeScreenViewModel @Inject constructor(
 
             }
         }
+    }
+
+    fun startRefresh() {
+        _state.update {
+            it.copy(
+                isRefreshing = true
+            )
+        }
+        viewModelScope.launch {
+            refreshUserInfo()
+            refreshCoinsList()
+            _state.update {
+                it.copy(
+                    isRefreshing = false
+                )
+            }
+        }
+    }
+
+    private suspend fun refreshCoinsList() {
+        _state.update {
+            it.copy(
+                coinsListState = it.coinsListState.copy(
+                    currentCoinsPage = 1
+                )
+            )
+        }
+        refreshCoinsListUseCase()
+
     }
 
     fun onSearchQueryChange(query: String) {
@@ -128,13 +155,24 @@ class HomeScreenViewModel @Inject constructor(
                             )
                         )
                     }
-                    Log.d("PIZDAPIZDA", _state.value.toString())
                 }
         }
     }
 
+    private suspend fun loadCoinsRequest() {
+        loadAllCoinsListUseCase(_state.value.coinsListState.currentCoinsPage)
+        _state.update {
+            it.copy(
+                coinsListState = it.coinsListState.copy(
+                    isLoading = false,
+                    currentCoinsPage = it.coinsListState.currentCoinsPage + 1
+                )
+            )
+        }
+    }
+
     fun loadCoins() {
-        if (_state.value.coinsListState.isLoading)  return
+        if (_state.value.coinsListState.isLoading) return
         _state.update {
             it.copy(
                 coinsListState = it.coinsListState.copy(
@@ -143,34 +181,19 @@ class HomeScreenViewModel @Inject constructor(
             )
         }
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                loadAllCoinsListUseCase(_state.value.coinsListState.currentCoinsPage)
-                _state.update {
-                    it.copy(
-                        coinsListState = it.coinsListState.copy(
-                            isLoading = false,
-                            currentCoinsPage = it.coinsListState.currentCoinsPage + 1
-                        )
-                    )
-                }
-            }
+            loadCoinsRequest()
         }
     }
 
     fun logOut() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                logOutFromAccountUseCase()
-            }
+            logOutFromAccountUseCase()
         }
+
     }
 
-    private fun refreshUserInfo() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                usersInfoUseCase()
-            }
-        }
+    private suspend fun refreshUserInfo() {
+        usersInfoUseCase()
 
     }
 }

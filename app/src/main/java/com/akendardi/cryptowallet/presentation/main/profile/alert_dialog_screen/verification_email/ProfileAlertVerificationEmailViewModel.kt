@@ -6,7 +6,6 @@ import com.akendardi.cryptowallet.domain.usecase.user.userInfo.VerificateEmailUs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,10 +15,9 @@ class ProfileAlertVerificationEmailViewModel @Inject constructor(
 
     fun verificateEmail() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                verificateEmailUseCase()
-            }
+            verificateEmailUseCase()
         }
+
     }
 
 }

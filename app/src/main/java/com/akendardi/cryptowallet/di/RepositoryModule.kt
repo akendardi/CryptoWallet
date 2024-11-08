@@ -2,10 +2,12 @@ package com.akendardi.cryptowallet.di
 
 import com.akendardi.cryptowallet.data.repositories.auth.AuthRepositoryImpl
 import com.akendardi.cryptowallet.data.repositories.crypto.CryptoRepositoryImpl
+import com.akendardi.cryptowallet.data.repositories.internet_connection.InternetConnectionRepositoryImpl
 import com.akendardi.cryptowallet.data.repositories.user.UserInfoRepositoryImpl
 import com.akendardi.cryptowallet.data.repositories.user.UserRepositoryImpl
 import com.akendardi.cryptowallet.domain.repository.AuthRepository
 import com.akendardi.cryptowallet.domain.repository.CryptoRepository
+import com.akendardi.cryptowallet.domain.repository.InternetConnectionRepository
 import com.akendardi.cryptowallet.domain.repository.UserInfoRepository
 import com.akendardi.cryptowallet.domain.repository.UserRepository
 import dagger.Binds
@@ -32,4 +34,8 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindUserImageRepository(impl: UserInfoRepositoryImpl): UserInfoRepository
+
+    @Singleton
+    @Binds
+    fun bindUserInternetConntectionRepository(impl: InternetConnectionRepositoryImpl): InternetConnectionRepository
 }

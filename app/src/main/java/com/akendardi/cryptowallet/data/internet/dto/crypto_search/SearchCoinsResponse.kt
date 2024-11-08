@@ -9,7 +9,7 @@ data class SearchCoinsResponse (
 data class SearchedCoinInfoDto(
     @SerializedName("SYMBOL") val symbol: String,
     @SerializedName("NAME") val name: String,
-    @SerializedName("LOGO_URL") val imageUrl: String
+    @SerializedName("LOGO_URL") val imageUrl: String?
 )
 
 data class ListSearchedCoinInfoDto(

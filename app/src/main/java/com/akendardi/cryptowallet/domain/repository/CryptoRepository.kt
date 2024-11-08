@@ -9,7 +9,9 @@ interface CryptoRepository {
     val topCoins: StateFlow<List<CoinInfo>>
     val searchedCoins: StateFlow<List<SearchCoinInfo>>
 
-    suspend fun loadAllCoinsList(page: Int = 0)
+    suspend fun loadAllCoins(page: Int = 0)
+
+    suspend fun refreshCoinsList()
 
 
     suspend fun searchCoins(query: String)

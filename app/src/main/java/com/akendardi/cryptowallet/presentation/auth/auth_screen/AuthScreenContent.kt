@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.presentation.auth.auth_screen.components
+package com.akendardi.cryptowallet.presentation.auth.auth_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,10 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.FieldType
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.TextFieldsErrorsState
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.TextFieldsState
+import com.akendardi.cryptowallet.presentation.auth.auth_screen.components.AuthCard
+import com.akendardi.cryptowallet.presentation.auth.auth_screen.components.Title
 
 @Composable
 fun AuthScreenContent(
