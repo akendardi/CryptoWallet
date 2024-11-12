@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.presentation.main.home_screen.components.bottom_sheet_search
+package com.akendardi.cryptowallet.presentation.main.bottom_sheet_search
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState

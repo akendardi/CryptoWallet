@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.presentation.main.home_screen.components.bottom_sheet_search
+package com.akendardi.cryptowallet.presentation.main.bottom_sheet_search
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth

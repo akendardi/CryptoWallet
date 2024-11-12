@@ -1,12 +1,11 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.bottom_sheet_search.BottomSheetSearch
+import com.akendardi.cryptowallet.presentation.main.bottom_sheet_search.BottomSheetSearch
 
 @Preview(showBackground = true)
 @Composable
@@ -45,7 +44,6 @@ fun HomeScreen(
         loadNextPage = viewModel::loadCoins,
         onItemClicked = {},
         onRefresh = {
-            Log.d("TIGER PIZDA", "HomeScreen: ")
             viewModel.startRefresh()
         }
     )

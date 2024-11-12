@@ -6,7 +6,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.akendardi.cryptowallet.presentation.main.SendScreenContent
 import com.akendardi.cryptowallet.presentation.main.WalletScreenContent
-import com.akendardi.cryptowallet.presentation.main.home_screen.HomeScreen
 
 
 @Composable

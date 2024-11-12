@@ -15,6 +15,7 @@ sealed class Screen(val route: String) {
 
     data object HomeScreen: Screen(ROUTE_HOME_SCREEN)
     data object ProfileScreen: Screen(ROUTE_PROFILE_SCREEN)
+    data object SearchScreen: Screen(ROUTE_SEARCH_SCREEN)
 
     data object MainScreenNavGraph: Screen(ROUTE_MAIN_SCREEN_NAV_GRAPH)
 
@@ -55,6 +56,7 @@ sealed class Screen(val route: String) {
 
         const val ROUTE_HOME_SCREEN = "homeScreen"
         const val ROUTE_PROFILE_SCREEN = "profileScreen"
+        const val ROUTE_SEARCH_SCREEN = "searchScreen"
 
         const val ROUTE_WALLET_SCREEN = "walletScreen"
         const val ROUTE_SEND_SCREEN = "sendScreen"

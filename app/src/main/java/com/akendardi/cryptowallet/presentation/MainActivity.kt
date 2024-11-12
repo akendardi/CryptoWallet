@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun SetTheme(isDarkTheme: Boolean) {
+    fun SetTheme(isDarkTheme: Boolean) {
         val window: Window = this.window
         val systemUiController = rememberSystemUiController()
         val useDarkIcons = !isDarkTheme

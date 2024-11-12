@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.usecase.auth.LogOutFromAccountUseCase
@@ -118,9 +117,8 @@ class HomeScreenViewModel @Inject constructor(
             queryFlow
                 .debounce(500)
                 .collect { query ->
-                    Log.d("PIZDAPIZDA", "startSearch: start")
-                    if (query.isNotEmpty()) {
-                        searchCoinsUseCase(query)
+                    if (query.isNotEmpty() && query.trim().isNotEmpty()) {
+                        searchCoinsUseCase(query.trim())
                     }
                 }
         }
