@@ -27,6 +27,7 @@ fun HomeScreenPreview() {
 fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
     onProfileClickListener: () -> Unit,
+    onCoinClickListener: (String) -> Unit,
     logout: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
@@ -42,7 +43,7 @@ fun HomeScreen(
         },
         onSearchButtonClick = viewModel::launchSearchMode,
         loadNextPage = viewModel::loadCoins,
-        onItemClicked = {},
+        onItemClicked = onCoinClickListener,
         onRefresh = {
             viewModel.startRefresh()
         }
@@ -54,7 +55,7 @@ fun HomeScreen(
             onQueryChanged = viewModel::onSearchQueryChange,
             searchState = state.searchState,
             startSearch = viewModel::startSearch,
-            onItemClicked = {}
+            onItemClicked = onCoinClickListener
         )
     }
 }

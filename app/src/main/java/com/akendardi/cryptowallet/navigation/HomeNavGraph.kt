@@ -1,5 +1,6 @@
 package com.akendardi.cryptowallet.navigation
 
+import android.util.Log
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -9,6 +10,7 @@ import com.akendardi.cryptowallet.presentation.main.profile.Profile
 
 fun NavGraphBuilder.homeNavGraph(
     navHostController: NavHostController,
+    onCoinClickListener: (String) -> Unit,
     goToLogInScreen: () -> Unit
 ) {
     navigation(
@@ -35,6 +37,10 @@ fun NavGraphBuilder.homeNavGraph(
                     ) {
                         launchSingleTop = true
                     }
+                },
+                onCoinClickListener = {
+                    Log.d("NAVIGATION", "click homeScreen")
+                    onCoinClickListener(it)
                 },
                 logout = goToLogInScreen
             )
