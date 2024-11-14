@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.data.internet.api
 
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -17,7 +16,7 @@ object CoinsApiFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val coinsApiService: CoinsApiService = retrofit.create()
+    val dataCoinsApiService: DataCoinsApiService = retrofit.create()
 }
 
 object SearchCoinsApiFactory {
@@ -31,5 +30,5 @@ object SearchCoinsApiFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val searchCoinsApiService: SearchCoinsApiService = retrofit.create()
+    val assetsCoinsApiService: AssetsCoinsApiService = retrofit.create()
 }

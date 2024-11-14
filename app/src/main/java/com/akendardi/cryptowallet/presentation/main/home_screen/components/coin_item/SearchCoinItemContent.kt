@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImage
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.NameAndSymbol
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImageMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
 
 @Composable
 fun SearchCoinItemContent(
@@ -40,9 +40,9 @@ fun SearchCoinItemContent(
                 .padding(12.dp)
         ) {
 
-            CoinItemImage(imageUrl = searchCoinInfo.imageUrl)
+            CoinItemImageMainScreen(imageUrl = searchCoinInfo.imageUrl)
 
-            NameAndSymbol(
+            CoinNameAndSymbolMainScreen(
                 name = searchCoinInfo.name,
                 symbol = searchCoinInfo.symbol
             )

@@ -3,9 +3,9 @@ package com.akendardi.cryptowallet.di
 import android.content.Context
 import com.akendardi.cryptowallet.CryptoApp
 import com.akendardi.cryptowallet.data.internet.api.CoinsApiFactory
-import com.akendardi.cryptowallet.data.internet.api.CoinsApiService
+import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
 import com.akendardi.cryptowallet.data.internet.api.SearchCoinsApiFactory
-import com.akendardi.cryptowallet.data.internet.api.SearchCoinsApiService
+import com.akendardi.cryptowallet.data.internet.api.AssetsCoinsApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,8 +23,8 @@ interface DataModule {
         }
 
         @Provides
-        fun provideCoinsApiService(): CoinsApiService {
-            return CoinsApiFactory.coinsApiService
+        fun provideCoinsApiService(): DataCoinsApiService {
+            return CoinsApiFactory.dataCoinsApiService
         }
 
         @Provides
@@ -33,8 +33,8 @@ interface DataModule {
         }
 
         @Provides
-        fun provideSearchCoinsApiService(): SearchCoinsApiService {
-            return SearchCoinsApiFactory.searchCoinsApiService
+        fun provideSearchCoinsApiService(): AssetsCoinsApiService {
+            return SearchCoinsApiFactory.assetsCoinsApiService
         }
 
         @Provides

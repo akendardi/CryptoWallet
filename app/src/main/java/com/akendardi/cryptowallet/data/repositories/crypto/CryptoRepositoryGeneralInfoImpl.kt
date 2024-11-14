@@ -1,10 +1,10 @@
 package com.akendardi.cryptowallet.data.repositories.crypto
 
-import com.akendardi.cryptowallet.data.internet.api.CoinsApiService
-import com.akendardi.cryptowallet.data.internet.api.SearchCoinsApiService
+import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
+import com.akendardi.cryptowallet.data.internet.api.AssetsCoinsApiService
 import com.akendardi.cryptowallet.domain.entity.CoinInfo
 import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
-import com.akendardi.cryptowallet.domain.repository.CryptoRepository
+import com.akendardi.cryptowallet.domain.repository.CryptoRepositoryGeneralInfo
 import com.akendardi.cryptowallet.mapper.toEntityMainScreen
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-class CryptoRepositoryImpl @Inject constructor(
-    private val coinsApiService: CoinsApiService,
-    private val searchCoinsApiService: SearchCoinsApiService
-) : CryptoRepository {
+class CryptoRepositoryGeneralInfoImpl @Inject constructor(
+    private val dataCoinsApiService: DataCoinsApiService,
+    private val assetsCoinsApiService: AssetsCoinsApiService
+) : CryptoRepositoryGeneralInfo {
 
     private val _topCoins = MutableStateFlow<List<CoinInfo>>(listOf())
     override val topCoins = _topCoins.asStateFlow()
@@ -37,14 +37,14 @@ class CryptoRepositoryImpl @Inject constructor(
     }
 
     private suspend fun loadAllCoinsList(page: Int): List<CoinInfo> = coroutineScope {
-        val response = coinsApiService.loadAllCoins(limit = 15, page = page)
+        val response = dataCoinsApiService.loadAllCoins(limit = 15, page = page)
 
         response.data
             .filter { it.priceInfoDto != null }
             .map { coinData ->
                 async {
                     val plotInformation =
-                        coinsApiService.loadHistoricalInfo(fsym = coinData.coinInfo.symbol)
+                        dataCoinsApiService.loadHistoricalInfo(fsym = coinData.coinInfo.symbol)
 
                     if (plotInformation.data.listPrices == null) {
                         null
@@ -58,7 +58,7 @@ class CryptoRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchCoins(query: String) {
-        val response = searchCoinsApiService.searchCoinsWithString(query)
+        val response = assetsCoinsApiService.searchCoinsWithString(query)
         val coins = response.listSearchedCoinInfoDto
             .listSearchedCoinInfoDto
             .filter { it.imageUrl != null }

@@ -1,64 +1,55 @@
 package com.akendardi.cryptowallet.navigation
 
 import android.util.Log
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.akendardi.cryptowallet.presentation.main.SendScreenContent
-import com.akendardi.cryptowallet.presentation.main.WalletScreenContent
+import androidx.navigation.navigation
 import com.akendardi.cryptowallet.presentation.main.coin_info_screen.CoinInfoScreen
+import com.akendardi.cryptowallet.presentation.main.main_screen.MainScreen
+import com.akendardi.cryptowallet.presentation.main.profile.Profile
 
 
-@Composable
-fun MainNavGraph(
+fun NavGraphBuilder.mainNavGraph(
     navHostController: NavHostController,
     goToLogInScreen: () -> Unit
 ) {
-
-
-    NavHost(
-        navHostController,
-        startDestination = Screen.BottomBarScreen.HomeScreenNavGraph.route,
-        enterTransition = {
-            EnterTransition.None
-        },
-        exitTransition = {
-            ExitTransition.None
-        }
+    navigation(
+        route = Screen.MainScreenNavGraph.route,
+        startDestination = Screen.BottomBarScreen.HomeScreenNavGraph.route
     ) {
 
-        homeNavGraph(
-            navHostController,
-            onCoinClickListener = {
-                navHostController.navigate(route = Screen.CoinInfoScreen.getRoute(it)){
-                    launchSingleTop = true
+        composable(
+            route = Screen.BottomBarScreen.HomeScreenNavGraph.route
+        ) {
+            MainScreen(
+                goToLogInScreen = goToLogInScreen,
+                onProfileClickListener = {
+                    navHostController.navigate(Screen.ProfileScreen.route)
+                },
+                onCoinClickListener = {
+                    navHostController.navigate(Screen.CoinInfoScreen.getRoute(it))
                 }
-            },
-            goToLogInScreen = goToLogInScreen
-        )
+            )
+        }
 
+        composable(
+            route = Screen.ProfileScreen.route
+        ) {
+            Profile(
+                onButtonBackClick = { navHostController.popBackStack() },
+                goToLogInScreen = goToLogInScreen,
+            )
+        }
         composable(
             route = Screen.CoinInfoScreen.getRouteForDeliverArgs()
         ) {
-            val symbol = it.arguments?.getString("symbol") ?: throw Exception("Symbol is null")
-            Log.d("NAVIGATION", "MainNavGraph: $symbol")
-            CoinInfoScreen()
+            val symbol = it.arguments?.getString("symbolCoinInfo") ?: throw Exception("Symbol is null")
+            CoinInfoScreen(
+                symbol = symbol
+            )
         }
 
-        composable(
-            route = Screen.BottomBarScreen.SendScreen.route,
-        ) {
-            SendScreenContent()
-        }
-
-        composable(
-            route = Screen.BottomBarScreen.WalletScreen.route,
-        ) {
-            WalletScreenContent()
-        }
     }
 }
 

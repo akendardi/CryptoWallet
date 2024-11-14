@@ -15,14 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.domain.entity.CoinInfo
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImage
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.DifferenceAndPrice
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.NameAndSymbol
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.PriceGraph
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImageMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinDifferenceAndPriceMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinPriceGraphMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.getDifferenceColor
 
 @Composable
-fun CoinItemContent(
+fun CoinItemContentMainScreen(
     coinInfo: CoinInfo,
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -44,23 +44,23 @@ fun CoinItemContent(
                 .padding(12.dp)
         ) {
 
-            CoinItemImage(
+            CoinItemImageMainScreen(
                 imageUrl = coinInfo.imageUrl
             )
 
-            NameAndSymbol(
+            CoinNameAndSymbolMainScreen(
                 name = coinInfo.name,
                 symbol = coinInfo.symbol,
                 modifier = Modifier.weight(0.8f)
             )
 
-            PriceGraph(
+            CoinPriceGraphMainScreen(
                 dataPoints = coinInfo.priceInfo,
                 color = getDifferenceColor(coinInfo.todayDifference),
                 modifier = Modifier.weight(0.8f)
             )
 
-            DifferenceAndPrice(
+            CoinDifferenceAndPriceMainScreen(
                 coinInfo = coinInfo
             )
 

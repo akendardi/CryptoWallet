@@ -4,7 +4,7 @@ import com.akendardi.cryptowallet.domain.entity.CoinInfo
 import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
 import kotlinx.coroutines.flow.StateFlow
 
-interface CryptoRepository {
+interface CryptoRepositoryGeneralInfo {
 
     val topCoins: StateFlow<List<CoinInfo>>
     val searchedCoins: StateFlow<List<SearchCoinInfo>>

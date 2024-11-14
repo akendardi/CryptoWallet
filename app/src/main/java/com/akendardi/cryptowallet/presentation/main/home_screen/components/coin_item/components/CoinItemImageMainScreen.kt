@@ -15,7 +15,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 
 @Composable
-fun CoinItemImage(
+fun CoinItemImageMainScreen(
     imageUrl: Uri,
     modifier: Modifier = Modifier
 ) {

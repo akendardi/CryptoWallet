@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthScreen
 import com.akendardi.cryptowallet.presentation.auth.hello_screen.HelloScreen
-import com.akendardi.cryptowallet.presentation.main.MainScreen
 import com.akendardi.cryptowallet.presentation.splash.SplashScreen
 
 @Composable
@@ -59,17 +58,7 @@ fun RootNavGraph(
             )
         }
 
-        composable(route = Screen.MainScreenNavGraph.route) {
-            MainScreen(
-                goToLogInScreen = {
-                    navigateAndDeleteOldScreen(
-                        navController,
-                        newScreen = Screen.AuthScreen,
-                        oldScreen = Screen.MainScreenNavGraph
-                    )
-                }
-            )
-        }
+        mainNavGraph(navController, goToLogInScreen = {})
 
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(

@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun NameAndSymbol(
+fun CoinNameAndSymbolMainScreen(
     modifier: Modifier = Modifier,
     name: String,
     symbol: String

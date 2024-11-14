@@ -13,12 +13,11 @@ sealed class Screen(val route: String) {
 
     data object HelloScreen : Screen(ROUTE_HELLO_SCREEN)
 
-    data object HomeScreen : Screen(ROUTE_HOME_SCREEN)
     data object ProfileScreen : Screen(ROUTE_PROFILE_SCREEN)
     data object CoinInfoScreen : Screen(ROUTE_COIN_INFO_SCREEN) {
-        fun getRouteForDeliverArgs() = "$route/{symbol}"
+        fun getRouteForDeliverArgs() = "$route/{symbolCoinInfo}"
 
-        fun getRoute(symbol: String) = getRouteForDeliverArgs().replace("{symbol}", symbol)
+        fun getRoute(symbol: String) = getRouteForDeliverArgs().replace("{symbolCoinInfo}", symbol)
     }
 
     data object MainScreenNavGraph : Screen(ROUTE_MAIN_SCREEN_NAV_GRAPH)
@@ -30,6 +29,12 @@ sealed class Screen(val route: String) {
     ) {
         data object HomeScreenNavGraph : BottomBarScreen(
             route = ROUTE_HOME_SCREEN_NAV_GRAPH,
+            icon = Icons.Default.Home
+        )
+
+
+        data object HomeScreen : BottomBarScreen(
+            route = ROUTE_HOME_SCREEN,
             icon = Icons.Default.Home
         )
 

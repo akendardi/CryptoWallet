@@ -16,10 +16,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.presentation.main.bottom_sheet_search.BottomSheetSearch
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.CoinsTitle
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.balance.UserBalanceInfo
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.CoinItem
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.CoinItemMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.shimmer_effects.ShimmerAnimationCoinItem
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.TitleHomeScreen
 
@@ -86,7 +85,7 @@ fun HomeScreenContent(
 
             state.coinsListState.coinsList.forEach { coinInfo ->
                 item {
-                    CoinItem(
+                    CoinItemMainScreen(
                         coinInfo = coinInfo,
                         onItemClicked = onItemClicked
                     )

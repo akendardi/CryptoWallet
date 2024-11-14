@@ -16,7 +16,7 @@ import com.akendardi.cryptowallet.presentation.theme.NegativeDifferenceColor
 import com.akendardi.cryptowallet.presentation.theme.PositiveDifferenceColor
 
 @Composable
-fun DifferenceAndPrice(
+fun CoinDifferenceAndPriceMainScreen(
     coinInfo: CoinInfo,
     modifier: Modifier = Modifier
 ) {

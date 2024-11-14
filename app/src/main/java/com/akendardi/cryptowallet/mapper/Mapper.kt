@@ -1,17 +1,16 @@
 package com.akendardi.cryptowallet.mapper
 
 import android.net.Uri
-import android.util.Log
-import com.akendardi.cryptowallet.data.internet.dto.crypto.CurrencyDataItemDto
-import com.akendardi.cryptowallet.data.internet.dto.crypto.plot.CryptoPlotListInfoDto
+import com.akendardi.cryptowallet.data.internet.dto.crypto_detail.DetailCoinInfoDto
+import com.akendardi.cryptowallet.data.internet.dto.crypto_general.CurrencyDataItemDto
+import com.akendardi.cryptowallet.data.internet.dto.crypto_general.plot.CryptoPlotListInfoDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_search.SearchedCoinInfoDto
 import com.akendardi.cryptowallet.domain.entity.CoinInfo
+import com.akendardi.cryptowallet.domain.entity.DetailCoinInfo
 import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
 
 fun CurrencyDataItemDto.toEntityMainScreen(plotInfoDto: CryptoPlotListInfoDto): CoinInfo {
     val prices = mutableListOf<Double>()
-    Log.d("TVARINA", "toEntityMainScreen: $coinInfo")
-    Log.d("TVARINA", "toEntityMainScreen: $plotInfoDto")
     plotInfoDto.listPrices?.forEach {
         prices.add(it.closePrice)
     }
@@ -33,3 +32,10 @@ fun SearchedCoinInfoDto.toEntityMainScreen(): SearchCoinInfo {
         imageUrl = Uri.parse(imageUrl)
     )
 }
+
+//fun DetailCoinInfoDto.toEntity(): DetailCoinInfo {
+//    return DetailCoinInfo(
+//        symbol = this.symbol,
+//        name = this.name,
+//    )
+//}
