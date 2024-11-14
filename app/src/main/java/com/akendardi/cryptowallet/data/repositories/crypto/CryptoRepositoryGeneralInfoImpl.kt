@@ -2,8 +2,8 @@ package com.akendardi.cryptowallet.data.repositories.crypto
 
 import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
 import com.akendardi.cryptowallet.data.internet.api.AssetsCoinsApiService
-import com.akendardi.cryptowallet.domain.entity.CoinInfo
-import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
+import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
 import com.akendardi.cryptowallet.domain.repository.CryptoRepositoryGeneralInfo
 import com.akendardi.cryptowallet.mapper.toEntityMainScreen
 import kotlinx.coroutines.async
@@ -18,10 +18,10 @@ class CryptoRepositoryGeneralInfoImpl @Inject constructor(
     private val assetsCoinsApiService: AssetsCoinsApiService
 ) : CryptoRepositoryGeneralInfo {
 
-    private val _topCoins = MutableStateFlow<List<CoinInfo>>(listOf())
+    private val _topCoins = MutableStateFlow<List<CoinInfoGeneral>>(listOf())
     override val topCoins = _topCoins.asStateFlow()
 
-    private val _searchCoins = MutableStateFlow<List<SearchCoinInfo>>(listOf())
+    private val _searchCoins = MutableStateFlow<List<CoinInfoSearch>>(listOf())
     override val searchedCoins = _searchCoins.asStateFlow()
 
 
@@ -36,15 +36,15 @@ class CryptoRepositoryGeneralInfoImpl @Inject constructor(
         _topCoins.emit(newCoins)
     }
 
-    private suspend fun loadAllCoinsList(page: Int): List<CoinInfo> = coroutineScope {
+    private suspend fun loadAllCoinsList(page: Int): List<CoinInfoGeneral> = coroutineScope {
         val response = dataCoinsApiService.loadAllCoins(limit = 15, page = page)
 
         response.data
-            .filter { it.priceInfoDto != null }
+            .filter { it.detailPriceInfoDto != null }
             .map { coinData ->
                 async {
                     val plotInformation =
-                        dataCoinsApiService.loadHistoricalInfo(fsym = coinData.coinInfo.symbol)
+                        dataCoinsApiService.loadHourHistoricalInfo(fsym = coinData.coinInfo.symbol)
 
                     if (plotInformation.data.listPrices == null) {
                         null
@@ -67,8 +67,8 @@ class CryptoRepositoryGeneralInfoImpl @Inject constructor(
     }
 
     private suspend fun addToCoinsList(
-        coins: List<CoinInfo>,
-        newCoins: List<CoinInfo>
+        coins: List<CoinInfoGeneral>,
+        newCoins: List<CoinInfoGeneral>
     ) {
         coins.plus(newCoins).let { _topCoins.emit(it) }
     }

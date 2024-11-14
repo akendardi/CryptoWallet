@@ -3,7 +3,7 @@ package com.akendardi.cryptowallet.domain.entity
 import android.net.Uri
 import java.util.Locale
 
-data class CoinInfo(
+data class CoinInfoGeneral(
     val id: Int,
     val name: String,
     val symbol: String,

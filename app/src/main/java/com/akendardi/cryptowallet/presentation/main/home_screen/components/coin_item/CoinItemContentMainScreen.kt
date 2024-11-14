@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.domain.entity.CoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImageMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinDifferenceAndPriceMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
@@ -23,7 +23,7 @@ import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_
 
 @Composable
 fun CoinItemContentMainScreen(
-    coinInfo: CoinInfo,
+    coinInfoGeneral: CoinInfoGeneral,
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -31,7 +31,7 @@ fun CoinItemContentMainScreen(
         modifier = modifier
             .height(80.dp)
             .clickable {
-                onItemClicked(coinInfo.symbol)
+                onItemClicked(coinInfoGeneral.symbol)
             },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
@@ -45,23 +45,23 @@ fun CoinItemContentMainScreen(
         ) {
 
             CoinItemImageMainScreen(
-                imageUrl = coinInfo.imageUrl
+                imageUrl = coinInfoGeneral.imageUrl
             )
 
             CoinNameAndSymbolMainScreen(
-                name = coinInfo.name,
-                symbol = coinInfo.symbol,
+                name = coinInfoGeneral.name,
+                symbol = coinInfoGeneral.symbol,
                 modifier = Modifier.weight(0.8f)
             )
 
             CoinPriceGraphMainScreen(
-                dataPoints = coinInfo.priceInfo,
-                color = getDifferenceColor(coinInfo.todayDifference),
+                dataPoints = coinInfoGeneral.priceInfo,
+                color = getDifferenceColor(coinInfoGeneral.todayDifference),
                 modifier = Modifier.weight(0.8f)
             )
 
             CoinDifferenceAndPriceMainScreen(
-                coinInfo = coinInfo
+                coinInfoGeneral = coinInfoGeneral
             )
 
         }

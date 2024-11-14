@@ -1,14 +1,19 @@
 package com.akendardi.cryptowallet.presentation.main.coin_info_screen
 
-import android.net.Uri
-
 data class CoinInfoScreenState(
     val coinInfoState: CoinInfoState = CoinInfoState(),
+    val hourGraphicState: GraphicPriceState = GraphicPriceState(),
+    val dayGraphicState: GraphicPriceState = GraphicPriceState()
 )
 
 data class CoinInfoState(
     val symbol: String = "",
     val name: String = "",
-    val imageUri: Uri = Uri.parse(""),
-    val price: String = "",
+    val imageUrl: String = "",
+    val price: Double = 0.0,
+)
+
+data class GraphicPriceState(
+    val datesOnScreen: List<List<String>> = emptyList(),
+    val prices: List<Double> = emptyList()
 )

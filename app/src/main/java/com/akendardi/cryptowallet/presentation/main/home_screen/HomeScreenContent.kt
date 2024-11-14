@@ -86,7 +86,7 @@ fun HomeScreenContent(
             state.coinsListState.coinsList.forEach { coinInfo ->
                 item {
                     CoinItemMainScreen(
-                        coinInfo = coinInfo,
+                        coinInfoGeneral = coinInfo,
                         onItemClicked = onItemClicked
                     )
                 }

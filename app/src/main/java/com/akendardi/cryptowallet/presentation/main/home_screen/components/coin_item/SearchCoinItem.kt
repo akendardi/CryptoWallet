@@ -3,16 +3,16 @@ package com.akendardi.cryptowallet.presentation.main.home_screen.components.coin
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
 
 @Composable
 fun SearchCoinItem(
-    searchCoinInfo: SearchCoinInfo,
+    coinInfoSearch: CoinInfoSearch,
     onItemClicked: (String) -> Unit,
 ) {
 
     SearchCoinItemContent(
-        searchCoinInfo = searchCoinInfo,
+        coinInfoSearch = coinInfoSearch,
         onItemClicked = onItemClicked
     )
 
@@ -23,7 +23,7 @@ fun SearchCoinItem(
 @Composable
 private fun SearchCoinInfoPreview() {
     SearchCoinItem(
-        searchCoinInfo = SearchCoinInfo(
+        coinInfoSearch = CoinInfoSearch(
             name = "Ethereum",
             symbol = "BTC",
             imageUrl = Uri.parse("https://s2.coinmarketcap.com/static/img/coins/64x64/1.png")

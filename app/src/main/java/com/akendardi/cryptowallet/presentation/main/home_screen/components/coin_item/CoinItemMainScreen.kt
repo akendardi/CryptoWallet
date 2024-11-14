@@ -3,16 +3,16 @@ package com.akendardi.cryptowallet.presentation.main.home_screen.components.coin
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.akendardi.cryptowallet.domain.entity.CoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
 
 
 @Composable
 fun CoinItemMainScreen(
-    coinInfo: CoinInfo,
+    coinInfoGeneral: CoinInfoGeneral,
     onItemClicked: (String) -> Unit
 ) {
     CoinItemContentMainScreen(
-        coinInfo = coinInfo,
+        coinInfoGeneral = coinInfoGeneral,
         onItemClicked = onItemClicked
     )
 }
@@ -21,7 +21,7 @@ fun CoinItemMainScreen(
 @Composable
 private fun CoinItemPreview() {
     CoinItemMainScreen(
-        coinInfo = CoinInfo(
+        coinInfoGeneral = CoinInfoGeneral(
             id = 1803,
             name = "Ethereum",
             symbol = "BTC",

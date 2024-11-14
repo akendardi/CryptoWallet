@@ -1,14 +1,14 @@
 package com.akendardi.cryptowallet.domain.repository
 
-import com.akendardi.cryptowallet.domain.entity.CoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
 
-    suspend fun loadUsersCoinsListRemote(userId: Int): Flow<List<CoinInfo>>
+    suspend fun loadUsersCoinsListRemote(userId: Int): Flow<List<CoinInfoGeneral>>
 
-    suspend fun loadUsersCoinsListLocal(): Flow<List<CoinInfo>>
+    suspend fun loadUsersCoinsListLocal(): Flow<List<CoinInfoGeneral>>
 
 
     suspend fun addToBalance(

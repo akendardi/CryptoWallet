@@ -14,13 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImageMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
 
 @Composable
 fun SearchCoinItemContent(
-    searchCoinInfo: SearchCoinInfo,
+    coinInfoSearch: CoinInfoSearch,
     onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -28,7 +28,7 @@ fun SearchCoinItemContent(
         modifier = modifier
             .height(80.dp)
             .padding(4.dp)
-            .clickable { onItemClicked(searchCoinInfo.symbol) },
+            .clickable { onItemClicked(coinInfoSearch.symbol) },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
@@ -40,11 +40,11 @@ fun SearchCoinItemContent(
                 .padding(12.dp)
         ) {
 
-            CoinItemImageMainScreen(imageUrl = searchCoinInfo.imageUrl)
+            CoinItemImageMainScreen(imageUrl = coinInfoSearch.imageUrl)
 
             CoinNameAndSymbolMainScreen(
-                name = searchCoinInfo.name,
-                symbol = searchCoinInfo.symbol
+                name = coinInfoSearch.name,
+                symbol = coinInfoSearch.symbol
             )
         }
     }

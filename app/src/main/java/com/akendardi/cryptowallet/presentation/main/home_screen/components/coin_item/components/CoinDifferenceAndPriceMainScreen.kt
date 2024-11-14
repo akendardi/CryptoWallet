@@ -11,13 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.akendardi.cryptowallet.domain.entity.CoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
 import com.akendardi.cryptowallet.presentation.theme.NegativeDifferenceColor
 import com.akendardi.cryptowallet.presentation.theme.PositiveDifferenceColor
 
 @Composable
 fun CoinDifferenceAndPriceMainScreen(
-    coinInfo: CoinInfo,
+    coinInfoGeneral: CoinInfoGeneral,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -26,15 +26,15 @@ fun CoinDifferenceAndPriceMainScreen(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(
-            text = coinInfo.getFormattedDifference(),
-            color = getDifferenceColor(coinInfo.todayDifference),
+            text = coinInfoGeneral.getFormattedDifference(),
+            color = getDifferenceColor(coinInfoGeneral.todayDifference),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp
         )
 
         Text(
-            text = coinInfo.getFormattedPrice(),
+            text = coinInfoGeneral.getFormattedPrice(),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,

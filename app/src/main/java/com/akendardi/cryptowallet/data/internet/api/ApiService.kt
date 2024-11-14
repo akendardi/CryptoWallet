@@ -2,7 +2,7 @@ package com.akendardi.cryptowallet.data.internet.api
 
 import com.akendardi.cryptowallet.data.internet.dto.crypto_detail.DetailCoinInfoResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_general.CoinsApiResponseDto
-import com.akendardi.cryptowallet.data.internet.dto.crypto_general.plot.CryptoPlotInfoResponseDto
+import com.akendardi.cryptowallet.data.internet.dto.crypto_plot.CryptoPlotInfoResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_price.CoinPriceResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_search.SearchCoinsResponse
 import retrofit2.http.GET
@@ -17,10 +17,17 @@ interface DataCoinsApiService {
     ): CoinsApiResponseDto
 
     @GET("data/v2/histohour")
-    suspend fun loadHistoricalInfo(
+    suspend fun loadHourHistoricalInfo(
         @Query("fsym") fsym: String,
         @Query("tsym") tsym: String = "USD",
         @Query("limit") limit: Int = 23,
+    ): CryptoPlotInfoResponseDto
+
+    @GET("data/v2/histoday")
+    suspend fun loadDayHistoricalInfo(
+        @Query("fsym") fsym: String,
+        @Query("tsym") tsym: String = "USD",
+        @Query("limit") limit: Int = 30,
     ): CryptoPlotInfoResponseDto
 
     @GET("data/price")

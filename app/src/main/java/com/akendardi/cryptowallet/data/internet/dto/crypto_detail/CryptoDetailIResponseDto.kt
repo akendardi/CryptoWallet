@@ -9,7 +9,6 @@ data class DetailCoinInfoResponseDto(
 data class DetailCoinInfoDto(
     @SerializedName("NAME") val name: String,
     @SerializedName("SYMBOL") val symbol: String,
-    @SerializedName("LOGO_URL") val logoUrl: String,
-    @SerializedName("PRICE_USD") val price: Double
+    @SerializedName("LOGO_URL") val logoUrl: String
 )
 

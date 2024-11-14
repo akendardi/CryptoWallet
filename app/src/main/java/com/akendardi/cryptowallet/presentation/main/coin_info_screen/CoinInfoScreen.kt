@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.main.coin_info_screen
 
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,14 +32,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.akendardi.cryptowallet.mapper.toFormattedPrice
 
 @Composable
 fun CoinInfoScreen(
-    modifier: Modifier = Modifier,
     symbol: String
 ) {
     val viewModel = hiltViewModel<CoinInfoViewModel, CoinInfoViewModel.Factory>(
-        creationCallback = {factory -> factory.create(symbol)}
+        creationCallback = { factory -> factory.create(symbol) }
     )
     val state by viewModel.state.collectAsState()
 
@@ -71,7 +70,7 @@ fun CoinInfoScreenContent(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 CoinImageCoinInfoScreen(
-                    imageUri = state.coinInfoState.imageUri
+                    imageUri = state.coinInfoState.imageUrl
                 )
                 CoinNameAndSymbolCoinInfoScreen(
                     modifier = Modifier.weight(1f),
@@ -80,7 +79,7 @@ fun CoinInfoScreenContent(
                 )
                 CoinPriceCoinInfoScreen(
                     modifier = Modifier.weight(1f),
-                    price = state.coinInfoState.price
+                    price = state.coinInfoState.price.toFormattedPrice()
                 )
             }
         }
@@ -88,9 +87,10 @@ fun CoinInfoScreenContent(
     }
 }
 
+
 @Composable
 fun CoinImageCoinInfoScreen(
-    imageUri: Uri,
+    imageUri: String,
     modifier: Modifier = Modifier
 ) {
     Image(
@@ -167,8 +167,8 @@ private fun CoinInfoPreview() {
             coinInfoState = CoinInfoState(
                 name = "Ethereum",
                 symbol = "BTC",
-                imageUri = Uri.parse("https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"),
-                price = "12312321"
+                imageUrl = "",
+                price = 4423423.1
             )
         )
     )

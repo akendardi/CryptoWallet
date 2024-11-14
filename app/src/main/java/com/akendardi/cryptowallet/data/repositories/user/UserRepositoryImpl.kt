@@ -1,17 +1,17 @@
 package com.akendardi.cryptowallet.data.repositories.user
 
-import com.akendardi.cryptowallet.domain.entity.CoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
 import com.akendardi.cryptowallet.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
-    override suspend fun loadUsersCoinsListRemote(userId: Int): Flow<List<CoinInfo>> {
+    override suspend fun loadUsersCoinsListRemote(userId: Int): Flow<List<CoinInfoGeneral>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun loadUsersCoinsListLocal(): Flow<List<CoinInfo>> {
+    override suspend fun loadUsersCoinsListLocal(): Flow<List<CoinInfoGeneral>> {
         TODO("Not yet implemented")
     }
 

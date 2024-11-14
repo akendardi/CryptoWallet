@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class CurrencyDataItemDto(
     @SerializedName("CoinInfo") val coinInfo: CoinInfoDto,
-    @SerializedName("RAW") val priceInfoDto: PriceInfoDto?
+    @SerializedName("RAW") val detailPriceInfoDto: DetailPriceInfoDto?
 )

@@ -1,7 +1,7 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen
 
-import com.akendardi.cryptowallet.domain.entity.CoinInfo
-import com.akendardi.cryptowallet.domain.entity.SearchCoinInfo
+import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
+import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
 import com.akendardi.cryptowallet.domain.entity.UserInfo
 
 data class HomeScreenUIState(
@@ -19,13 +19,13 @@ data class BalanceInfo(
 )
 
 data class CoinsListState(
-    val coinsList: List<CoinInfo> = listOf(),
+    val coinsList: List<CoinInfoGeneral> = listOf(),
     val currentCoinsPage: Int = 0,
     val isLoading: Boolean = false
 )
 data class SearchState(
     val query: String = "",
-    val coins: List<SearchCoinInfo> = listOf()
+    val coins: List<CoinInfoSearch> = listOf()
 )
 
 enum class ScreenMode{
