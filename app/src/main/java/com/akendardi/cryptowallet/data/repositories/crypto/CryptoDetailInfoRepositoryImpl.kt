@@ -32,19 +32,16 @@ class CryptoDetailInfoRepositoryImpl @Inject constructor(
 
     private suspend fun loadData(symbol: String) {
         coroutineScope {
-            val priceDeferred = async { dataCoinsApiService.loadCurrentPrice(symbol) }
             val infoDeferred = async { assetsCoinsApiService.loadDetailCoinInfo(symbol) }
             val hourDeferred = async { dataCoinsApiService.loadHourHistoricalInfo(symbol) }
             val dayDeferred = async { dataCoinsApiService.loadDayHistoricalInfo(symbol) }
 
-            val priceResponse = priceDeferred.await()
             val infoResponse = infoDeferred.await()
             val hourResponse = hourDeferred.await()
             val dayResponse = dayDeferred.await()
 
             val detailCoinInfo = responsesToCoinInfoDetail(
                 infoResponse,
-                priceResponse,
                 hourResponse,
                 dayResponse
             )

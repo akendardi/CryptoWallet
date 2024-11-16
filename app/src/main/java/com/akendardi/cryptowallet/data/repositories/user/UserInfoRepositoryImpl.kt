@@ -3,7 +3,7 @@ package com.akendardi.cryptowallet.data.repositories.user
 import android.content.Context
 import android.net.Uri
 import com.akendardi.cryptowallet.R
-import com.akendardi.cryptowallet.domain.entity.UserInfo
+import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
 import com.akendardi.cryptowallet.domain.repository.UserInfoRepository
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
 import com.akendardi.cryptowallet.domain.usecase.auth.CheckInternetConnectionUseCase

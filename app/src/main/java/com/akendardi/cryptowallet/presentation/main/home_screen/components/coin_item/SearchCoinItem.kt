@@ -3,7 +3,7 @@ package com.akendardi.cryptowallet.presentation.main.home_screen.components.coin
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
+import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 
 @Composable
 fun SearchCoinItem(

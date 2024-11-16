@@ -1,7 +1,7 @@
 package com.akendardi.cryptowallet.domain.repository
 
 import android.net.Uri
-import com.akendardi.cryptowallet.domain.entity.UserInfo
+import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow

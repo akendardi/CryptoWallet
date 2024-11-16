@@ -3,7 +3,6 @@ package com.akendardi.cryptowallet.data.internet.api
 import com.akendardi.cryptowallet.data.internet.dto.crypto_detail.DetailCoinInfoResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_general.CoinsApiResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_plot.CryptoPlotInfoResponseDto
-import com.akendardi.cryptowallet.data.internet.dto.crypto_price.CoinPriceResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_search.SearchCoinsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -29,12 +28,6 @@ interface DataCoinsApiService {
         @Query("tsym") tsym: String = "USD",
         @Query("limit") limit: Int = 30,
     ): CryptoPlotInfoResponseDto
-
-    @GET("data/price")
-    suspend fun loadCurrentPrice(
-        @Query("fsym") fsym: String,
-        @Query("tsyms") tsym: String = "USD"
-    ): CoinPriceResponseDto
 
 }
 

@@ -5,12 +5,11 @@ import com.akendardi.cryptowallet.data.internet.dto.crypto_detail.DetailCoinInfo
 import com.akendardi.cryptowallet.data.internet.dto.crypto_general.CurrencyDataItemDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_plot.CryptoPlotInfoResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_plot.CryptoPlotListInfoDto
-import com.akendardi.cryptowallet.data.internet.dto.crypto_price.CoinPriceResponseDto
 import com.akendardi.cryptowallet.data.internet.dto.crypto_search.SearchedCoinInfoDto
-import com.akendardi.cryptowallet.domain.entity.CoinInfoDetail
-import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
-import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
-import com.akendardi.cryptowallet.domain.entity.PricePoint
+import com.akendardi.cryptowallet.domain.entity.coin_info_detail.CoinInfoDetail
+import com.akendardi.cryptowallet.domain.entity.coin_info_detail.PricePoint
+import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
+import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -42,14 +41,14 @@ fun SearchedCoinInfoDto.toEntityMainScreen(): CoinInfoSearch {
 
 fun responsesToCoinInfoDetail(
     infoResponseDto: DetailCoinInfoResponseDto,
-    priceInfo: CoinPriceResponseDto,
     hourPlotInfo: CryptoPlotInfoResponseDto,
     dayPlotInfo: CryptoPlotInfoResponseDto,
-): CoinInfoDetail{
+): CoinInfoDetail {
     val name = infoResponseDto.data.values.first().name
     val symbol = infoResponseDto.data.values.first().symbol
     val imageUrl = infoResponseDto.data.values.first().logoUrl
-    val price = priceInfo.price
+    val price = infoResponseDto.data.values.first().price
+    val lastUpdate = infoResponseDto.data.values.first().lastUpdate
 
     val listHourPoints = hourPlotInfo.data.listPrices?.map {
         PricePoint(
@@ -70,13 +69,14 @@ fun responsesToCoinInfoDetail(
         symbol = symbol,
         imageUrl = imageUrl,
         currentPrice = price,
+        lastUpdate = lastUpdate,
         pricesHour = listHourPoints,
         pricesDay = listDayPoints
     )
 
 }
 
-fun Double.toFormattedPrice(): String{
+fun Double.toFormattedPrice(): String {
     return "$" + String.format(Locale.getDefault(), "%.2f", this)
 }
 
@@ -87,11 +87,13 @@ fun formatUnixTimestampsForDays(timestamps: List<Long>): List<List<String>> {
     return timestamps.map { timestamp ->
         val dateTime = Instant.ofEpochSecond(timestamp).atZone(zoneId)
         val formattedDate = dateTime.format(formatter)
-        formattedDate.split(" ").map { it.replaceFirstChar {char ->
-            if (char.isLowerCase()) char.titlecase(
-                Locale.ROOT
-            ) else char.toString()
-        } }
+        formattedDate.split(" ").map {
+            it.replaceFirstChar { char ->
+                if (char.isLowerCase()) char.titlecase(
+                    Locale.ROOT
+                ) else char.toString()
+            }
+        }
     }
 }
 
@@ -104,8 +106,10 @@ fun formatUnixTimestampsForHours(timestamps: List<Long>): List<List<String>> {
         val formattedDateTime = dateTime.format(formatter)
 
         // Разбиваем на список [часы, число, месяц]
-        formattedDateTime.split(" ").map { it.replaceFirstChar { char ->
-            if (char.isLowerCase()) char.titlecase(Locale.ROOT) else char.toString()
-        } }
+        formattedDateTime.split(" ").map {
+            it.replaceFirstChar { char ->
+                if (char.isLowerCase()) char.titlecase(Locale.ROOT) else char.toString()
+            }
+        }
     }
 }

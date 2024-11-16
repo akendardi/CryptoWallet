@@ -1,13 +1,12 @@
 package com.akendardi.cryptowallet.navigation
 
-import android.util.Log
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.akendardi.cryptowallet.presentation.main.coin_info_screen.CoinInfoScreen
+import com.akendardi.cryptowallet.presentation.coin_info_screen.CoinInfoScreen
 import com.akendardi.cryptowallet.presentation.main.main_screen.MainScreen
-import com.akendardi.cryptowallet.presentation.main.profile.Profile
+import com.akendardi.cryptowallet.presentation.profile.Profile
 
 
 fun NavGraphBuilder.mainNavGraph(
@@ -44,7 +43,8 @@ fun NavGraphBuilder.mainNavGraph(
         composable(
             route = Screen.CoinInfoScreen.getRouteForDeliverArgs()
         ) {
-            val symbol = it.arguments?.getString("symbolCoinInfo") ?: throw Exception("Symbol is null")
+            val symbol =
+                it.arguments?.getString("symbolCoinInfo") ?: throw Exception("Symbol is null")
             CoinInfoScreen(
                 symbol = symbol
             )

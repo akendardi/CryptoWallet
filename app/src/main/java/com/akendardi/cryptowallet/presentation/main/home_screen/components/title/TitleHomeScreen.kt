@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.domain.entity.UserInfo
+import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
 
 @Composable
 fun TitleHomeScreen(

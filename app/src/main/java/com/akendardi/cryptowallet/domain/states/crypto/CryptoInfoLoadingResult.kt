@@ -1,6 +1,6 @@
 package com.akendardi.cryptowallet.domain.states.crypto
 
-import com.akendardi.cryptowallet.domain.entity.CoinInfoDetail
+import com.akendardi.cryptowallet.domain.entity.coin_info_detail.CoinInfoDetail
 
 sealed class CryptoInfoLoadingResult {
 

@@ -1,6 +1,6 @@
 package com.akendardi.cryptowallet.data.repositories.user
 
-import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
+import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
 import com.akendardi.cryptowallet.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

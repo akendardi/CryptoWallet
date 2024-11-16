@@ -1,8 +1,8 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen
 
-import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
-import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
-import com.akendardi.cryptowallet.domain.entity.UserInfo
+import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
+import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
+import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
 
 data class HomeScreenUIState(
     val userInfoState: UserInfo = UserInfo(),

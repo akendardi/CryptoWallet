@@ -2,8 +2,8 @@ package com.akendardi.cryptowallet.data.repositories.crypto
 
 import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
 import com.akendardi.cryptowallet.data.internet.api.AssetsCoinsApiService
-import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
-import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
+import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
+import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 import com.akendardi.cryptowallet.domain.repository.CryptoRepositoryGeneralInfo
 import com.akendardi.cryptowallet.mapper.toEntityMainScreen
 import kotlinx.coroutines.async

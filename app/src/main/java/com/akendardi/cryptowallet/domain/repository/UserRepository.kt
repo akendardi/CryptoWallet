@@ -1,6 +1,6 @@
 package com.akendardi.cryptowallet.domain.repository
 
-import com.akendardi.cryptowallet.domain.entity.CoinInfoGeneral
+import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

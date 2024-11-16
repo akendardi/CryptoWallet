@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.domain.entity.CoinInfoSearch
+import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImageMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
 
