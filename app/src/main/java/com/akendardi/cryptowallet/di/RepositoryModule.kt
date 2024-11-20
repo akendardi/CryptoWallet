@@ -41,7 +41,6 @@ interface RepositoryModule {
     @Binds
     fun bindUserInternetConntectionRepository(impl: InternetConnectionRepositoryImpl): InternetConnectionRepository
 
-    @Singleton
     @Binds
     fun bindCryptoDetailInfoRepository(impl: CryptoDetailInfoRepositoryImpl): CryptoDetailInfoRepository
 }

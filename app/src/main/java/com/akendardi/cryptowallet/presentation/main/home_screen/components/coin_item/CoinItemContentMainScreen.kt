@@ -24,14 +24,17 @@ import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_
 @Composable
 fun CoinItemContentMainScreen(
     coinInfoGeneral: CoinInfoGeneral,
-    onItemClicked: (String) -> Unit,
+    onItemClicked: (symbol: String, name: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .height(80.dp)
             .clickable {
-                onItemClicked(coinInfoGeneral.symbol)
+                onItemClicked(
+                    coinInfoGeneral.symbol,
+                    coinInfoGeneral.name
+                )
             },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)

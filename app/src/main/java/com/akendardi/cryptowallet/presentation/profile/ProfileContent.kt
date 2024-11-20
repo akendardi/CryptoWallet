@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.presentation.profile.components
+package com.akendardi.cryptowallet.presentation.profile
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -10,6 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.akendardi.cryptowallet.presentation.profile.components.ProfileInfo
+import com.akendardi.cryptowallet.presentation.profile.components.TopButtons
 import com.akendardi.cryptowallet.presentation.profile.setting_components.SettingCard
 import com.akendardi.cryptowallet.settings.ThemeMode
 

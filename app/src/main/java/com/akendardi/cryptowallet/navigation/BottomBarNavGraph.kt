@@ -13,7 +13,7 @@ fun BottomBarNavGraph(
     navHostController: NavHostController,
     goToLogInScreen: () -> Unit,
     onProfileClickListener: () -> Unit,
-    onCoinClickListener: (String) -> Unit
+    onCoinClickListener: (symbol: String, name: String) -> Unit
 ) {
     NavHost(
         navController = navHostController,

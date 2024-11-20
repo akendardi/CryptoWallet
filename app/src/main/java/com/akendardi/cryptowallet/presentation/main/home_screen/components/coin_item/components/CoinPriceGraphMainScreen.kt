@@ -34,7 +34,6 @@ fun CoinPriceGraphMainScreen(
                 val endX = (i + 1) * spacing
                 val endY = normalizedDataPoints[i + 1].toFloat()
 
-                // Контрольные точки для сглаживания линии
                 val controlX1 = startX + spacing / 3
                 val controlX2 = endX - spacing / 3
 

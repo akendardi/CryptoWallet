@@ -15,9 +15,10 @@ sealed class Screen(val route: String) {
 
     data object ProfileScreen : Screen(ROUTE_PROFILE_SCREEN)
     data object CoinInfoScreen : Screen(ROUTE_COIN_INFO_SCREEN) {
-        fun getRouteForDeliverArgs() = "$route/{symbolCoinInfo}"
+        fun getRouteForDeliverArgs() = "$route/{symbolCoinInfo}/{nameCoinInfo}"
 
-        fun getRoute(symbol: String) = getRouteForDeliverArgs().replace("{symbolCoinInfo}", symbol)
+        fun getRoute(symbol: String, name: String) = getRouteForDeliverArgs().replace("{symbolCoinInfo}", symbol)
+            .replace("{nameCoinInfo}", name)
     }
 
     data object MainScreenNavGraph : Screen(ROUTE_MAIN_SCREEN_NAV_GRAPH)

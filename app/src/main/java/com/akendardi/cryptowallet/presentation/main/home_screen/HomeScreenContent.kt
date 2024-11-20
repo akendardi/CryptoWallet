@@ -30,7 +30,7 @@ fun HomeScreenContent(
     logout: () -> Unit,
     onSearchButtonClick: () -> Unit,
     loadNextPage: () -> Unit,
-    onItemClicked: (String) -> Unit,
+    onItemClicked: (symbol: String, name: String) -> Unit,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -77,7 +77,7 @@ fun HomeScreenContent(
                 CoinsTitle(onSearchButtonClick = onSearchButtonClick)
             }
 
-            if (state.coinsListState.coinsList.isEmpty()) {
+            if (state.coinsListState.isFirstLoading) {
                 items(10) {
                     ShimmerAnimationCoinItem()
                 }
@@ -92,7 +92,7 @@ fun HomeScreenContent(
                 }
             }
 
-            if (state.coinsListState.isLoading) {
+            if (state.coinsListState.isLoadingNextPage) {
                 item {
                     Box(
                         modifier = Modifier

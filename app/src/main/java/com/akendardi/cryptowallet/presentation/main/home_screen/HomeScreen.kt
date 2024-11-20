@@ -17,7 +17,7 @@ fun HomeScreenPreview() {
         logout = {},
         onSearchButtonClick = {},
         loadNextPage = {},
-        onItemClicked = {},
+        onItemClicked = {_, _ ->},
         onRefresh = {}
     )
 }
@@ -27,7 +27,7 @@ fun HomeScreenPreview() {
 fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
     onProfileClickListener: () -> Unit,
-    onCoinClickListener: (String) -> Unit,
+    onCoinClickListener: (symbol: String, name: String) -> Unit,
     logout: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()

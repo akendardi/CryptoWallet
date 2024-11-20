@@ -21,7 +21,8 @@ data class BalanceInfo(
 data class CoinsListState(
     val coinsList: List<CoinInfoGeneral> = listOf(),
     val currentCoinsPage: Int = 0,
-    val isLoading: Boolean = false
+    val isFirstLoading: Boolean = false,
+    val isLoadingNextPage: Boolean = false
 )
 data class SearchState(
     val query: String = "",

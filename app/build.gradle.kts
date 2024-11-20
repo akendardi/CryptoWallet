@@ -101,26 +101,22 @@ fun DependencyHandlerScope.androidxDependencies() {
 }
 
 fun DependencyHandlerScope.testDependencies() {
-    androidTestImplementation(libs.androidx.ui.test.junit4) // Если вы используете UI-тесты, оставьте эту зависимость
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
 
     testImplementation("com.google.truth:truth:1.4.4")
 
-    // JUnit 5
-    testImplementation("org.junit.jupiter:junit-jupiter-api: 4.11.1") // Использование переменной из версии
+    testImplementation("org.junit.jupiter:junit-jupiter-api: 4.11.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine: 4.11.1")
 
-    // Mockito для JUnit 5
-    testImplementation("org.mockito:mockito-junit-jupiter:4.0.0") // Для поддержки Mockito с JUnit 5
+    testImplementation("org.mockito:mockito-junit-jupiter:4.0.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     testImplementation("org.mockito:mockito-inline:3.11.2")
     testImplementation ("com.squareup.okhttp3:mockwebserver:4.9.0")
 
 
-    // Kotlin Coroutines для тестирования
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
 
-    // Удалены зависимости на JUnit 4
 }
 
 fun DependencyHandlerScope.debugImplementation() {

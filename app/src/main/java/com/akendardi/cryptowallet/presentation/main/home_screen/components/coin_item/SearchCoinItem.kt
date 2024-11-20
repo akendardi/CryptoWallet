@@ -8,7 +8,7 @@ import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 @Composable
 fun SearchCoinItem(
     coinInfoSearch: CoinInfoSearch,
-    onItemClicked: (String) -> Unit,
+    onItemClicked: (symbol: String, name: String) -> Unit,
 ) {
 
     SearchCoinItemContent(
@@ -28,5 +28,5 @@ private fun SearchCoinInfoPreview() {
             symbol = "BTC",
             imageUrl = Uri.parse("https://s2.coinmarketcap.com/static/img/coins/64x64/1.png")
         )
-    ) {}
+    ) {_, _ ->}
 }

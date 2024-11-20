@@ -24,7 +24,12 @@ fun SettingsContent(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(15.dp),
+            .padding(
+                start = 15.dp,
+                end = 15.dp,
+                top = 5.dp,
+                bottom = 5.dp
+            ),
     ) {
         item {
             SettingsItemWithDropDownMenu(

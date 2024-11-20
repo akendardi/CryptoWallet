@@ -9,7 +9,7 @@ import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGenera
 @Composable
 fun CoinItemMainScreen(
     coinInfoGeneral: CoinInfoGeneral,
-    onItemClicked: (String) -> Unit
+    onItemClicked: (symbol: String, name: String) -> Unit
 ) {
     CoinItemContentMainScreen(
         coinInfoGeneral = coinInfoGeneral,
@@ -32,5 +32,5 @@ private fun CoinItemPreview() {
             ),
             priceInfo = emptyList()
         )
-    ){}
+    ){_, _ ->}
 }

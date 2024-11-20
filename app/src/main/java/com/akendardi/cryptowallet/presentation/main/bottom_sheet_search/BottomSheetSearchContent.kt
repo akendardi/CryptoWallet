@@ -26,7 +26,7 @@ fun BottomSheetSearchContent(
     startSearch: () -> Unit,
     scope: CoroutineScope,
     onDismiss: () -> Unit,
-    onItemClicked: (String) -> Unit,
+    onItemClicked: (symbol: String, name: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     ModalBottomSheet(

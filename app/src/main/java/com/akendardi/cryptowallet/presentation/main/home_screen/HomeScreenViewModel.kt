@@ -158,23 +158,36 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private suspend fun loadCoinsRequest() {
+        if (_state.value.coinsListState.currentCoinsPage == 0) startFirstLoading()
         loadAllCoinsListUseCase(_state.value.coinsListState.currentCoinsPage)
         _state.update {
             it.copy(
                 coinsListState = it.coinsListState.copy(
-                    isLoading = false,
-                    currentCoinsPage = it.coinsListState.currentCoinsPage + 1
+                    isLoadingNextPage = false,
+                    currentCoinsPage = it.coinsListState.currentCoinsPage + 1,
+                    isFirstLoading = false
                 )
             )
         }
     }
 
-    fun loadCoins() {
-        if (_state.value.coinsListState.isLoading) return
+    private fun startFirstLoading() {
         _state.update {
             it.copy(
                 coinsListState = it.coinsListState.copy(
-                    isLoading = true
+                    isFirstLoading = true
+                )
+            )
+        }
+
+    }
+
+    fun loadCoins() {
+        if (_state.value.coinsListState.isLoadingNextPage) return
+        _state.update {
+            it.copy(
+                coinsListState = it.coinsListState.copy(
+                    isLoadingNextPage = true
                 )
             )
         }

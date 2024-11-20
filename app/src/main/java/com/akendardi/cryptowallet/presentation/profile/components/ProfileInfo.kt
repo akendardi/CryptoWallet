@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.ProfileImage
 
 @Composable
 fun ProfileInfo(
@@ -34,11 +35,11 @@ fun ProfileInfo(
             .fillMaxWidth()
             .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        ProfilePhoto(
-            photoUri = photoUri
-        )
+        ProfileImage(
+            modifier = Modifier.size(150.dp),
+            uri = photoUri.toString())
         ProfileName(
             name = name
         )
@@ -49,27 +50,7 @@ fun ProfileInfo(
 
 }
 
-@Composable
-fun ProfilePhoto(
-    photoUri: Uri,
-    modifier: Modifier = Modifier
-) {
-    Image(
-        modifier = modifier
-            .clip(CircleShape)
-            .size(120.dp),
-        painter = rememberAsyncImagePainter(
-            contentScale = ContentScale.Crop,
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(photoUri)
-                .memoryCachePolicy(CachePolicy.ENABLED)
-                .diskCachePolicy(CachePolicy.ENABLED)
-                .build()
-        ),
-        contentDescription = null,
-        contentScale = ContentScale.Crop
-    )
-}
+
 
 @Composable
 fun ProfileName(

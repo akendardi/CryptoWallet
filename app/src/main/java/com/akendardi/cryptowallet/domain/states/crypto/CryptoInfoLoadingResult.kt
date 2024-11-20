@@ -8,7 +8,7 @@ sealed class CryptoInfoLoadingResult {
 
     data object Loading : CryptoInfoLoadingResult()
 
-    data object Error : CryptoInfoLoadingResult()
+    data class Error(val e: Exception) : CryptoInfoLoadingResult()
 
     data class Success(val coinInfo: CoinInfoDetail) : CryptoInfoLoadingResult()
 }

@@ -21,14 +21,19 @@ import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_
 @Composable
 fun SearchCoinItemContent(
     coinInfoSearch: CoinInfoSearch,
-    onItemClicked: (String) -> Unit,
+    onItemClicked: (symbol: String, name: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .height(80.dp)
             .padding(4.dp)
-            .clickable { onItemClicked(coinInfoSearch.symbol) },
+            .clickable {
+                onItemClicked(
+                    coinInfoSearch.symbol,
+                    coinInfoSearch.name
+                )
+            },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {

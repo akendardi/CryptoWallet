@@ -14,7 +14,7 @@ fun BottomSheetSearch(
     searchState: SearchState,
     onQueryChanged: (String) -> Unit,
     startSearch: () -> Unit,
-    onItemClicked: (String) -> Unit,
+    onItemClicked: (symbol: String, name: String) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true

@@ -1,12 +1,10 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen.components.title
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -14,14 +12,16 @@ import com.akendardi.cryptowallet.presentation.main.home_screen.components.shimm
 
 
 @Composable
-fun ProfileImage(uri: String?) {
+fun ProfileImage(
+    uri: String?,
+    modifier: Modifier = Modifier,
+) {
 
     SubcomposeAsyncImage(
         model = uri,
         contentDescription = null,
-        modifier = Modifier
-            .clip(CircleShape)
-            .size(58.dp),
+        modifier = modifier
+            .clip(CircleShape),
 
         contentScale = ContentScale.Crop
     ) {
@@ -32,7 +32,6 @@ fun ProfileImage(uri: String?) {
 
             else -> {
                 SubcomposeAsyncImageContent()
-
             }
         }
     }

@@ -7,7 +7,7 @@ import androidx.navigation.compose.rememberNavController
 fun MainScreen(
     goToLogInScreen: () -> Unit,
     onProfileClickListener: () -> Unit,
-    onCoinClickListener: (String) -> Unit
+    onCoinClickListener: (symbol: String, name: String) -> Unit
 ) {
     val navController = rememberNavController()
 

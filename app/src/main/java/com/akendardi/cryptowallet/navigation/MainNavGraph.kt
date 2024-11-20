@@ -26,8 +26,11 @@ fun NavGraphBuilder.mainNavGraph(
                 onProfileClickListener = {
                     navHostController.navigate(Screen.ProfileScreen.route)
                 },
-                onCoinClickListener = {
-                    navHostController.navigate(Screen.CoinInfoScreen.getRoute(it))
+                onCoinClickListener = {symbol, name ->
+                    navHostController.navigate(Screen.CoinInfoScreen.getRoute(
+                        symbol = symbol,
+                        name = name
+                    ))
                 }
             )
         }
@@ -45,8 +48,10 @@ fun NavGraphBuilder.mainNavGraph(
         ) {
             val symbol =
                 it.arguments?.getString("symbolCoinInfo") ?: throw Exception("Symbol is null")
+            val name = it.arguments?.getString("nameCoinInfo") ?: throw Exception("Name is null")
             CoinInfoScreen(
-                symbol = symbol
+                symbol = symbol,
+                name = name,
             )
         }
 
