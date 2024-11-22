@@ -1,16 +1,25 @@
 package com.akendardi.cryptowallet.presentation.profile
 
-import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
+import android.net.Uri
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
 import com.akendardi.cryptowallet.settings.ThemeMode
 
 data class ProfileUiState(
-    val userInfo: UserInfo = UserInfo(),
+    val generalUserInfo: ProfileUserState = ProfileUserState(),
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val isNotificationsEnables: Boolean = false,
     val currentScreen: ProfileScreen = ProfileScreen.Profile,
     val isOpenAnswerScreen: Boolean = false,
-    val requestAnswer: UserProfileOperationResult = UserProfileOperationResult.Initial
+    val isLoading: Boolean = true,
+    val requestAnswer: UserProfileOperationResult = UserProfileOperationResult.Initial,
+    val error: String = ""
+)
+
+data class ProfileUserState(
+    val userName: String = "",
+    val profileUri: Uri = Uri.EMPTY,
+    val email: String = "",
+    val isVerificatedAccount: Boolean = false
 )
 
 

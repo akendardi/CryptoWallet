@@ -81,7 +81,12 @@ class ProfileViewModel @Inject constructor(
                 usersInfoUseCase.observeUserInfo().collect { userInfo ->
                     _state.update {
                         it.copy(
-                            userInfo = userInfo
+                            generalUserInfo = ProfileUserState(
+                                userName = userInfo.userName,
+                                profileUri = userInfo.profileUri,
+                                email = userInfo.email,
+                                isVerificatedAccount = userInfo.isVerificatedAccount
+                            )
                         )
                     }
                 }

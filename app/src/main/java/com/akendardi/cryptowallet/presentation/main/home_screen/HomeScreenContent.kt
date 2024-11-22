@@ -21,6 +21,7 @@ import com.akendardi.cryptowallet.presentation.main.home_screen.components.balan
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.CoinItemMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.shimmer_effects.ShimmerAnimationCoinItem
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.TitleHomeScreen
+import com.akendardi.cryptowallet.presentation.theme.shimmerEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,7 +61,7 @@ fun HomeScreenContent(
         ) {
             item {
                 TitleHomeScreen(
-                    userInfoState = state.userInfoState,
+                    generalUserInfoState = state.generalUserInfoState,
                     onProfileClickListener = onProfileClickListener,
                     logout = logout
                 )

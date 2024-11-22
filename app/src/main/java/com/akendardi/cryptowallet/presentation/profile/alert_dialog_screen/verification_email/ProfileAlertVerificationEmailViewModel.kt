@@ -17,7 +17,6 @@ class ProfileAlertVerificationEmailViewModel @Inject constructor(
         viewModelScope.launch {
             verificateEmailUseCase()
         }
-
     }
 
 }

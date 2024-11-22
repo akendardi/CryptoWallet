@@ -14,16 +14,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
+import com.akendardi.cryptowallet.presentation.main.home_screen.UserInfoState
 
 @Composable
 fun TitleHomeScreen(
-    userInfoState: UserInfo,
+    generalUserInfoState: UserInfoState,
     onProfileClickListener: () -> Unit,
     modifier: Modifier = Modifier,
     logout: () -> Unit
 ) {
-    val uri = userInfoState.profileUri.toString()
+    val uri = generalUserInfoState.profileUri.toString()
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -35,10 +35,11 @@ fun TitleHomeScreen(
     ) {
         ProfileImage(
             modifier = Modifier.size(50.dp),
-            uri = uri)
+            uri = uri
+        )
 
         TitleTextHomeScreen(
-            userInfoState.userName
+            generalUserInfoState.userName
         )
 
         Spacer(modifier = Modifier.weight(1f))

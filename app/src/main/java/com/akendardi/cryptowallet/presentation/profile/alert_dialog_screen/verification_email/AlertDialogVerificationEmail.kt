@@ -23,7 +23,7 @@ fun AlertDialogVerificateEmail(
     isVerification: Boolean,
     viewModel: ProfileAlertVerificationEmailViewModel = hiltViewModel()
 ) {
-    VerificationEmailAlertDialogContent(
+    AlertDialogVerificateEmailContent(
         onDismiss = onDismiss,
         isVerification = isVerification,
         onButtonClick = {
@@ -33,87 +33,6 @@ fun AlertDialogVerificateEmail(
     )
 }
 
-@Composable
-fun VerificationEmailAlertDialogContent(
-    onDismiss: () -> Unit,
-    isVerification: Boolean,
-    onButtonClick: () -> Unit
-) {
-
-    when (isVerification) {
-        true -> {
-            VerificationEmailAlert(
-                onDismiss = onDismiss
-            )
-        }
 
 
-        false -> {
-            UnVerificationEmailAlert(
-                onDismiss = onDismiss,
-                onButtonClick = onButtonClick
-            )
-        }
 
-
-    }
-
-
-}
-
-@Composable
-fun VerificationEmailAlert(onDismiss: () -> Unit, modifier: Modifier = Modifier) {
-    AlertDialog(
-        modifier = modifier,
-        onDismissRequest = { onDismiss() },
-        title = { Text(text = stringResource(R.string.verification_email)) },
-        text = {
-            Column {
-                Text(text = stringResource(R.string.verification_email_description))
-                Spacer(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(20.dp)
-                )
-                Text(text = stringResource(R.string.email_verificated), style = MaterialTheme.typography.titleMedium)
-            }
-        },
-        confirmButton = {}
-    )
-}
-
-@Composable
-fun UnVerificationEmailAlert(
-    onDismiss: () -> Unit,
-    onButtonClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    AlertDialog(
-        modifier = modifier,
-        onDismissRequest = { onDismiss() },
-        title = { Text(text = stringResource(R.string.verification_email)) },
-        text = {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = stringResource(R.string.verification_email_description))
-                Spacer(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(20.dp)
-                )
-                Text(
-                    text = stringResource(R.string.email_unverificated),
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp),
-                    onClick = onButtonClick
-                ) {
-                    Text(text = stringResource(R.string.verificate_email))
-                }
-            }
-        },
-        confirmButton = {}
-    )
-}

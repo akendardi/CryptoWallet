@@ -49,7 +49,10 @@ class HomeScreenViewModel @Inject constructor(
             usersInfoUseCase.observeUserInfo().collect { userInfo ->
                 _state.update {
                     it.copy(
-                        userInfoState = userInfo
+                        generalUserInfoState = UserInfoState(
+                            userName = userInfo.userName,
+                            profileUri = userInfo.profileUri
+                        )
                     )
                 }
             }

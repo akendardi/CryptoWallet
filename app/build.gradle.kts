@@ -137,6 +137,8 @@ fun DependencyHandlerScope.firebaseDependencies() {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.database)
+
 }
 
 fun DependencyHandlerScope.accompanistDependencies() {
@@ -175,5 +177,6 @@ dependencies {
     materialDependencies()
     googleDependencies()
     implementation ("androidx.compose.foundation:foundation:1.7.5")
+
 
 }

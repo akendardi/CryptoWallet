@@ -32,5 +32,5 @@ private fun CoinItemPreview() {
             ),
             priceInfo = emptyList()
         )
-    ){_, _ ->}
+    ) { _, _ -> }
 }

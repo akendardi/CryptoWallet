@@ -50,9 +50,9 @@ fun Profile(
 
     Box(modifier = modifier.fillMaxSize()) {
         ProfileContent(
-            name = state.userInfo.userName,
-            email = state.userInfo.email,
-            photoUri = state.userInfo.profileUri,
+            name = state.generalUserInfo.userName,
+            email = state.generalUserInfo.email,
+            photoUri = state.generalUserInfo.profileUri,
             themeMode = state.themeMode,
             isNotificationEnables = state.isNotificationsEnables,
             onThemeChanged = viewModel::changeTheme,
@@ -105,7 +105,7 @@ fun Profile(
     HandleProfileScreen(
         currentScreen = state.currentScreen,
         onDismiss = viewModel::closeAlertScreen,
-        isVerification = state.userInfo.isVerificationAccount
+        isVerification = state.generalUserInfo.isVerificatedAccount
     )
 
 }

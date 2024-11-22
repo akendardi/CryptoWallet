@@ -1,16 +1,22 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen
 
+import android.net.Uri
 import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
 import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
-import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
 
 data class HomeScreenUIState(
-    val userInfoState: UserInfo = UserInfo(),
+    val generalUserInfoState: UserInfoState = UserInfoState(),
     val userBalanceState: BalanceInfo = BalanceInfo(),
     val coinsListState: CoinsListState = CoinsListState(),
     val screenMode: ScreenMode = ScreenMode.DEFAULT,
     val searchState: SearchState = SearchState(),
-    val isRefreshing: Boolean = false
+    val isRefreshing: Boolean = false,
+    val error: String = ""
+)
+
+data class UserInfoState(
+    val userName: String = "",
+    val profileUri: Uri = Uri.parse(""),
 )
 
 data class BalanceInfo(

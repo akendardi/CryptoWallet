@@ -3,7 +3,7 @@ package com.akendardi.cryptowallet.data.repositories.user
 import android.content.Context
 import android.net.Uri
 import com.akendardi.cryptowallet.R
-import com.akendardi.cryptowallet.domain.entity.user_info.UserInfo
+import com.akendardi.cryptowallet.domain.entity.user_info.UserInfoGeneral
 import com.akendardi.cryptowallet.domain.repository.UserInfoRepository
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
 import com.akendardi.cryptowallet.domain.usecase.auth.CheckInternetConnectionUseCase
@@ -33,8 +33,15 @@ class UserInfoRepositoryImpl @Inject constructor(
 ) : UserInfoRepository {
 
 
-    private val _userInfoFlow = MutableStateFlow(UserInfo())
-    override val userInfoFlow: StateFlow<UserInfo> = _userInfoFlow.asStateFlow()
+    private val _userInfoFlow = MutableStateFlow(
+        UserInfoGeneral(
+            userName = "",
+            profileUri = Uri.EMPTY,
+            email = "",
+            isVerificatedAccount = false
+        )
+    )
+    override val userInfoFlow: StateFlow<UserInfoGeneral> = _userInfoFlow.asStateFlow()
 
     private val _requestAnswer: MutableSharedFlow<UserProfileOperationResult> =
         MutableSharedFlow(replay = 1)
@@ -104,11 +111,11 @@ class UserInfoRepositoryImpl @Inject constructor(
         val email = currentUser.email ?: ""
         val isVerification = currentUser.isEmailVerified
 
-        val userInfo = UserInfo(
+        val userInfo = UserInfoGeneral(
             userName = name,
             profileUri = profilePhotoUri,
             email = email,
-            isVerificationAccount = isVerification
+            isVerificatedAccount = isVerification
         )
 
         _userInfoFlow.emit(userInfo)
