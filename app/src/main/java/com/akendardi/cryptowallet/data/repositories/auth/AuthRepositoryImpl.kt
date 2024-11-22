@@ -1,7 +1,9 @@
 package com.akendardi.cryptowallet.data.repositories.auth
 
 import android.content.Context
+import android.util.Log
 import com.akendardi.cryptowallet.R
+import com.akendardi.cryptowallet.domain.entity.user_info.balance.UsersBalance
 import com.akendardi.cryptowallet.domain.repository.AuthRepository
 import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.google.firebase.FirebaseException
@@ -11,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +23,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
+    private val remoteDatabase: FirebaseDatabase,
     @ApplicationContext private val context: Context
 ) : AuthRepository {
 
@@ -35,7 +39,7 @@ class AuthRepositoryImpl @Inject constructor(
     ) {
         try {
             startLoading()
-            createAccount(
+            createAccountAtFirebase(
                 name = name,
                 email = email,
                 password = password
@@ -47,15 +51,43 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun createAccount(
+    private suspend fun createAccountAtFirebase(
         name: String,
         email: String,
         password: String
-    ){
+    ) {
+        Log.d("AUTH_TEST", "createUserBalanceInFirebaseDb:  create acc ")
         auth.createUserWithEmailAndPassword(email, password).await()
         auth.currentUser?.updateProfile(
             UserProfileChangeRequest.Builder().setDisplayName(name).build()
         )?.await()
+        Log.d("AUTH_TEST", "createUserBalanceInFirebaseDb:  ok acc ")
+        createUserBalanceInFirebaseDb(auth.currentUser?.uid ?: throw RuntimeException())
+    }
+
+    private suspend fun createUserBalanceInFirebaseDb(
+        userId: String
+    ) {
+        val databaseReference = remoteDatabase.reference
+        Log.d("AUTH_TEST", "Database reference initialized: $databaseReference")
+
+        val initialBalance = UsersBalance(
+            totalBalance = 0.0,
+            freeBalance = 0.0,
+            lockedBalance = 0.0,
+            purchasedCoins = listOf(),
+            transactions = listOf()
+        )
+        Log.d("AUTH_TEST", "createUserBalanceInFirebaseDb:  create db $userId ")
+
+        databaseReference
+            .child("users")
+            .child(userId)
+            .child("balance")
+            .setValue(initialBalance)
+            .await()
+
+
     }
 
 
@@ -69,7 +101,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun emitLoginError(e: FirebaseException){
+    private suspend fun emitLoginError(e: FirebaseException) {
         when (e) {
             is FirebaseAuthInvalidCredentialsException -> {
                 val errorMessage = if (e.errorCode == "ERROR_WRONG_PASSWORD") {
@@ -95,7 +127,6 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
 
-
     override suspend fun resetPasswordWithEmail(email: String) {
         try {
             startLoading()
@@ -108,7 +139,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override  fun logOutFromAccount() {
+    override fun logOutFromAccount() {
         auth.signOut()
     }
 
@@ -124,7 +155,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun startLoading(){
+    private suspend fun startLoading() {
         _authState.emit(AuthResult.Loading)
     }
 
