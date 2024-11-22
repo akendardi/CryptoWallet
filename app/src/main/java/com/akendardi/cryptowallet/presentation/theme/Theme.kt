@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Pink40,  // Розовый для заголовков и кнопок
+    primary = PurplePrimary,  // Розовый для заголовков и кнопок
     secondary = Color.White, // Лиловый для графиков и акцентов
     tertiary = Pink80,  // Дополнительный розовый для иконок
     surface = Color(0xFF121212), // Чёрный фон
@@ -21,12 +21,13 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = Color.White,     // Белый текст на лиловом
     onTertiary = Color.White,      // Белый текст на дополнительном
     onBackground = Color(0xFFE0E0E0), // Светло-серый текст на чёрном фоне
-    onSurface = Color(0xFFE0E0E0),   // Светло-серый текст на тёмной поверхности
+    onSurface = Color(0xFFE0E0E0),
+    surfaceVariant = Color.DarkGray,
 
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Pink40,  // Розовый для заголовков и кнопок
+    primary = PurplePrimary,  // Розовый для заголовков и кнопок
     secondary = Color.Black, // Лиловый для графиков и акцентов
     tertiary = Pink80,  // Дополнительный розовый для иконок
     background = Color(0xFFF5F5F5), // Белый фон
@@ -35,9 +36,9 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = Color(0xFF212121), // Чёрный текст на лиловом
     onTertiary = Color.White,      // Белый текст на розовом
     onBackground = Color(0xFF212121), // Тёмный текст на белом фоне
-    onSurface = Color(0xFF212121),   // Тёмный текст на светлой поверхности
+    onSurface = Color(0xFF212121),
+    surfaceVariant = Color.Gray.copy(0.3f)
 )
-
 
 
 @Composable

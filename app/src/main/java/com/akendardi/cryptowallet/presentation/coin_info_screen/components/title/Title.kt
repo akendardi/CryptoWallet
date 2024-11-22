@@ -24,6 +24,7 @@ import com.akendardi.cryptowallet.presentation.coin_info_screen.CoinInfoState
 fun TitleCoinInfo(
     coinInfoState: CoinInfoState,
     isNotificationsEnabled: Boolean,
+    onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -37,7 +38,7 @@ fun TitleCoinInfo(
     ) {
 
         TitleBackButton(
-            onBackButtonClick = {}
+            onBackButtonClick = onBackButtonClick
         )
 
         CoinNameAndSymbolCoinInfoScreen(

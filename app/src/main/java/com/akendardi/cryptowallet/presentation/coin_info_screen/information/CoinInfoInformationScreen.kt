@@ -19,6 +19,9 @@ fun CoinInfoInformationScreen(
 
     CoinInfoInformationScreenContent(
         state = state,
-        onGraphTypeChange = viewModel::changeGraphType
+        onGraphTypeChange = viewModel::changeGraphType,
+        onRefresh = viewModel::loadData,
+        onBuyClick = {},
+        onSellClick = {}
     )
 }

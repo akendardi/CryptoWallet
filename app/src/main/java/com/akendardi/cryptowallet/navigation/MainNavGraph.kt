@@ -52,6 +52,7 @@ fun NavGraphBuilder.mainNavGraph(
             CoinInfoScreen(
                 symbol = symbol,
                 name = name,
+                onBackButtonClick = { navHostController.popBackStack() }
             )
         }
 

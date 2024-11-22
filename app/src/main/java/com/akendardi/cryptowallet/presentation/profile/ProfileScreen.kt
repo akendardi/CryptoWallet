@@ -5,7 +5,10 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -74,10 +77,11 @@ fun Profile(
                 imagePickerLauncher.launch("image/*")
             }
         )
-
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .windowInsetsPadding(WindowInsets.systemBars),
             snackbar = { snackbarData ->
                 Snackbar(
                     snackbarData = snackbarData,
@@ -87,7 +91,9 @@ fun Profile(
                 )
             }
         )
+
     }
+
 
     HandleProfileResult(
         snackbarHostState = snackbarHostState,

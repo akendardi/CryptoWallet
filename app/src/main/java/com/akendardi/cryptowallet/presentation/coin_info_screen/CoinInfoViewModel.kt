@@ -18,14 +18,18 @@ class CoinInfoViewModel @AssistedInject constructor(
 
 
     private val _state =
-        MutableStateFlow(CoinInfoScreenState(coinInfoState = CoinInfoState(
-            symbol = symbol,
-            name = name
-        )))
+        MutableStateFlow(
+            CoinInfoScreenState(
+                coinInfoState = CoinInfoState(
+                    symbol = symbol,
+                    name = name
+                )
+            )
+        )
     val state = _state.asStateFlow()
 
     fun updateTab(tab: Int) {
-        if (tab == 0){
+        if (tab == 0) {
             _state.update {
                 it.copy(
                     currentScreen = CurrentCoinInfoScreen.INFORMATION
@@ -38,7 +42,6 @@ class CoinInfoViewModel @AssistedInject constructor(
                 )
             }
         }
-
     }
 
 

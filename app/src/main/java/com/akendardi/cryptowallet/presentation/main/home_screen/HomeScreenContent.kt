@@ -55,7 +55,8 @@ fun HomeScreenContent(
         LazyColumn(
             state = listState,
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            userScrollEnabled = !state.coinsListState.isFirstLoading
         ) {
             item {
                 TitleHomeScreen(

@@ -1,29 +1,47 @@
 package com.akendardi.cryptowallet.presentation.coin_info_screen.information
 
 import android.util.Log
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.CoinInfoGraph
+import com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.CoinInfoInformationTitle
 
 const val TAG: String = "CoinInfoInformationScreenContent"
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoinInfoInformationScreenContent(
     state: CoinInfoInformationScreenState,
     onGraphTypeChange: () -> Unit,
+    onRefresh: () -> Unit,
+    onBuyClick: () -> Unit,
+    onSellClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    Log.d(TAG, "CoinInfoInformationScreenContent: $state")
 
     val intervals = 6
     val graphicState = when (state.graphicType) {
@@ -31,23 +49,119 @@ fun CoinInfoInformationScreenContent(
         GraphicType.DAY -> state.dayGraphicState
     }
 
-    Column(
+    Log.d(TAG, "CoinInfoInformationScreenContent: $state")
+    val refreshState = rememberPullToRefreshState()
+
+    PullToRefreshBox(
+        modifier = modifier.fillMaxSize(),
+        state = refreshState,
+        isRefreshing = (state.isLoading && state.coinInfoState.lastDateUpdate != ""),
+        onRefresh = {
+            Log.d(TAG, "CoinInfoInformationScreenContent: $state")
+            onRefresh()
+        }
+    ) {
+        if (state.isLoading && state.coinInfoState.lastDateUpdate == "") {
+            CoinInfoDetailLoading()
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+
+                item {
+                    CoinInfoInformationTitle(
+                        coinInfoDetailState = state.coinInfoState
+                    )
+                }
+                item {
+                    CoinInfoGraph(
+                        intervals = intervals,
+                        graphicType = state.graphicType,
+                        graphicState = graphicState,
+                        onGraphTypeChange = onGraphTypeChange
+                    )
+                }
+                item {
+                    ButtonsBuyAndSell(
+                        onBuyClick = onBuyClick,
+                        onSellClick = onSellClick
+                    )
+                }
+            }
+        }
+    }
+
+}
+
+@Composable
+fun ButtonsBuyAndSell(
+    onBuyClick: () -> Unit,
+    onSellClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        ButtonBuy(
+            onClick = onBuyClick,
+            modifier = Modifier.weight(1f)
+        )
+        ButtonSell(
+            onClick = onSellClick,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+fun ButtonBuy(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors().copy(
+            containerColor = MaterialTheme.colorScheme.primary
+        ),
+        onClick = onClick
+    ) {
+        Text(stringResource(R.string.buy), color = MaterialTheme.colorScheme.onPrimary)
+    }
+}
+
+@Composable
+fun ButtonSell(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors().copy(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        onClick = onClick
+    ) {
+        Text(
+            stringResource(R.string.sell),
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
+}
+
+
+@Composable
+fun CoinInfoDetailLoading(modifier: Modifier = Modifier) {
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .background(Color.Black.copy(alpha = 0.5f)),
+        contentAlignment = Alignment.Center
     ) {
-        Spacer(
-            Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-        )
-        CoinInfoGraph(
-            intervals = intervals,
-            graphicType = state.graphicType,
-            graphicState = graphicState,
-            onGraphTypeChange = onGraphTypeChange
-        )
-
+        CircularProgressIndicator()
     }
 }
 
@@ -83,7 +197,10 @@ private fun ScreenPreview() {
                 prices = prices
             )
         ),
-        onGraphTypeChange = {}
+        onGraphTypeChange = {},
+        onRefresh = {},
+        onBuyClick = {},
+        onSellClick = {}
     )
 
 }

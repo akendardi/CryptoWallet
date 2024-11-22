@@ -14,8 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.GraphicType
 
 @Composable
@@ -42,7 +44,7 @@ fun SwitchTypeGraphic(
     modifier: Modifier = Modifier
 ) {
 
-    val isDailyGraph = type == GraphicType.HOUR
+    val isDailyGraph = type == GraphicType.DAY
 
     Row(
         modifier = modifier
@@ -54,7 +56,7 @@ fun SwitchTypeGraphic(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Ч",
+            text = stringResource(R.string.hour_symbol),
             modifier = Modifier
                 .weight(1f),
             style = MaterialTheme.typography.titleSmall.copy(
@@ -64,7 +66,7 @@ fun SwitchTypeGraphic(
         )
 
         Text(
-            text = "Д",
+            text = stringResource(R.string.day_symbol),
             modifier = Modifier
                 .weight(1f),
             style = MaterialTheme.typography.titleSmall.copy(

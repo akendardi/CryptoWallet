@@ -3,6 +3,7 @@ package com.akendardi.cryptowallet.presentation.coin_info_screen.information.com
 import android.graphics.Paint
 import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,12 +18,14 @@ fun CanvasPrices(
     pricesOnScreen: List<String>,
     modifier: Modifier = Modifier
 ) {
+    val color = MaterialTheme.colorScheme.onBackground
     Canvas(
         modifier = modifier
     ) {
         drawYNumbers(
             intervals,
-            pricesOnScreen = pricesOnScreen
+            pricesOnScreen = pricesOnScreen,
+            colorForText = color
         )
     }
 }
@@ -30,7 +33,8 @@ fun CanvasPrices(
 
 fun DrawScope.drawYNumbers(
     intervals: Int,
-    pricesOnScreen: List<String>
+    pricesOnScreen: List<String>,
+    colorForText: Color
 ) {
     val yStep = size.height / (intervals - 1)
 
@@ -39,7 +43,7 @@ fun DrawScope.drawYNumbers(
 
         val paint = Paint().apply {
             textSize = 14.sp.toPx()
-            color = Color.White.toArgb()
+            color = colorForText.toArgb()
             textAlign = Paint.Align.LEFT
         }
 

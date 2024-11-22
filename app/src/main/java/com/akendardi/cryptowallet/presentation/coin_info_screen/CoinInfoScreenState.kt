@@ -2,7 +2,7 @@ package com.akendardi.cryptowallet.presentation.coin_info_screen
 
 data class CoinInfoScreenState(
     val coinInfoState: CoinInfoState = CoinInfoState(),
-    val isNotificationsEnabled: Boolean = true,
+    val isNotificationsEnabled: Boolean = false,
     val currentScreen: CurrentCoinInfoScreen = CurrentCoinInfoScreen.INFORMATION,
 )
 

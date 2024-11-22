@@ -1,15 +1,12 @@
 package com.akendardi.cryptowallet.presentation.coin_info_screen.information.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.GraphicPriceState
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.GraphicType
 
@@ -25,7 +22,6 @@ fun CoinInfoGraph(
     Column(
         modifier
             .fillMaxWidth()
-            .padding(12.dp)
             .aspectRatio(1.2f)
     ) {
 
@@ -62,7 +58,7 @@ fun CoinInfoGraph(
                 graphicType = graphicType,
                 onGraphTypeChange = onGraphTypeChange
             )
-            when(graphicType) {
+            when (graphicType) {
                 GraphicType.HOUR -> {
                     CanvasHours(
                         modifier = Modifier
@@ -72,6 +68,7 @@ fun CoinInfoGraph(
                         hoursOnScreen = graphicState.timeStampsOnScreen
                     )
                 }
+
                 GraphicType.DAY -> {
                     CanvasDays(
                         modifier = Modifier

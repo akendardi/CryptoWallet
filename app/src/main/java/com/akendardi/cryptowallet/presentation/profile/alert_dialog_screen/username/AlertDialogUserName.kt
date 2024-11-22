@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.profile.alert_dialog_screen.username
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
@@ -20,7 +19,6 @@ fun AlertDialogEditName(
     onDismiss: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-    Log.d("TEST_VIEWMODEL", viewModel.toString())
     EditUserNameAlertDialogContent(
         value = state.name,
         error = state.error,
@@ -65,7 +63,7 @@ fun EditUserNameAlertDialogContent(
             TextButton(onClick = {
                 saveChangesClick()
             }) {
-                Text(text = stringResource(R.string.understand))
+                Text(text = stringResource(R.string.save))
             }
         },
         dismissButton = {

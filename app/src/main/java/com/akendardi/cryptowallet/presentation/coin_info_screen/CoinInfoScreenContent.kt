@@ -15,6 +15,7 @@ import com.akendardi.cryptowallet.presentation.coin_info_screen.transactions.Coi
 fun CoinInfoScreenContent(
     state: CoinInfoScreenState,
     onTabSelected: (Int) -> Unit,
+    onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -22,7 +23,8 @@ fun CoinInfoScreenContent(
         topBar = {
             TitleCoinInfo(
                 coinInfoState = state.coinInfoState,
-                isNotificationsEnabled = state.isNotificationsEnabled
+                isNotificationsEnabled = state.isNotificationsEnabled,
+                onBackButtonClick = onBackButtonClick
             )
         }
     ) { paddingValues ->

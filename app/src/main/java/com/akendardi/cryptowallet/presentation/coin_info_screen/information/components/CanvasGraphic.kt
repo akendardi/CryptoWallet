@@ -66,7 +66,7 @@ fun DrawScope.drawGraphic(
     drawPath(
         path = path,
         color = color,
-        style = Stroke(width = 2.dp.toPx())
+        style = Stroke(width = 1.dp.toPx())
     )
 
     val filledPath = path.apply {
@@ -117,7 +117,10 @@ private fun ScreenPreview() {
                 prices = prices
             )
         ),
-        onGraphTypeChange = {}
+        onGraphTypeChange = {},
+        onRefresh = {},
+        onBuyClick = {},
+        onSellClick = {}
     )
 
 }

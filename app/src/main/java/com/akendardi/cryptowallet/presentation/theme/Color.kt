@@ -12,6 +12,10 @@ val PurpleGrey40 = Color(0xFF625b71)
 
 val Pink40 = Color(0xFFFF67C2)
 
+val BluePrimary = Color(0xFF4158d0)
+val PurplePrimary = Color(0xFFc850c0)
+val YelowPrimary = Color(0xFFffcc70)
+
 val PositiveDifferenceColor = Color(0xFF02BA62)
 val NegativeDifferenceColor = Color(0xFFED512E)
 

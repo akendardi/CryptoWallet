@@ -2,6 +2,7 @@ package com.akendardi.cryptowallet.presentation.coin_info_screen.information.com
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,20 +21,26 @@ fun CanvasDays(
     intervals: Int,
     datesOnScreen: List<List<String>>,
     modifier: Modifier = Modifier) {
+    val primaryColorForDates = MaterialTheme.colorScheme.onBackground
+    val secondaryColorForDates = MaterialTheme.colorScheme.surfaceVariant
     Canvas(
         modifier
     ) {
 
         drawXDates(
             intervals,
-            datesOnScreen = datesOnScreen
+            datesOnScreen = datesOnScreen,
+            primaryColor = primaryColorForDates,
+            secondaryColor = secondaryColorForDates
         )
     }
 }
 
 fun DrawScope.drawXDates(
     intervals: Int,
-    datesOnScreen: List<List<String>>
+    datesOnScreen: List<List<String>>,
+    primaryColor: Color,
+    secondaryColor: Color
 ) {
     val xStep = size.width / intervals
 
@@ -51,7 +58,7 @@ fun DrawScope.drawXDates(
                 textPadding * 2,
                 Paint().apply {
                     textSize = 14.sp.toPx()
-                    color = Color.White.toArgb()
+                    color = primaryColor.toArgb()
                     textAlign = Paint.Align.CENTER
                 }
             )
@@ -61,7 +68,7 @@ fun DrawScope.drawXDates(
                 textPadding,
                 Paint().apply {
                     textSize = 12.sp.toPx()
-                    color = Color.Gray.toArgb()
+                    color = secondaryColor.toArgb()
                     textAlign = Paint.Align.CENTER
                 }
             )
@@ -170,7 +177,10 @@ private fun ScreenPreview() {
                 prices = prices
             )
         ),
-        onGraphTypeChange = {}
+        onGraphTypeChange = {},
+        onRefresh = {},
+        onBuyClick = {},
+        onSellClick = {}
     )
 
 }
