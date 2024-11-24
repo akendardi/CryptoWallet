@@ -33,7 +33,7 @@ fun TitleHomeScreen(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        ProfileImage(
+        ImageWithShimmerEffect(
             modifier = Modifier.size(50.dp),
             uri = uri
         )

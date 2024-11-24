@@ -1,27 +1,19 @@
 package com.akendardi.cryptowallet.presentation.profile.components
 
 import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.CachePolicy
-import coil.request.ImageRequest
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.ProfileImage
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.ImageWithShimmerEffect
 
 @Composable
 fun ProfileInfo(
@@ -37,7 +29,7 @@ fun ProfileInfo(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        ProfileImage(
+        ImageWithShimmerEffect(
             modifier = Modifier.size(150.dp),
             uri = photoUri.toString())
         ProfileName(

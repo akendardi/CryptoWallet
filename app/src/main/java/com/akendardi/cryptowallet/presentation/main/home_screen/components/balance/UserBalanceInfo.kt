@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.akendardi.cryptowallet.presentation.theme.NegativeDifferenceColor
+import com.akendardi.cryptowallet.presentation.theme.NegativeColor
 import com.akendardi.cryptowallet.presentation.theme.PositiveDifferenceColor
 import com.akendardi.cryptowallet.presentation.theme.profileGradientColor
 
@@ -108,7 +108,7 @@ fun DifferenceValue(
     val color = if (isPositiveDifference) {
         PositiveDifferenceColor
     } else {
-        NegativeDifferenceColor
+        NegativeColor
     }
     Text(
         modifier = modifier,

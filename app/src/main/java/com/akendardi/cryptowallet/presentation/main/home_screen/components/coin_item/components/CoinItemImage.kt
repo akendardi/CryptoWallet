@@ -2,28 +2,25 @@ package com.akendardi.cryptowallet.presentation.main.home_screen.components.coin
 
 import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 
 @Composable
-fun CoinItemImageMainScreen(
+fun CoinItemImage(
     imageUrl: Uri,
     modifier: Modifier = Modifier
 ) {
 
     Image(
         modifier = modifier
-            .clip(CircleShape)
-            .size(58.dp),
+            .clip(CircleShape),
         painter = rememberAsyncImagePainter(
             contentScale = ContentScale.Crop,
             model = ImageRequest.Builder(LocalContext.current)

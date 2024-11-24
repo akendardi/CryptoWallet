@@ -62,4 +62,5 @@
     <string name="last_time_update">Время последнего обновления: %1$s</string>
     <string name="hour_symbol">Ч</string>
     <string name="day_symbol">Д</string>
+    <string name="buying">Покупка</string>
 </resources>

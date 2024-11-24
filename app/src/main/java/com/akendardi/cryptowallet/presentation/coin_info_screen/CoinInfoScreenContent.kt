@@ -16,6 +16,8 @@ fun CoinInfoScreenContent(
     state: CoinInfoScreenState,
     onTabSelected: (Int) -> Unit,
     onBackButtonClick: () -> Unit,
+    onBuyClick: () -> Unit,
+    onSellClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -40,7 +42,9 @@ fun CoinInfoScreenContent(
 
             when (state.currentScreen) {
                 CurrentCoinInfoScreen.INFORMATION -> CoinInfoInformationScreen(
-                    symbol = state.coinInfoState.symbol
+                    symbol = state.coinInfoState.symbol,
+                    onBuyClick = {},
+                    onSellClick = {}
                 )
                 CurrentCoinInfoScreen.TRANSACTIONS -> CoinInfoTransactionsScreen(
                     symbol = state.coinInfoState.symbol

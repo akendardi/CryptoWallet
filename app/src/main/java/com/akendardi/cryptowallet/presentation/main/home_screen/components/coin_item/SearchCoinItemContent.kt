@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -15,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImageMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImage
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
 
 @Composable
@@ -45,7 +46,10 @@ fun SearchCoinItemContent(
                 .padding(12.dp)
         ) {
 
-            CoinItemImageMainScreen(imageUrl = coinInfoSearch.imageUrl)
+            CoinItemImage(
+                modifier = Modifier.size(58.dp),
+                imageUrl = coinInfoSearch.imageUrl
+            )
 
             CoinNameAndSymbolMainScreen(
                 name = coinInfoSearch.name,

@@ -7,7 +7,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun CoinInfoInformationScreen(
-    symbol: String
+    symbol: String,
+    onBuyClick: () -> Unit,
+    onSellClick: () -> Unit
 ) {
 
     val viewModel =
@@ -21,7 +23,7 @@ fun CoinInfoInformationScreen(
         state = state,
         onGraphTypeChange = viewModel::changeGraphType,
         onRefresh = viewModel::loadData,
-        onBuyClick = {},
-        onSellClick = {}
+        onBuyClick = onBuyClick,
+        onSellClick = onSellClick
     )
 }

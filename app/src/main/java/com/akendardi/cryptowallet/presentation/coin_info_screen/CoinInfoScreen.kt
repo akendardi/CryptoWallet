@@ -20,7 +20,9 @@ fun CoinInfoScreen(
     CoinInfoScreenContent(
         state = state,
         onTabSelected = viewModel::updateTab,
-        onBackButtonClick = onBackButtonClick
+        onBackButtonClick = onBackButtonClick,
+        onBuyClick = {},
+        onSellClick = {}
     )
 }
 
@@ -35,6 +37,6 @@ private fun CoinInfoPreview() {
                 symbol = "BTC"
             )
         ),
-        {}, {}
+        {}, {}, {}, {}
     )
 }

@@ -8,11 +8,11 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.shimmer_effects.ShimmerAnimationProfileImage
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.shimmer_effects.ShimmerAnimationImage
 
 
 @Composable
-fun ProfileImage(
+fun ImageWithShimmerEffect(
     uri: String?,
     modifier: Modifier = Modifier,
 ) {
@@ -27,7 +27,7 @@ fun ProfileImage(
     ) {
         when (this.painter.state) {
             is AsyncImagePainter.State.Loading -> {
-                ShimmerAnimationProfileImage()
+                ShimmerAnimationImage()
             }
 
             else -> {

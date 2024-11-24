@@ -1,4 +1,4 @@
-package com.akendardi.cryptowallet.presentation.coin_info_screen.information.components
+package com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.graphic
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

@@ -4,30 +4,22 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.akendardi.cryptowallet.R
-import com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.CoinInfoGraph
+import com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.graphic.CoinInfoGraph
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.CoinInfoInformationTitle
+import com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.buttons.ButtonsOperations
 
 const val TAG: String = "CoinInfoInformationScreenContent"
 
@@ -85,7 +77,7 @@ fun CoinInfoInformationScreenContent(
                     )
                 }
                 item {
-                    ButtonsBuyAndSell(
+                    ButtonsOperations(
                         onBuyClick = onBuyClick,
                         onSellClick = onSellClick
                     )
@@ -96,61 +88,6 @@ fun CoinInfoInformationScreenContent(
 
 }
 
-@Composable
-fun ButtonsBuyAndSell(
-    onBuyClick: () -> Unit,
-    onSellClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
-        ButtonBuy(
-            onClick = onBuyClick,
-            modifier = Modifier.weight(1f)
-        )
-        ButtonSell(
-            onClick = onSellClick,
-            modifier = Modifier.weight(1f)
-        )
-    }
-}
-
-@Composable
-fun ButtonBuy(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors().copy(
-            containerColor = MaterialTheme.colorScheme.primary
-        ),
-        onClick = onClick
-    ) {
-        Text(stringResource(R.string.buy), color = MaterialTheme.colorScheme.onPrimary)
-    }
-}
-
-@Composable
-fun ButtonSell(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors().copy(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-        onClick = onClick
-    ) {
-        Text(
-            stringResource(R.string.sell),
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-    }
-}
 
 
 @Composable
@@ -200,7 +137,8 @@ private fun ScreenPreview() {
         onGraphTypeChange = {},
         onRefresh = {},
         onBuyClick = {},
-        onSellClick = {}
+        onSellClick = {},
+
     )
 
 }

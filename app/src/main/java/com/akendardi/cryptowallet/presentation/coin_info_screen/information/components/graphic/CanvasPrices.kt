@@ -1,7 +1,6 @@
-package com.akendardi.cryptowallet.presentation.coin_info_screen.information.components
+package com.akendardi.cryptowallet.presentation.coin_info_screen.information.components.graphic
 
 import android.graphics.Paint
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

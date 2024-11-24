@@ -6,15 +6,11 @@ import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
 import com.akendardi.cryptowallet.domain.repository.CryptoDetailInfoRepository
 import com.akendardi.cryptowallet.domain.states.crypto.CryptoInfoLoadingResult
 import com.akendardi.cryptowallet.mapper.responsesToCoinInfoDetail
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CryptoDetailInfoRepositoryImpl @Inject constructor(

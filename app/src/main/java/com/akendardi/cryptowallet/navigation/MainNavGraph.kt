@@ -43,6 +43,7 @@ fun NavGraphBuilder.mainNavGraph(
                 goToLogInScreen = goToLogInScreen,
             )
         }
+
         composable(
             route = Screen.CoinInfoScreen.getRouteForDeliverArgs()
         ) {

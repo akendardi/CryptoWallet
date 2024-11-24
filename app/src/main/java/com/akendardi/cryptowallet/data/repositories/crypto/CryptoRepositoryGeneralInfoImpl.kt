@@ -1,7 +1,8 @@
 package com.akendardi.cryptowallet.data.repositories.crypto
 
-import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
+import android.util.Log
 import com.akendardi.cryptowallet.data.internet.api.AssetsCoinsApiService
+import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
 import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
 import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 import com.akendardi.cryptowallet.domain.repository.CryptoRepositoryGeneralInfo
@@ -45,6 +46,8 @@ class CryptoRepositoryGeneralInfoImpl @Inject constructor(
                 async {
                     val plotInformation =
                         dataCoinsApiService.loadHourHistoricalInfo(fsym = coinData.coinInfo.symbol)
+
+                    Log.d("COINS_TAG", "loadAllCoinsList: ")
 
                     if (plotInformation.data.listPrices == null) {
                         null
