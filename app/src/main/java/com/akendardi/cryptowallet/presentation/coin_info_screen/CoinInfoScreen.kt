@@ -10,7 +10,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun CoinInfoScreen(
     symbol: String,
     name: String,
-    onBackButtonClick: () -> Unit
+    onBackButtonClick: () -> Unit,
+    onBuyClick: () -> Unit,
+    onSellClick: () -> Unit,
 ) {
     val viewModel = hiltViewModel<CoinInfoViewModel, CoinInfoViewModel.Factory>(
         creationCallback = { factory -> factory.create(symbol = symbol, name = name) }
@@ -21,7 +23,7 @@ fun CoinInfoScreen(
         state = state,
         onTabSelected = viewModel::updateTab,
         onBackButtonClick = onBackButtonClick,
-        onBuyClick = {},
+        onBuyClick = onBuyClick,
         onSellClick = {}
     )
 }

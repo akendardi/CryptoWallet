@@ -10,7 +10,8 @@ sealed class CoinOperationResult {
         val name: String,
         val freeBalance: Double,
         val currentPrice: Double,
-        val coinImage: String
+        val coinImage: String,
+        val isAccountVerificated: Boolean
     ) : CoinOperationResult()
 
     data object LoadingOperation : CoinOperationResult()

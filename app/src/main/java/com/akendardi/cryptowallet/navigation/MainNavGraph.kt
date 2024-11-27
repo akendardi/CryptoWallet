@@ -44,18 +44,7 @@ fun NavGraphBuilder.mainNavGraph(
             )
         }
 
-        composable(
-            route = Screen.CoinInfoScreen.getRouteForDeliverArgs()
-        ) {
-            val symbol =
-                it.arguments?.getString("symbolCoinInfo") ?: throw Exception("Symbol is null")
-            val name = it.arguments?.getString("nameCoinInfo") ?: throw Exception("Name is null")
-            CoinInfoScreen(
-                symbol = symbol,
-                name = name,
-                onBackButtonClick = { navHostController.popBackStack() }
-            )
-        }
+        coinInfoNavGraph(navHostController)
 
     }
 }

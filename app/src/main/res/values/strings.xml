@@ -63,4 +63,7 @@
     <string name="hour_symbol">Ч</string>
     <string name="day_symbol">Д</string>
     <string name="buying">Покупка</string>
+    <string name="free_balance">Доступный баланс:</string>
+    <string name="total">Итого: </string>
+    <string name="buy_screen_account_not_verificated">Ваш аккаунт не подтвержден, поэтому вы не можете покупать валюту. Чтобы подтвердить аккаунт, перейдите в настройки</string>
 </resources>

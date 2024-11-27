@@ -43,8 +43,8 @@ fun CoinInfoScreenContent(
             when (state.currentScreen) {
                 CurrentCoinInfoScreen.INFORMATION -> CoinInfoInformationScreen(
                     symbol = state.coinInfoState.symbol,
-                    onBuyClick = {},
-                    onSellClick = {}
+                    onBuyClick = onBuyClick,
+                    onSellClick = onSellClick
                 )
                 CurrentCoinInfoScreen.TRANSACTIONS -> CoinInfoTransactionsScreen(
                     symbol = state.coinInfoState.symbol

@@ -34,6 +34,7 @@ interface RepositoryModule {
     @Binds
     fun bindUserImageRepository(impl: UserInfoRepositoryImpl): UserInfoRepository
 
+    @Singleton
     @Binds
     fun bindCoinOperationrepository(impl: CoinOperationsRepositoryImpl): CoinOperationsRepository
 

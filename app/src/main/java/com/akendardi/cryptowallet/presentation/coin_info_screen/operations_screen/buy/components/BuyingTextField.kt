@@ -1,3 +1,5 @@
+package com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,6 +19,7 @@ import com.akendardi.cryptowallet.presentation.theme.NegativeColor
 
 @Composable
 fun BuyingTextField(
+    isEnabled: Boolean,
     amount: String,
     onValueChanged: (String) -> Unit,
     error: String,
@@ -25,18 +28,26 @@ fun BuyingTextField(
     Column(
         modifier = modifier
     ) {
-        Text(
-            text = "Сумма покупки:",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.surfaceVariant
-        )
-
 
         TextField(
+            enabled = isEnabled,
             value = amount,
             onValueChange = onValueChanged,
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            placeholder = {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "0.00", style = TextStyle(
+                        fontSize = 36.sp,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground.copy(0.5f)
+                    )
+                )
+
+
+            },
             maxLines = 1,
             colors = TextFieldDefaults.colors().copy(
                 focusedIndicatorColor = Color.Transparent,

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun BuyingButton(
-    totalCount: String,
+    isEnabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -19,7 +19,7 @@ fun BuyingButton(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12),
         onClick = onClick,
-        enabled = totalCount != ""
+        enabled = isEnabled
     ) {
         Text(
             text = "Подтвердить покупку",

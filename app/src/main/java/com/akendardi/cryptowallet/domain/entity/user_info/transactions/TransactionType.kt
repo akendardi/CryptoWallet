@@ -7,6 +7,7 @@ sealed class TransactionType {
         val symbol: String,
         val price: Double,
         val count: Double,
+        val amount: Double,
         val time: Long
     ) : TransactionType()
 

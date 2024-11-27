@@ -14,11 +14,18 @@ sealed class Screen(val route: String) {
     data object HelloScreen : Screen(ROUTE_HELLO_SCREEN)
 
     data object ProfileScreen : Screen(ROUTE_PROFILE_SCREEN)
+
+    data object CoinInfoScreenNavGraph : Screen(ROUTE_COIN_INFO_SCREEN_NAV_GRAPH)
     data object CoinInfoScreen : Screen(ROUTE_COIN_INFO_SCREEN) {
         fun getRouteForDeliverArgs() = "$route/{symbolCoinInfo}/{nameCoinInfo}"
 
         fun getRoute(symbol: String, name: String) = getRouteForDeliverArgs().replace("{symbolCoinInfo}", symbol)
             .replace("{nameCoinInfo}", name)
+    }
+    data object CoinInfoBuyingScreen : Screen(ROUTE_COIN_INFO_BUYING_SCREEN){
+        fun getRouteForDeliverArgs() = "$route/{symbolCoinInfo}"
+
+        fun getRoute(symbol: String) = getRouteForDeliverArgs().replace("{symbolCoinInfo}", symbol)
     }
 
     data object MainScreenNavGraph : Screen(ROUTE_MAIN_SCREEN_NAV_GRAPH)
@@ -64,7 +71,10 @@ sealed class Screen(val route: String) {
 
         const val ROUTE_HOME_SCREEN = "homeScreen"
         const val ROUTE_PROFILE_SCREEN = "profileScreen"
+
+        const val ROUTE_COIN_INFO_SCREEN_NAV_GRAPH = "coinInfoScreenNavGraph"
         const val ROUTE_COIN_INFO_SCREEN = "coinInfoScreen"
+        const val ROUTE_COIN_INFO_BUYING_SCREEN = "coinBuyingScreen"
 
         const val ROUTE_WALLET_SCREEN = "walletScreen"
         const val ROUTE_SEND_SCREEN = "sendScreen"

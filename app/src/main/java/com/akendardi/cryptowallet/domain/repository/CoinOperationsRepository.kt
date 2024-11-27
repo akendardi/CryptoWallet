@@ -9,7 +9,7 @@ interface CoinOperationsRepository {
 
     suspend fun getInfoForBuying(symbol: String)
 
-    suspend fun buyCoin(symbol: String, count: Double)
+    suspend fun buyCoin(symbol: String, amount: Double)
 
-    suspend fun sellCoin(symbol: String, count: Double)
+    suspend fun sellCoin(symbol: String, amount: Double)
 }

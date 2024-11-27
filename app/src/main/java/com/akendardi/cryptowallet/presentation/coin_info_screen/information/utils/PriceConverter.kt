@@ -40,5 +40,11 @@ class PriceConverter {
             }
             return "$" + formatter.format(price)
         }
+
+        fun unFormatPrice(price: String): Double {
+            return price.replace("[^\\d.,-]".toRegex(), "")
+                .replace(",", ".")
+                .toDoubleOrNull() ?: 0.0
+        }
     }
 }
