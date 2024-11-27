@@ -2,6 +2,8 @@ package com.akendardi.cryptowallet.di
 
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import dagger.Module
@@ -24,6 +26,11 @@ interface FirebaseModule {
         @Provides
         fun provideFirebaseStorage(): FirebaseStorage {
             return Firebase.storage
+        }
+
+        @Provides
+        fun provideFirebaseDatabase(): FirebaseDatabase{
+            return Firebase.database("https://cryptowallet-a6228-default-rtdb.europe-west1.firebasedatabase.app")
         }
     }
 }

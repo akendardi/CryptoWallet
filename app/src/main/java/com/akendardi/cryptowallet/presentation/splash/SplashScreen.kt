@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.akendardi.cryptowallet.R
-import kotlinx.coroutines.delay
 import kotlin.system.exitProcess
 
 
@@ -47,7 +46,7 @@ fun SplashScreen(
             }
 
             SplashState.NetworkError -> {
-                ShowDialog()
+                ShowDialogNetworkError()
             }
 
             is SplashState.Success -> {
@@ -67,7 +66,7 @@ fun SplashScreen(
 
 
 @Composable
-fun ShowDialog(modifier: Modifier = Modifier) {
+fun ShowDialogNetworkError(modifier: Modifier = Modifier) {
     AlertDialog(
         modifier = modifier,
         onDismissRequest = {

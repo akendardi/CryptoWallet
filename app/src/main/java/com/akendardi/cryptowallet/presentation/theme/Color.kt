@@ -12,8 +12,20 @@ val PurpleGrey40 = Color(0xFF625b71)
 
 val Pink40 = Color(0xFFFF67C2)
 
-val PositiveDifferenceColor = Color(0xFF639A00)
+val BluePrimary = Color(0xFF4158d0)
+val PurplePrimary = Color(0xFFc850c0)
+val YelowPrimary = Color(0xFFffcc70)
+
+
+val PositiveDifferenceColor = Color(0xFF02BA62)
+val NegativeColor = Color(0xFFED512E)
 
 val profileGradientColor = Brush.verticalGradient(
     listOf(Pink40, Pink80, Color.White),
+)
+
+val ShimmerColorShades = listOf(
+    Color.LightGray.copy(0.9f),
+    Color.LightGray.copy(0.2f),
+    Color.LightGray.copy(0.9f)
 )

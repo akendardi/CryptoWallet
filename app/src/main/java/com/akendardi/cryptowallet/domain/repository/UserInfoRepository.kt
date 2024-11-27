@@ -1,14 +1,15 @@
 package com.akendardi.cryptowallet.domain.repository
 
 import android.net.Uri
-import com.akendardi.cryptowallet.domain.entity.UserInfo
+import com.akendardi.cryptowallet.domain.entity.user_info.UserInfoGeneral
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
+import com.google.firebase.auth.UserInfo
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
 interface UserInfoRepository {
 
-    val userInfoFlow: StateFlow<UserInfo>
+    val userInfoFlow: StateFlow<UserInfoGeneral>
 
     val requestAnswer: SharedFlow<UserProfileOperationResult>
 

@@ -48,4 +48,22 @@
     <string name="profile_photo_changed">Ваше фото успешно изменено</string>
     <string name="exit">Выход</string>
     <string name="hello_comma">"Привет, "</string>
+    <string name="catalog">Каталог:</string>
+    <string name="search">Поиск</string>
+
+    <string name="error_wrong_password">Неверный пароль. Повторите попытку.</string>
+    <string name="error_invalid_credentials">Вы ввели неверные данные. Повторите попытку.</string>
+    <string name="error_user_not_found">Пользователь с такими учетными данными не найден.</string>
+    <string name="error_too_many_requests">Слишком много неудачных попыток входа. Попробуйте позже или сбросьте пароль.</string>
+    <string name="error_unknown">Неизвестная ошибка: %1$s</string>
+    <string name="error_user_collision">Пользователь с таким аккаунтом уже существует</string>
+    <string name="buy">Купить</string>
+    <string name="sell">Продать</string>
+    <string name="last_time_update">Время последнего обновления: %1$s</string>
+    <string name="hour_symbol">Ч</string>
+    <string name="day_symbol">Д</string>
+    <string name="buying">Покупка</string>
+    <string name="free_balance">Доступный баланс:</string>
+    <string name="total">Итого: </string>
+    <string name="buy_screen_account_not_verificated">Ваш аккаунт не подтвержден, поэтому вы не можете покупать валюту. Чтобы подтвердить аккаунт, перейдите в настройки</string>
 </resources>

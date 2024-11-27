@@ -7,7 +7,7 @@ interface AuthRepository {
 
     val authState: StateFlow<AuthResult>
 
-    suspend fun createAccount(
+    suspend fun createAccountWithEmail(
         name: String,
         email: String,
         password: String
@@ -19,7 +19,7 @@ interface AuthRepository {
         password: String
     )
 
-    suspend fun logOutFromAccount()
+    fun logOutFromAccount()
 
     suspend fun resetPasswordWithEmail(
         email: String

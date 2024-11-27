@@ -2,12 +2,11 @@ package com.akendardi.cryptowallet.data.repositories.user
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import com.akendardi.cryptowallet.R
-import com.akendardi.cryptowallet.data.repositories.internet_usecase.CheckInternetConnectionUseCase
-import com.akendardi.cryptowallet.domain.entity.UserInfo
+import com.akendardi.cryptowallet.domain.entity.user_info.UserInfoGeneral
 import com.akendardi.cryptowallet.domain.repository.UserInfoRepository
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
+import com.akendardi.cryptowallet.domain.usecase.auth.CheckInternetConnectionUseCase
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -34,15 +33,23 @@ class UserInfoRepositoryImpl @Inject constructor(
 ) : UserInfoRepository {
 
 
-    private val _userInfoFlow = MutableStateFlow(UserInfo())
-    override val userInfoFlow: StateFlow<UserInfo> = _userInfoFlow.asStateFlow()
+    private val _userInfoFlow = MutableStateFlow(
+        UserInfoGeneral(
+            userName = "",
+            profileUri = Uri.EMPTY,
+            email = "",
+            isVerificatedAccount = false
+        )
+    )
+    override val userInfoFlow: StateFlow<UserInfoGeneral> = _userInfoFlow.asStateFlow()
 
     private val _requestAnswer: MutableSharedFlow<UserProfileOperationResult> =
         MutableSharedFlow(replay = 1)
     override val requestAnswer: SharedFlow<UserProfileOperationResult> =
         _requestAnswer.asSharedFlow()
 
-    private suspend fun emitLoading() {
+
+    private suspend fun startLoading() {
         _requestAnswer.emit(UserProfileOperationResult.Loading)
     }
 
@@ -68,23 +75,26 @@ class UserInfoRepositoryImpl @Inject constructor(
         if (!isInternetAvailable()) return
         val currentUser = getValidatedCurrentUser() ?: return
 
-        emitLoading()
+        startLoading()
 
         val currentUserId = currentUser.uid
         val storageRef = storage.reference.child("images/$currentUserId")
         try {
-            val fileList = Tasks.await(storageRef.listAll()).items
-            fileList.forEach { fileRef ->
-                fileRef.delete().await()
+            withContext(Dispatchers.IO) {
+                val fileList = Tasks.await(storageRef.listAll()).items
+                fileList.forEach { fileRef ->
+                    fileRef.delete().await()
+                }
+
+                val fileName = uri.lastPathSegment ?: "profile_image"
+                val userFileRef = storageRef.child(fileName)
+
+                userFileRef.putFile(uri).await()
+
+                loadProfileInfo()
+                _requestAnswer.emit(UserProfileOperationResult.SuccessChangeProfilePhoto)
             }
 
-            val fileName = uri.lastPathSegment ?: "profile_image"
-            val userFileRef = storageRef.child(fileName)
-
-            userFileRef.putFile(uri).await()
-
-            loadProfileInfo()
-            _requestAnswer.emit(UserProfileOperationResult.SuccessChangeProfilePhoto)
         } catch (_: Exception) {
             _requestAnswer.emit(UserProfileOperationResult.Error)
         }
@@ -92,7 +102,7 @@ class UserInfoRepositoryImpl @Inject constructor(
 
 
     override suspend fun loadProfileInfo() {
-        
+
         if (!isInternetAvailable()) return
         val currentUser = getValidatedCurrentUser() ?: return
 
@@ -101,45 +111,58 @@ class UserInfoRepositoryImpl @Inject constructor(
         val email = currentUser.email ?: ""
         val isVerification = currentUser.isEmailVerified
 
-        val userInfo = UserInfo(
+        val userInfo = UserInfoGeneral(
             userName = name,
             profileUri = profilePhotoUri,
             email = email,
-            isVerificationAccount = isVerification
+            isVerificatedAccount = isVerification
         )
 
         _userInfoFlow.emit(userInfo)
     }
 
-    private fun getProfilePhotoUri(
+    private suspend fun getProfilePhotoUri(
         currentUser: FirebaseUser
     ): Uri {
-        val storageRef = storage.reference.child("images/${currentUser.uid}")
-        val fileList = Tasks.await(storageRef.listAll()).items
+        return withContext(Dispatchers.IO) {
+            val storageRef = storage.reference.child("images/${currentUser.uid}")
+            val fileList = Tasks.await(storageRef.listAll()).items
 
-        return if (fileList.isNotEmpty()) {
-            Tasks.await(fileList.first().downloadUrl)
-        } else {
-            Uri.parse("android.resource://${context.packageName}/${R.drawable.default_profile_image}")
+            return@withContext if (fileList.isNotEmpty()) {
+                Tasks.await(fileList.first().downloadUrl)
+            } else {
+                Uri.parse("android.resource://${context.packageName}/${R.drawable.default_profile_image}")
+            }
         }
+
     }
 
     override suspend fun changeUserName(name: String) {
         try {
             if (!isInternetAvailable()) return
             val currentUser = getValidatedCurrentUser() ?: return
-            emitLoading()
-            withContext(Dispatchers.IO) {
-                val profileUpdates = UserProfileChangeRequest.Builder()
-                    .setDisplayName(name)
-                    .build()
-
-                currentUser.updateProfile(profileUpdates).await()
-                loadProfileInfo()
-                _requestAnswer.emit(UserProfileOperationResult.SuccessChangeName)
-            }
+            startLoading()
+            changeUserNameOnFirebase(
+                currentUser = currentUser,
+                name = name
+            )
+            _requestAnswer.emit(UserProfileOperationResult.SuccessChangeName)
         } catch (e: Exception) {
             _requestAnswer.emit(UserProfileOperationResult.Error)
+        }
+    }
+
+    private suspend fun changeUserNameOnFirebase(
+        currentUser: FirebaseUser,
+        name: String
+    ) {
+        withContext(Dispatchers.IO) {
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build()
+
+            currentUser.updateProfile(profileUpdates).await()
+            loadProfileInfo()
         }
     }
 
@@ -150,18 +173,30 @@ class UserInfoRepositoryImpl @Inject constructor(
         try {
             if (!isInternetAvailable()) return
             val currentUser = getValidatedCurrentUser() ?: return
-            emitLoading()
-            withContext(Dispatchers.IO) {
-                val cred = EmailAuthProvider.getCredential(currentUser.email.toString(), currentPassword)
-
-                currentUser.reauthenticate(cred).await()
-                currentUser.verifyBeforeUpdateEmail(email).await()
-                _requestAnswer.emit(UserProfileOperationResult.SuccessChangeEmail)
-
-            }
+            startLoading()
+            changeEmailOnFirebase(
+                currentUser = currentUser,
+                email = email,
+                currentPassword = currentPassword
+            )
+            _requestAnswer.emit(UserProfileOperationResult.SuccessChangeEmail)
         } catch (e: Exception) {
-            Log.d("TEST_PIZDEC", e.message.toString())
             _requestAnswer.emit(UserProfileOperationResult.Error)
+        }
+    }
+
+    private suspend fun changeEmailOnFirebase(
+        currentUser: FirebaseUser,
+        email: String,
+        currentPassword: String
+    ) {
+        withContext(Dispatchers.IO) {
+            val cred =
+                EmailAuthProvider.getCredential(currentUser.email.toString(), currentPassword)
+
+            currentUser.reauthenticate(cred).await()
+            currentUser.verifyBeforeUpdateEmail(email).await()
+
         }
     }
 
@@ -172,22 +207,34 @@ class UserInfoRepositoryImpl @Inject constructor(
         try {
             if (!isInternetAvailable()) return
             val currentUser = getValidatedCurrentUser() ?: return
-            emitLoading()
+            startLoading()
             val email = currentUser.email ?: return
-            withContext(Dispatchers.IO) {
-                try {
-                    val credential = EmailAuthProvider.getCredential(email, currentPassword)
-                    currentUser.reauthenticate(credential).await()
-
-                    currentUser.updatePassword(newPassword).await()
-
-                    _requestAnswer.emit(UserProfileOperationResult.SuccessChangePassword)
-                } catch (e: Exception) {
-                    _requestAnswer.emit(UserProfileOperationResult.Error)
-                }
-            }
+            changePasswordOnFirebase(
+                currentUser = currentUser,
+                email = email,
+                currentPassword = currentPassword,
+                newPassword = newPassword
+            )
         } catch (e: Exception) {
             _requestAnswer.emit(UserProfileOperationResult.Error)
+        }
+    }
+
+    private suspend fun changePasswordOnFirebase(
+        currentUser: FirebaseUser,
+        email: String,
+        currentPassword: String,
+        newPassword: String
+    ) {
+        withContext(Dispatchers.IO) {
+
+            val credential = EmailAuthProvider.getCredential(email, currentPassword)
+            currentUser.reauthenticate(credential).await()
+
+            currentUser.updatePassword(newPassword).await()
+
+            _requestAnswer.emit(UserProfileOperationResult.SuccessChangePassword)
+
         }
     }
 
@@ -209,15 +256,13 @@ class UserInfoRepositoryImpl @Inject constructor(
     }
 
     override suspend fun verificateEmail() {
+        if (!isInternetAvailable()) return
+
+        val currentUser = getValidatedCurrentUser() ?: return
+        startLoading()
+
         try {
-            if (!isInternetAvailable()) return
-
-            val currentUser = getValidatedCurrentUser() ?: return
-
-            _requestAnswer.emit(UserProfileOperationResult.Loading)
-
             currentUser.sendEmailVerification().await()
-
             _requestAnswer.emit(UserProfileOperationResult.SuccessVerificationEmail)
         } catch (e: Exception) {
             _requestAnswer.emit(UserProfileOperationResult.Error)

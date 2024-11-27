@@ -1,10 +1,10 @@
 package com.akendardi.cryptowallet.domain.usecase.auth
 
-import com.akendardi.cryptowallet.data.repositories.internet_usecase.CheckInternetConnectionUseCase
+import com.akendardi.cryptowallet.domain.repository.InternetConnectionRepository
 import javax.inject.Inject
 
 class CheckInternetConnectionUseCase @Inject constructor(
-    private val checkInternetConnectionUseCase: CheckInternetConnectionUseCase
+    private val repository: InternetConnectionRepository
 ) {
-    operator fun invoke(): Boolean = checkInternetConnectionUseCase()
+    operator fun invoke(): Boolean = repository.checkInternetConnection()
 }

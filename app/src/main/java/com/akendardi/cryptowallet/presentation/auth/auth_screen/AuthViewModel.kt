@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.auth.auth_screen
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,6 @@ import com.akendardi.cryptowallet.domain.usecase.validators.PasswordValidator
 import com.akendardi.cryptowallet.domain.usecase.validators.UserNameValidator
 import com.akendardi.cryptowallet.domain.usecase.validators.UsernameValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -42,6 +40,7 @@ class AuthViewModel @Inject constructor(
     private fun observeAuthResult() {
         viewModelScope.launch {
             repository.authState.collect { result ->
+                Log.d("TEST_TEST", "observeAuthResult: $result")
                 _state.update {
                     it.copy(
                         authResult = result

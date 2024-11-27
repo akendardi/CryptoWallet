@@ -1,11 +1,11 @@
 package com.akendardi.cryptowallet.domain.usecase.crypto
 
-import com.akendardi.cryptowallet.domain.repository.CryptoRepository
+import com.akendardi.cryptowallet.domain.repository.CryptoRepositoryGeneralInfo
 import javax.inject.Inject
 
 class LoadAllCoinsListUseCase @Inject constructor(
-    private val cryptoRepository: CryptoRepository
+    private val cryptoRepositoryGeneralInfo: CryptoRepositoryGeneralInfo
 ) {
-    suspend operator fun invoke(page: Int = 0) =
-        cryptoRepository.loadAllCoinsList(page)
+    suspend operator fun invoke(page: Int) =
+        cryptoRepositoryGeneralInfo.loadAllCoins(page)
 }

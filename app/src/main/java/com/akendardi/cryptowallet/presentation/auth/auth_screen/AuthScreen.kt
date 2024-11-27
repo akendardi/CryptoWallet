@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.akendardi.cryptowallet.presentation.auth.auth_screen.components.AuthScreenContent
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.utils.HandleAuthResult
 
 @Composable
