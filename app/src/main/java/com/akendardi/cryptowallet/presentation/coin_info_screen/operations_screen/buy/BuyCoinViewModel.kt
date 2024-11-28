@@ -52,7 +52,11 @@ class BuyCoinViewModel @AssistedInject constructor(
                     Log.d("TEST_RESULT", "$result")
                     when (result) {
                         CoinOperationResult.Error -> {
-
+                            _state.update {
+                                it.copy(
+                                    operationResult = BuyOperationResult.Error
+                                )
+                            }
                         }
 
                         is CoinOperationResult.InfoLoaded -> {
@@ -72,7 +76,7 @@ class BuyCoinViewModel @AssistedInject constructor(
                         CoinOperationResult.LoadingOperation -> {
                             _state.update {
                                 it.copy(
-                                    isOperationLoading = true
+                                    operationResult = BuyOperationResult.Loading
                                 )
                             }
                         }
@@ -82,8 +86,7 @@ class BuyCoinViewModel @AssistedInject constructor(
                                 it.copy(
                                     operationResult = BuyOperationResult.Success(
                                         transactionId = result.transactionId
-                                    ),
-                                    isOperationLoading = false
+                                    )
                                 )
                             }
                             loadInfoForBuyingUseCase(symbol)
@@ -154,7 +157,6 @@ class BuyCoinViewModel @AssistedInject constructor(
                 imageUrl = result.coinImage,
                 currentPrice = PriceConverter.formatPrice(result.currentPrice),
                 currentFreeBalance = PriceConverter.formatPrice(result.freeBalance),
-                isOperationLoading = false,
                 isCanBuy = result.isAccountVerificated,
                 error = "",
                 amount = "",

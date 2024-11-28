@@ -66,7 +66,6 @@ fun BuyCoinScreenContent(
         if (state.isFirstLoading) {
             CoinInfoDetailLoading()
         } else {
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -113,9 +112,6 @@ fun BuyCoinScreenContent(
                 }
 
             }
-            if (state.isOperationLoading){
-                CoinInfoDetailLoading()
-            }
         }
     }
 }
@@ -133,8 +129,7 @@ private fun AlertDialogBuyCoinPreview() {
             amount = "412.34",
             isCanBuy = false,
             totalCount = "0.00043 BTC",
-            error = "a",
-            isOperationLoading = true
+            error = "a"
         ),
         onValueChanged = {}, {}
     )

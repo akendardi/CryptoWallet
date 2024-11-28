@@ -2,7 +2,6 @@ package com.akendardi.cryptowallet.presentation.coin_info_screen.operations_scre
 
 data class BuyCoinScreenState(
     val isFirstLoading: Boolean = true,
-    val isOperationLoading: Boolean = false,
     val isCanBuy: Boolean = false,
     val name: String = "",
     val symbol: String = "",
@@ -18,6 +17,8 @@ data class BuyCoinScreenState(
 sealed class BuyOperationResult{
 
     data object Initial: BuyOperationResult()
+
+    data object Loading: BuyOperationResult()
 
     data object Error: BuyOperationResult()
 
