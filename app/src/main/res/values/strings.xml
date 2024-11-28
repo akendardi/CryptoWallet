@@ -66,4 +66,6 @@
     <string name="free_balance">Доступный баланс:</string>
     <string name="total">Итого: </string>
     <string name="buy_screen_account_not_verificated">Ваш аккаунт не подтвержден, поэтому вы не можете покупать валюту. Чтобы подтвердить аккаунт, перейдите в настройки</string>
+    <string name="success_buy">Покупка совершена успешно. Номер транзакции - %1$s</string>
+    <string name="buy_error">Что-то пошло не так. Проверьте введенные данные и попробуйте еще раз.</string>
 </resources>
