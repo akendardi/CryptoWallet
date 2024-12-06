@@ -11,6 +11,7 @@ data class ProfileUiState(
     val currentScreen: ProfileScreen = ProfileScreen.Profile,
     val isOpenAnswerScreen: Boolean = false,
     val isLoading: Boolean = true,
+    val isRefreshing: Boolean = false,
     val requestAnswer: UserProfileOperationResult = UserProfileOperationResult.Initial,
     val error: String = ""
 )

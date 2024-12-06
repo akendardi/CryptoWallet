@@ -1,19 +1,17 @@
 package com.akendardi.cryptowallet.data.internet.dto.user
 
-import com.akendardi.cryptowallet.domain.entity.user_info.transactions.TransactionType
-
 data class BalanceInfoDto(
-    val totalBalance: Double? = null,
-    val freeBalance: Double? = null,
-    val lockedBalance: Double? = null,
-    val purchasedCoins: List<PurchasedCoinDto>? = null,
-    val transactions: List<TransactionDto>? = null
+    val freeBalance: Double = 0.0,
+    val purchasedCoins: List<PurchasedCoinDto> = listOf(),
+    val transactions: List<TransactionDto> = listOf()
 )
 
 data class PurchasedCoinDto(
-    val symbol: String? = null,
-    val buyPrice: Double? = null,
-    val count: Double? = null
+    val symbol: String = "",
+    val name: String = "",
+    val buyPrice: Double = 0.0,
+    val count: Double = 0.0,
+    val imageUrl: String = ""
 )
 
 data class TransactionDto(
@@ -21,8 +19,14 @@ data class TransactionDto(
     val type: String = "",
     val userId: String = "",
     val symbol: String = "",
+    val imageUrl: String = "",
     val price: Double = 0.0,
     val count: Double = 0.0,
     val amount: Double = 0.0,
     val time: Long = 0L
-)
+){
+    companion object{
+        const val TYPE_BUY = "buy"
+        const val TYPE_SELL = "sell"
+    }
+}

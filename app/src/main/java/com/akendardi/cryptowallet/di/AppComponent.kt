@@ -8,7 +8,7 @@ import dagger.Component
     modules = [
         DataModule::class,
         RepositoryModule::class,
-        FirebaseModule::class,
+        FirebaseModule::class
     ]
 )
 interface AppComponent {

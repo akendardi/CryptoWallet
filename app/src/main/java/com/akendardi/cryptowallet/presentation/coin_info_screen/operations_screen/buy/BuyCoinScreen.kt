@@ -21,6 +21,7 @@ import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_scree
 @Composable
 fun BuyCoinScreen(
     symbol: String,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -36,7 +37,8 @@ fun BuyCoinScreen(
     ){
         BuyCoinScreenContent(
             state = state,
-            onValueChanged = viewModel::changeAmount,
+            onValueChanged = viewModel::changeCount,
+            onBackClick = onBackClick,
             onBuyClick = viewModel::buyCoin
         )
         SnackbarHost(

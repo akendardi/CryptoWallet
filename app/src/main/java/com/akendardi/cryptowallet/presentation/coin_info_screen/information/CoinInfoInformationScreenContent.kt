@@ -54,7 +54,7 @@ fun CoinInfoInformationScreenContent(
         }
     ) {
         if (state.isLoading && state.coinInfoState.lastDateUpdate == "") {
-            CoinInfoDetailLoading()
+            BoxLoading()
         } else {
             LazyColumn(
                 modifier = Modifier
@@ -91,7 +91,7 @@ fun CoinInfoInformationScreenContent(
 
 
 @Composable
-fun CoinInfoDetailLoading(modifier: Modifier = Modifier) {
+fun BoxLoading(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()

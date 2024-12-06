@@ -158,29 +158,6 @@ fun ThemeDropDownMenuItem(
 }
 
 @Composable
-fun SettingsItemWithSwitched(
-    settingItem: SettingItem,
-    isEnabled: Boolean,
-    onCheckedChange: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        SettingsIconWithText(
-            settingItem = settingItem
-        )
-        Switch(checked = isEnabled, onCheckedChange = {
-            onCheckedChange()
-        })
-    }
-}
-
-@Composable
 fun SettingsItemWithArrow(
     settingItem: SettingItem,
     onItemClick: () -> Unit,

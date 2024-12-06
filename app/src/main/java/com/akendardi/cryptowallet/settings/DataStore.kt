@@ -15,7 +15,6 @@ val Context.dataStore by preferencesDataStore("settings_preferences")
 
 object SettingsKeys {
     val THEME_MODE = stringPreferencesKey("theme_mode")
-    val NOTIFICATIONS_ENABLED = booleanPreferencesKey("notifications_enabled")
 }
 
 class SettingsManager @Inject constructor(@ApplicationContext val context: Context) {
@@ -29,20 +28,6 @@ class SettingsManager @Inject constructor(@ApplicationContext val context: Conte
     suspend fun setThemeMode(themeMode: ThemeMode) {
         context.dataStore.edit { preferences ->
             preferences[SettingsKeys.THEME_MODE] = themeMode.name
-        }
-    }
-
-    val notificationsEnabledFlow: Flow<Boolean> = context.dataStore.data
-        .map { preferences ->
-            Log.d("SETTINGS_TEST", preferences[SettingsKeys.NOTIFICATIONS_ENABLED].toString())
-            preferences[SettingsKeys.NOTIFICATIONS_ENABLED] ?: true
-        }
-
-
-    suspend fun changeNotificationsEnabled() {
-        context.dataStore.edit { preferences ->
-            val currentSetting = preferences[SettingsKeys.NOTIFICATIONS_ENABLED] ?: false
-            preferences[SettingsKeys.NOTIFICATIONS_ENABLED] = !currentSetting
         }
     }
 }

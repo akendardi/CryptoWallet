@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImage
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbol
 
 @Composable
 fun SearchCoinItemContent(
@@ -51,7 +51,7 @@ fun SearchCoinItemContent(
                 imageUrl = coinInfoSearch.imageUrl
             )
 
-            CoinNameAndSymbolMainScreen(
+            CoinNameAndSymbol(
                 name = coinInfoSearch.name,
                 symbol = coinInfoSearch.symbol
             )

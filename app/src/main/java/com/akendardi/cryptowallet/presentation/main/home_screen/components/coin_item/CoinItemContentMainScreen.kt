@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinItemImage
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinDifferenceAndPriceMainScreen
-import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbolMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinNameAndSymbol
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.CoinPriceGraphMainScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.components.getDifferenceColor
 
@@ -53,7 +53,7 @@ fun CoinItemContentMainScreen(
                 imageUrl = coinInfoGeneral.imageUrl
             )
 
-            CoinNameAndSymbolMainScreen(
+            CoinNameAndSymbol(
                 name = coinInfoGeneral.name,
                 symbol = coinInfoGeneral.symbol,
                 modifier = Modifier.weight(0.8f)

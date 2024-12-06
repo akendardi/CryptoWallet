@@ -157,6 +157,8 @@ fun DependencyHandlerScope.materialDependencies() {
 
 fun DependencyHandlerScope.googleDependencies() {
     implementation("com.google.accompanist:accompanist-swiperefresh:0.36.0")
+    implementation ("com.google.accompanist:accompanist-navigation-animation:0.36.0")
+
 
 }
 
@@ -177,6 +179,8 @@ dependencies {
     materialDependencies()
     googleDependencies()
     implementation ("androidx.compose.foundation:foundation:1.7.5")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.3")
+
 
 
 }

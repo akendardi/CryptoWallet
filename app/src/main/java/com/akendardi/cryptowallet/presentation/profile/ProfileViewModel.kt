@@ -30,8 +30,13 @@ class ProfileViewModel @Inject constructor(
     init {
         subscribeUserInfoFlow()
         subscribeRequestAnswer()
-        subscribeNotifications()
         subscribeTheme()
+    }
+
+    fun refresh(){
+        viewModelScope.launch {
+            usersInfoUseCase()
+        }
     }
 
 
@@ -69,11 +74,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun changeNotificationsMode() {
-        viewModelScope.launch {
-            settingsManager.changeNotificationsEnabled()
-        }
-    }
 
     private fun subscribeUserInfoFlow() {
         viewModelScope.launch {
@@ -122,17 +122,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun subscribeNotifications() {
-        viewModelScope.launch {
-            settingsManager.notificationsEnabledFlow.collect { isEnabled ->
-                _state.update {
-                    it.copy(
-                        isNotificationsEnables = isEnabled,
-                    )
-                }
-            }
-        }
-    }
 
     fun uploadProfilePhoto(uri: Uri) {
         viewModelScope.launch {

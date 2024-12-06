@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -48,13 +49,12 @@ fun Profile(
 
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()){
         ProfileContent(
             name = state.generalUserInfo.userName,
             email = state.generalUserInfo.email,
             photoUri = state.generalUserInfo.profileUri,
             themeMode = state.themeMode,
-            isNotificationEnables = state.isNotificationsEnables,
             onThemeChanged = viewModel::changeTheme,
             onVerificationEmailClick = {
                 viewModel.openSettingAlertScreen(ProfileScreen.VerificationEmail)
@@ -68,7 +68,6 @@ fun Profile(
             onEditPasswordClick = {
                 viewModel.openSettingAlertScreen(ProfileScreen.EditPassword)
             },
-            onChangeNotificationsClick = viewModel::changeNotificationsMode,
             onButtonBackClick = {
                 viewModel.resetRequestAnswer()
                 onButtonBackClick()
@@ -91,10 +90,8 @@ fun Profile(
                 )
             }
         )
-
     }
-
-
+    
     HandleProfileResult(
         snackbarHostState = snackbarHostState,
         requestAnswer = state.requestAnswer,

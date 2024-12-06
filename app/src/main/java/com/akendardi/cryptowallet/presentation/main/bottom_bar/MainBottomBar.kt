@@ -22,17 +22,21 @@ import com.akendardi.cryptowallet.navigation.Screen
 
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
     val screens = listOf(
         Screen.BottomBarScreen.HomeScreen,
-        Screen.BottomBarScreen.SendScreen,
-        Screen.BottomBarScreen.WalletScreen
+        Screen.BottomBarScreen.WalletScreen,
+        Screen.BottomBarScreen.TransactionsScreen,
+
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar(
-        modifier = Modifier.height(100.dp),
+        modifier = modifier.height(100.dp),
         containerColor = MaterialTheme.colorScheme.surface
     ) {
         screens.forEach { screen ->

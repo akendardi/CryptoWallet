@@ -24,7 +24,7 @@ fun CoinInfoScreen(
         onTabSelected = viewModel::updateTab,
         onBackButtonClick = onBackButtonClick,
         onBuyClick = onBuyClick,
-        onSellClick = {}
+        onSellClick = onSellClick
     )
 }
 

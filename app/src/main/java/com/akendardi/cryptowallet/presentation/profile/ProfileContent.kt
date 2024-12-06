@@ -22,10 +22,8 @@ fun ProfileContent(
     photoUri: Uri,
     email: String,
     themeMode: ThemeMode,
-    isNotificationEnables: Boolean,
     onThemeChanged: (ThemeMode) -> Unit,
     onVerificationEmailClick: () -> Unit,
-    onChangeNotificationsClick: () -> Unit,
     onEditNameClick: () -> Unit,
     onEditEmailClick: () -> Unit,
     onEditPasswordClick: () -> Unit,
@@ -54,12 +52,10 @@ fun ProfileContent(
 
             SettingCard(
                 themeMode = themeMode,
-                isNotificationEnables = isNotificationEnables,
                 changeThemeMode = onThemeChanged,
                 onEditNameClick = onEditNameClick,
                 onEditEmailClick = onEditEmailClick,
                 onEditPasswordClick = onEditPasswordClick,
-                onChangeNotificationsClick = onChangeNotificationsClick,
                 onVerificationEmailClick = onVerificationEmailClick
             )
         }

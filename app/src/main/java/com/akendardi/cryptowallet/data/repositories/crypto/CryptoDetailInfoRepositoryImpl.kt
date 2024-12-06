@@ -24,6 +24,8 @@ class CryptoDetailInfoRepositoryImpl @Inject constructor(
     override val coinInfo: StateFlow<CryptoInfoLoadingResult> = _coinInfo.asStateFlow()
 
 
+
+
     override suspend fun loadCoinInfo(symbol: String) {
         startLoading()
         try {

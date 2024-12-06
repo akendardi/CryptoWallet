@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.ImageWithShimmerEffect
 
@@ -53,6 +54,8 @@ fun ProfileName(
         modifier = modifier,
         text = name,
         style = MaterialTheme.typography.titleLarge,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onBackground
     )
@@ -66,6 +69,8 @@ fun ProfileEmail(
     Text(
         modifier = modifier,
         text = email,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)

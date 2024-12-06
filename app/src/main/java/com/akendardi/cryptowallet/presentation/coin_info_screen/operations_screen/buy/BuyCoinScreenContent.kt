@@ -24,18 +24,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.R
-import com.akendardi.cryptowallet.presentation.coin_info_screen.information.CoinInfoDetailLoading
-import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.BalanceCard
+import com.akendardi.cryptowallet.presentation.coin_info_screen.information.BoxLoading
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.BalanceCardBuying
 import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.BuyingButton
-import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.BuyingResult
-import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.BuyingTextField
-import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.CoinCard
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.OperationResults
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.CoinsOperationsTextField
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.CoinCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuyCoinScreenContent(
     state: BuyCoinScreenState,
     onValueChanged: (String) -> Unit,
+    onBackClick: () -> Unit,
     onBuyClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -52,7 +53,7 @@ fun BuyCoinScreenContent(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.Default.ArrowBackIosNew,
                             contentDescription = "Back",
@@ -64,7 +65,7 @@ fun BuyCoinScreenContent(
         }
     ) { paddingValues ->
         if (state.isFirstLoading) {
-            CoinInfoDetailLoading()
+            BoxLoading()
         } else {
             Column(
                 modifier = Modifier
@@ -81,29 +82,29 @@ fun BuyCoinScreenContent(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
 
             ) {
-                BalanceCard(state.currentFreeBalance)
+                BalanceCardBuying(state.currentFreeBalance)
 
                 CoinCard(
                     name = state.name,
                     currentPrice = state.currentPrice,
                     imageUrl = state.imageUrl
                 )
-                BuyingTextField(
+                CoinsOperationsTextField(
                     isEnabled = state.isCanBuy,
-                    amount = state.amount,
+                    amount = state.count,
                     onValueChanged = onValueChanged,
                     error = state.error
                 )
 
-                BuyingResult(totalCount = state.totalCount)
+                OperationResults(totalCount = state.totalCount)
 
 
                 BuyingButton(
-                    isEnabled = state.error == "" && state.amount.isNotEmpty() && state.isCanBuy,
+                    isEnabled = state.error == "" && state.count.isNotEmpty() && state.isCanBuy,
                     onClick = onBuyClick
                 )
 
-                if(!state.isCanBuy){
+                if (!state.isCanBuy) {
                     Text(
                         text = stringResource(R.string.buy_screen_account_not_verificated),
                         style = MaterialTheme.typography.bodyLarge,
@@ -126,11 +127,11 @@ private fun AlertDialogBuyCoinPreview() {
             name = "Ethereum",
             currentPrice = "$1000",
             currentFreeBalance = "$124.34",
-            amount = "412.34",
+            count = "412.34",
             isCanBuy = false,
             totalCount = "0.00043 BTC",
             error = "a"
         ),
-        onValueChanged = {}, {}
+        onValueChanged = {}, {}, {}
     )
 }

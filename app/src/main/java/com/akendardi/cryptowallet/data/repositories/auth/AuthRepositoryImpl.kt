@@ -31,6 +31,10 @@ class AuthRepositoryImpl @Inject constructor(
     private val _authState = MutableStateFlow<AuthResult>(AuthResult.Initial)
     override val authState: StateFlow<AuthResult> = _authState.asStateFlow()
 
+    init {
+        Log.d("TEST_DAGGER", this.toString())
+    }
+
 
     override suspend fun createAccountWithEmail(
         name: String,
@@ -72,11 +76,8 @@ class AuthRepositoryImpl @Inject constructor(
         Log.d("AUTH_TEST", "Database reference initialized: $databaseReference")
 
         val initialBalance = UsersBalance(
-            totalBalance = 0.0,
             freeBalance = 0.0,
-            lockedBalance = 0.0,
-            purchasedCoins = listOf(),
-            transactions = listOf()
+            purchasedCoins = listOf()
         )
         Log.d("AUTH_TEST", "createUserBalanceInFirebaseDb:  create db $userId ")
 

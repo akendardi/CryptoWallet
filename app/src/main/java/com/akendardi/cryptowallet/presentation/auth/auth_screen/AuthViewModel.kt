@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.repository.AuthRepository
+import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.akendardi.cryptowallet.domain.usecase.auth.CreateAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.LogInAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.ResetPasswordUseCase
@@ -358,4 +359,5 @@ class AuthViewModel @Inject constructor(
             )
         }
     }
+
 }

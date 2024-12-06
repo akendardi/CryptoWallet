@@ -23,6 +23,7 @@ fun CanvasDays(
     modifier: Modifier = Modifier) {
     val primaryColorForDates = MaterialTheme.colorScheme.onBackground
     val secondaryColorForDates = MaterialTheme.colorScheme.surfaceVariant
+
     Canvas(
         modifier
     ) {
@@ -81,20 +82,26 @@ fun CanvasHours(
     intervals: Int,
     hoursOnScreen: List<List<String>>,
     modifier: Modifier = Modifier) {
+    val primaryColorForDates = MaterialTheme.colorScheme.onBackground
+    val secondaryColorForDates = MaterialTheme.colorScheme.surfaceVariant
     Canvas(
         modifier
     ) {
 
         drawXHours(
             intervals,
-            hoursOnScreen = hoursOnScreen
+            hoursOnScreen = hoursOnScreen,
+            primaryColor = primaryColorForDates,
+            secondaryColor = secondaryColorForDates
         )
     }
 }
 
 fun DrawScope.drawXHours(
     intervals: Int,
-    hoursOnScreen: List<List<String>>
+    hoursOnScreen: List<List<String>>,
+    primaryColor: Color,
+    secondaryColor: Color
 ) {
     val xStep = size.width / intervals
 
@@ -113,7 +120,7 @@ fun DrawScope.drawXHours(
                 textPadding * 2,
                 Paint().apply {
                     textSize = 14.sp.toPx()
-                    color = Color.White.toArgb()
+                    color = primaryColor.toArgb()
                     textAlign = Paint.Align.CENTER
                 }
             )
@@ -123,7 +130,7 @@ fun DrawScope.drawXHours(
                 textPadding,
                 Paint().apply {
                     textSize = 8.sp.toPx()
-                    color = Color.Gray.toArgb()
+                    color = secondaryColor.toArgb()
                     textAlign = Paint.Align.CENTER
                 }
             )

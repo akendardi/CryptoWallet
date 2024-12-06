@@ -13,9 +13,7 @@ import com.akendardi.cryptowallet.settings.ThemeMode
 @Composable
 fun SettingCard(
     themeMode: ThemeMode,
-    isNotificationEnables: Boolean,
     changeThemeMode: (ThemeMode) -> Unit,
-    onChangeNotificationsClick: () -> Unit,
     onVerificationEmailClick: () -> Unit,
     onEditNameClick: () -> Unit,
     onEditEmailClick: () -> Unit,
@@ -31,11 +29,9 @@ fun SettingCard(
     ) {
         SettingsContent(
             themeMode = themeMode,
-            isNotificationEnabled = isNotificationEnables,
             onChangeThemeClick = {
                 changeThemeMode(it)
             },
-            onChangeNotificationsClick = onChangeNotificationsClick,
             onVerificationEmailClick = onVerificationEmailClick,
             onEditNameClick = onEditNameClick,
             onEditEmailClick = onEditEmailClick,

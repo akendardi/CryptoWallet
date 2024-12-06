@@ -38,14 +38,13 @@ class CryptoRepositoryGeneralInfoImpl @Inject constructor(
         _topCoins.emit(newCoins)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun loadAllCoinsList(page: Int): List<CoinInfoGeneral> = coroutineScope {
-        val response = dataCoinsApiService.loadAllCoins(limit = 15, page = page)
+        val response = dataCoinsApiService.loadAllCoins(limit = 8, page = page)
 
         response.data
             .filter { it.detailPriceInfoDto != null }
             .map { coinData ->
-                async(Dispatchers.IO.limitedParallelism(10)) {
+                async(Dispatchers.IO) {
                     val plotInformation =
                         dataCoinsApiService.loadHourHistoricalInfo(fsym = coinData.coinInfo.symbol)
 

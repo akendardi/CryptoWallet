@@ -3,10 +3,12 @@ package com.akendardi.cryptowallet.presentation.main.home_screen
 import android.net.Uri
 import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
 import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
+import com.akendardi.cryptowallet.presentation.main.wallet_screen.BalanceUI
 
 data class HomeScreenUIState(
     val generalUserInfoState: UserInfoState = UserInfoState(),
-    val userBalanceState: BalanceInfo = BalanceInfo(),
+    val userBalanceState: BalanceUI = BalanceUI(),
+    val isBalanceLoading: Boolean = false,
     val coinsListState: CoinsListState = CoinsListState(),
     val screenMode: ScreenMode = ScreenMode.DEFAULT,
     val searchState: SearchState = SearchState(),
@@ -17,11 +19,6 @@ data class HomeScreenUIState(
 data class UserInfoState(
     val userName: String = "",
     val profileUri: Uri = Uri.parse(""),
-)
-
-data class BalanceInfo(
-    val totalBalance: String = "82,314.15$",
-    val differencePercentage: String = "+87.25%"
 )
 
 data class CoinsListState(

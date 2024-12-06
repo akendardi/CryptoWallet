@@ -93,7 +93,8 @@ private fun navigateAndDeleteOldScreen(
     navController: NavHostController,
     newScreen: Screen,
     oldScreen: Screen
-){
+) {
+    Log.d("NavigationDebug", "Navigating from ${oldScreen.route} to ${newScreen.route}")
     navController.navigate(newScreen.route) {
         popUpTo(oldScreen.route) {
             inclusive = true

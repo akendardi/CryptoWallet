@@ -3,10 +3,10 @@ package com.akendardi.cryptowallet.presentation.coin_info_screen.operations_scre
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.operations.BuyCoinUseCase
 import com.akendardi.cryptowallet.domain.states.coin_operations.CoinOperationResult
-import com.akendardi.cryptowallet.domain.usecase.operations.LoadInfoForBuyingUseCase
+import com.akendardi.cryptowallet.domain.usecase.operations.OperationsUseCase
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.utils.PriceConverter
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.OperationResult
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,12 +16,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @HiltViewModel(assistedFactory = BuyCoinViewModel.Factory::class)
 class BuyCoinViewModel @AssistedInject constructor(
     @Assisted private val symbol: String,
-    private val loadInfoForBuyingUseCase: LoadInfoForBuyingUseCase,
-    private val buyCoinUseCase: BuyCoinUseCase
+    private val operationsUseCase: OperationsUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(BuyCoinScreenState())
@@ -33,28 +33,27 @@ class BuyCoinViewModel @AssistedInject constructor(
 
     private fun startLoadingInfo() {
         viewModelScope.launch {
-            loadInfoForBuyingUseCase(symbol)
+            operationsUseCase.startLoadingInfo(symbol)
         }
     }
 
     fun buyCoin(){
         viewModelScope.launch {
-            buyCoinUseCase(symbol, PriceConverter.unFormatPrice(_state.value.amount))
+            operationsUseCase.buyCoin(symbol, PriceConverter.unFormatPrice(_state.value.count))
         }
     }
 
     private fun subscribeInfoForBuying() {
         viewModelScope.launch {
-            Log.d("TEST_RESULT", "viewModel: ${loadInfoForBuyingUseCase.getInfoForBuying()}")
-            loadInfoForBuyingUseCase
-                .getInfoForBuying()
+            operationsUseCase
+                .getInfo()
                 .collect { result ->
                     Log.d("TEST_RESULT", "$result")
                     when (result) {
                         CoinOperationResult.Error -> {
                             _state.update {
                                 it.copy(
-                                    operationResult = BuyOperationResult.Error
+                                    operationResult = OperationResult.Error
                                 )
                             }
                         }
@@ -76,7 +75,7 @@ class BuyCoinViewModel @AssistedInject constructor(
                         CoinOperationResult.LoadingOperation -> {
                             _state.update {
                                 it.copy(
-                                    operationResult = BuyOperationResult.Loading
+                                    operationResult = OperationResult.Loading
                                 )
                             }
                         }
@@ -84,12 +83,12 @@ class BuyCoinViewModel @AssistedInject constructor(
                         is CoinOperationResult.Success -> {
                             _state.update {
                                 it.copy(
-                                    operationResult = BuyOperationResult.Success(
+                                    operationResult = OperationResult.Success(
                                         transactionId = result.transactionId
                                     )
                                 )
                             }
-                            loadInfoForBuyingUseCase(symbol)
+                            operationsUseCase.startLoadingInfo(symbol)
                         }
 
                     }
@@ -97,25 +96,16 @@ class BuyCoinViewModel @AssistedInject constructor(
         }
     }
 
-    fun changeAmount(amount: String) {
+    fun changeCount(count: String) {
         _state.update {
             it.copy(
-                amount = amount.filterIndexed { index, char ->
+                count = count.filterIndexed { index, char ->
                     if (char.isDigit()) {
                         true
                     } else if (char == '.') {
-                        amount.indexOf('.') == index && index != 0
+                        count.indexOf('.') == index && index != 0
                     } else {
                         false
-                    }
-                }.let { filteredAmount ->
-                    if (filteredAmount.contains('.')) {
-                        val parts = filteredAmount.split('.')
-                        val wholePart = parts[0]
-                        val fractionalPart = parts.getOrNull(1)?.take(2) ?: ""
-                        "$wholePart.$fractionalPart"
-                    } else {
-                        filteredAmount
                     }
                 }
             )
@@ -125,11 +115,11 @@ class BuyCoinViewModel @AssistedInject constructor(
     }
 
     private fun countTotalCount() {
-        val amount = if (state.value.amount.isEmpty()) 0.0 else state.value.amount.toDouble()
-        val value = amount / PriceConverter.unFormatPrice(state.value.currentPrice)
+        val amount = if (state.value.count.isEmpty()) 0.0 else state.value.count.toDouble()
+        val value = amount * PriceConverter.unFormatPrice(state.value.currentPrice)
         _state.update {
             it.copy(
-                totalCount = value.toString()
+                totalCount = String.format(locale = Locale.getDefault(), format = "%.2f", value)
             )
         }
     }
@@ -137,9 +127,9 @@ class BuyCoinViewModel @AssistedInject constructor(
     private fun updateError() {
         _state.update {
             it.copy(
-                error = if (it.amount.isEmpty()) {
+                error = if (it.count.isEmpty()) {
                     ""
-                } else if (it.amount.toDouble() > PriceConverter.unFormatPrice(it.currentFreeBalance)) {
+                } else if (it.count.toDouble() * PriceConverter.unFormatPrice(it.currentPrice) > PriceConverter.unFormatPrice(it.currentFreeBalance)) {
                     "Недостаточно средств"
                 } else {
                     ""
@@ -159,7 +149,7 @@ class BuyCoinViewModel @AssistedInject constructor(
                 currentFreeBalance = PriceConverter.formatPrice(result.freeBalance),
                 isCanBuy = result.isAccountVerificated,
                 error = "",
-                amount = "",
+                count = "",
                 totalCount = "0.0"
             )
         }

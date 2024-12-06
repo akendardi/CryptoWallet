@@ -3,6 +3,7 @@ package com.akendardi.cryptowallet.presentation.coin_info_screen.components.titl
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -23,7 +24,6 @@ import com.akendardi.cryptowallet.presentation.coin_info_screen.CoinInfoState
 @Composable
 fun TitleCoinInfo(
     coinInfoState: CoinInfoState,
-    isNotificationsEnabled: Boolean,
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -46,13 +46,8 @@ fun TitleCoinInfo(
             name = coinInfoState.name,
             symbol = coinInfoState.symbol
         )
-
-        TitleNotificationsButton(
-            isNotificationsEnabled = isNotificationsEnabled,
-            onNotificationsButtonClick = {}
-        )
-
-
+        
+        Spacer(modifier = Modifier.size(50.dp))
     }
 }
 
