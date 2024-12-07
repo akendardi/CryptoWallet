@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.data.repositories.transactions
 
-import android.util.Log
 import com.akendardi.cryptowallet.data.internet.dto.user.TransactionDto
 import com.akendardi.cryptowallet.domain.repository.UsersTransactionsRepository
 import com.akendardi.cryptowallet.domain.states.transactions.TransactionsResult
@@ -39,10 +38,9 @@ class UsersTransactionsRepositoryImpl @Inject constructor(
             val transactions = (balance.getValue<List<TransactionDto>>()
                 ?: listOf()).map { transactionDtoToEntity(it) }.sortedByDescending { it.time }
 
-            Log.d("TRANSACTIONS_TEST", "loadUsersTransactions: $transactions")
 
             _transactionsResult.emit(TransactionsResult.Success(transactions))
-        } catch (e: Exception){
+        } catch (e: Exception) {
             _transactionsResult.emit(TransactionsResult.Error)
         }
 

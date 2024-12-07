@@ -32,24 +32,30 @@ fun AlertRemoveFromBalanceContent(
         AlertDialog(
             modifier = modifier,
             onDismissRequest = onDismiss,
-            title = { Text(text = "Вывод") },
+            title = { Text(text = stringResource(R.string.withdrawal)) },
             text = {
                 Column {
-                    Text(text = "Введите сумму вывода")
+                    Text(text = stringResource(R.string.enter_withdrawal_amount))
                     CoinsOperationsTextField(
                         isEnabled = true,
                         amount = balanceOperationsState.amount,
                         onValueChanged = onValueChange,
                         error = balanceOperationsState.error
                     )
-                    Text(text = "Доступный баланс: ${balanceOperationsState.currentBalance}")
+                    Text(
+                        text = stringResource(
+                            R.string.available_balance,
+                            balanceOperationsState.currentBalance
+                        )
+                    )
                 }
             },
             confirmButton = {
                 TextButton(
                     enabled = balanceOperationsState.error == "",
-                    onClick = onButtonClick) {
-                    Text(text = "Вывести")
+                    onClick = onButtonClick
+                ) {
+                    Text(text = stringResource(id = R.string.withdraw))
                 }
             },
             dismissButton = {

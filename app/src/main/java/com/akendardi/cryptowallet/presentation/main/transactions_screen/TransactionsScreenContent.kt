@@ -13,7 +13,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.presentation.main.transactions_screen.components.NoTransactionsText
 import com.akendardi.cryptowallet.presentation.main.transactions_screen.components.TransactionItem
@@ -71,18 +70,4 @@ fun TransactionsScreenContent(
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-private fun Preview() {
-    TransactionsScreenContent(
-        transactions = listOf(
-        ),
-        isRefreshing = false,
-        onRefresh = {},
-        isLoading = false,
-        paddingValues = PaddingValues()
-    )
 }

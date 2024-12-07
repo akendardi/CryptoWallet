@@ -1,17 +1,12 @@
 package com.akendardi.cryptowallet.data.repositories.balance
 
-import android.util.Log
 import com.akendardi.cryptowallet.data.internet.dto.user.BalanceInfoDto
 import com.akendardi.cryptowallet.domain.repository.BalanceOperationRepository
 import com.akendardi.cryptowallet.domain.states.balance_operations.BalanceOperationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -25,14 +20,6 @@ class BalanceOperationRepositoryImpl @Inject constructor(
     override val currentFreeBalance = _currentFreeBalance.asStateFlow()
     override suspend fun resetInfo() {
         _currentFreeBalance.emit(BalanceOperationResult.Initial)
-    }
-
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            _currentFreeBalance.collect{
-                Log.d("REPOSITORY_TEST", "$it ")
-            }
-        }
     }
 
 
@@ -83,7 +70,7 @@ class BalanceOperationRepositoryImpl @Inject constructor(
             _currentFreeBalance.emit(BalanceOperationResult.LoadingOperation)
             val currentBalance = getBalance()
             val newFreeBalance = currentBalance.freeBalance - amount
-            if (newFreeBalance < 0){
+            if (newFreeBalance < 0) {
                 return
             }
             val newBalance = currentBalance.copy(

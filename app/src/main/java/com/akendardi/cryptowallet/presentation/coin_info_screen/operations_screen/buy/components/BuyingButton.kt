@@ -7,6 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.akendardi.cryptowallet.R
 
 
 @Composable
@@ -22,7 +24,7 @@ fun BuyingButton(
         enabled = isEnabled
     ) {
         Text(
-            text = "Подтвердить покупку",
+            text = stringResource(R.string.confirm_purchase),
             style = MaterialTheme.typography.titleLarge
         )
     }

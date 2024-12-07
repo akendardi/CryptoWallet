@@ -12,12 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.balance.BalanceDifference
 import com.akendardi.cryptowallet.presentation.main.wallet_screen.BalanceUI
-import com.akendardi.cryptowallet.presentation.main.wallet_screen.PriceDifference
 
 @Composable
 fun WalletBalanceInfo(
@@ -65,19 +63,4 @@ fun WalletBalanceInfo(
 
         }
     }
-}
-
-
-@Preview
-@Composable
-private fun WalletPreview() {
-    WalletBalanceInfo(
-        balanceUI = BalanceUI(
-            totalBalance = "$1 000 932.00",
-            freeBalance = "$1 000 932.00",
-            percentageDifference = "100.00%",
-            priceDifference = PriceDifference.POSITIVE,
-            dollarsDifference = "$48 952.67"
-        ), { /*TODO*/ }, { /*TODO*/ }
-    )
 }

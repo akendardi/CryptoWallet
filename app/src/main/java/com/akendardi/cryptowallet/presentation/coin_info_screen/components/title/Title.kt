@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.NotificationsActive
-import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +44,7 @@ fun TitleCoinInfo(
             name = coinInfoState.name,
             symbol = coinInfoState.symbol
         )
-        
+
         Spacer(modifier = Modifier.size(50.dp))
     }
 }
@@ -62,29 +60,6 @@ fun TitleBackButton(
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBackIosNew,
-            tint = MaterialTheme.colorScheme.onBackground,
-            contentDescription = null
-        )
-    }
-}
-
-@Composable
-fun TitleNotificationsButton(
-    isNotificationsEnabled: Boolean,
-    onNotificationsButtonClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    IconButton(
-        modifier = modifier.size(50.dp),
-        onClick = onNotificationsButtonClick
-    ) {
-        val imageVector = if (isNotificationsEnabled) {
-            Icons.Default.NotificationsActive
-        } else {
-            Icons.Default.NotificationsNone
-        }
-        Icon(
-            imageVector = imageVector,
             tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = null
         )

@@ -24,7 +24,6 @@ fun InfoText(
         textAlign = TextAlign.Start,
         fontSize = 15.sp,
         style = MaterialTheme.typography.titleLarge,
-        fontWeight = FontWeight.Bold,
         modifier = modifier
             .padding(
                 PaddingValues(

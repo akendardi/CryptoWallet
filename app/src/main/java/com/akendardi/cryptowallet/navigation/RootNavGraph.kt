@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.navigation
 
-import android.util.Log
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -33,7 +32,6 @@ fun RootNavGraph(
                         newScreen = Screen.MainScreenNavGraph,
                         oldScreen = Screen.AuthScreen
                     )
-                    Log.d("Navigation", "Navigating to MainScreenNavGraph")
                 },
                 goToHelloScreen = {
                     navigateAndDeleteOldScreen(
@@ -41,7 +39,6 @@ fun RootNavGraph(
                         newScreen = Screen.HelloScreen,
                         oldScreen = Screen.AuthScreen
                     )
-                    Log.d("Navigation", "Navigating to HelloScreen")
                 }
             )
         }
@@ -74,7 +71,6 @@ fun RootNavGraph(
                         newScreen = Screen.MainScreenNavGraph,
                         oldScreen = Screen.SplashScreen
                     )
-                    Log.d("Navigation", "Navigating to MainScreenNavGraph")
                 },
                 unLogin = {
                     navigateAndDeleteOldScreen(
@@ -94,7 +90,6 @@ private fun navigateAndDeleteOldScreen(
     newScreen: Screen,
     oldScreen: Screen
 ) {
-    Log.d("NavigationDebug", "Navigating from ${oldScreen.route} to ${newScreen.route}")
     navController.navigate(newScreen.route) {
         popUpTo(oldScreen.route) {
             inclusive = true

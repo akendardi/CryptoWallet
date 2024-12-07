@@ -9,9 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.presentation.theme.PositiveDifferenceColor
 
 
@@ -32,14 +33,14 @@ fun SellCoinOperation(
         ) {
             Text(
                 style = MaterialTheme.typography.titleMedium,
-                text = "Продажа $count",
+                text = stringResource(R.string.selling_with_count, count),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.surfaceVariant,
-                text = "Транзакция: $transactionId",
+                text = stringResource(R.string.transaction_with_number, transactionId),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -52,10 +53,4 @@ fun SellCoinOperation(
             color = PositiveDifferenceColor,
         )
     }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    SellCoinOperation(transactionId = "1", amount = "2000 0000", count = "0.00043")
 }

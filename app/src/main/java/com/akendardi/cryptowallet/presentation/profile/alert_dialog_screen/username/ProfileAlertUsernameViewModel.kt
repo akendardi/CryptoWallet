@@ -2,12 +2,11 @@ package com.akendardi.cryptowallet.presentation.profile.alert_dialog_screen.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.ChangeUserInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
 import com.akendardi.cryptowallet.domain.usecase.validators.UserNameValidator
 import com.akendardi.cryptowallet.domain.usecase.validators.UsernameValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -31,7 +30,7 @@ class ProfileAlertUsernameViewModel @Inject constructor(
         observeUserInfo()
     }
 
-    private fun observeUserInfo(){
+    private fun observeUserInfo() {
         viewModelScope.launch {
             usersInfoUseCase.observeUserInfo().collect { userInfo ->
                 _state.update {
@@ -44,7 +43,7 @@ class ProfileAlertUsernameViewModel @Inject constructor(
         }
     }
 
-    fun resetInfo(){
+    fun resetInfo() {
         isFirstAttempt = true
         _state.update {
             it.copy(
@@ -64,13 +63,13 @@ class ProfileAlertUsernameViewModel @Inject constructor(
         }
     }
 
-    private fun isCorrectUserName(): Boolean{
+    private fun isCorrectUserName(): Boolean {
         return userNameValidator(_state.value.name) == UsernameValidationResult.CORRECT
     }
 
     fun saveChange(): Boolean {
         isFirstAttempt = false
-        if (isCorrectUserName()){
+        if (isCorrectUserName()) {
             viewModelScope.launch {
                 changeUserInfoUseCase.changeName(state.value.name)
             }

@@ -9,10 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.akendardi.cryptowallet.presentation.main.wallet_screen.WalletScreen
 import com.akendardi.cryptowallet.presentation.main.home_screen.HomeScreen
 import com.akendardi.cryptowallet.presentation.main.transactions_screen.TransactionsScreen
-import com.akendardi.cryptowallet.presentation.main.wallet_screen.WalletScreenContent
+import com.akendardi.cryptowallet.presentation.main.wallet_screen.WalletScreen
 
 @Composable
 fun BottomBarNavGraph(

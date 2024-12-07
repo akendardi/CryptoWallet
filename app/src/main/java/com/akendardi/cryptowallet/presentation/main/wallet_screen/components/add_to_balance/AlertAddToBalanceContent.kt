@@ -32,10 +32,10 @@ fun AlertAddToBalanceContent(
         AlertDialog(
             modifier = modifier,
             onDismissRequest = onDismiss,
-            title = { Text(text = "Пополнение") },
+            title = { Text(text = stringResource(R.string.replenishment)) },
             text = {
                 Column {
-                    Text(text = "Введите сумму пополнения")
+                    Text(text = stringResource(R.string.replenishment_sum))
                     CoinsOperationsTextField(
                         isEnabled = true,
                         amount = balanceOperationsState.amount,

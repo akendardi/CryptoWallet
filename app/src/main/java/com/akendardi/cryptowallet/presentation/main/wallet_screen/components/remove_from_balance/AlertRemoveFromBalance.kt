@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.main.wallet_screen.components.remove_from_balance
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,7 +15,6 @@ fun AlertRemoveFromBalance(
     viewModel: AlertRemoveFromBalanceViewModel = hiltViewModel(
     )
 ) {
-    val TAG = "AlertRemoveFromBalance"
 
     val state by viewModel.state.collectAsState()
     LaunchedEffect(Unit) {
@@ -27,19 +25,16 @@ fun AlertRemoveFromBalance(
         BalanceOperationUiResult.Error -> {}
 
         BalanceOperationUiResult.Initial -> {
-            Log.d(TAG, "AlertRemoveFromBalance: Initial")
         }
+
         BalanceOperationUiResult.Loading -> {
-            Log.d(TAG, "AlertRemoveFromBalance: Loading")
             LoadingProgressBar()
         }
 
         BalanceOperationUiResult.LoadingBalance -> {
-            Log.d(TAG, "AlertRemoveFromBalance: LoadingBalance")
         }
 
         BalanceOperationUiResult.Success -> {
-            Log.d(TAG, "AlertRemoveFromBalance: Success")
             viewModel.resetInfo()
             closeScreenAfterAdd()
         }

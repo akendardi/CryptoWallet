@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.states.coin_operations.CoinOperationResult
@@ -26,6 +25,7 @@ class BuyCoinViewModel @AssistedInject constructor(
 
     private val _state = MutableStateFlow(BuyCoinScreenState())
     val state: StateFlow<BuyCoinScreenState> = _state.asStateFlow()
+
     init {
         startLoadingInfo()
         subscribeInfoForBuying()
@@ -37,7 +37,7 @@ class BuyCoinViewModel @AssistedInject constructor(
         }
     }
 
-    fun buyCoin(){
+    fun buyCoin() {
         viewModelScope.launch {
             operationsUseCase.buyCoin(symbol, PriceConverter.unFormatPrice(_state.value.count))
         }
@@ -48,7 +48,6 @@ class BuyCoinViewModel @AssistedInject constructor(
             operationsUseCase
                 .getInfo()
                 .collect { result ->
-                    Log.d("TEST_RESULT", "$result")
                     when (result) {
                         CoinOperationResult.Error -> {
                             _state.update {
@@ -129,7 +128,10 @@ class BuyCoinViewModel @AssistedInject constructor(
             it.copy(
                 error = if (it.count.isEmpty()) {
                     ""
-                } else if (it.count.toDouble() * PriceConverter.unFormatPrice(it.currentPrice) > PriceConverter.unFormatPrice(it.currentFreeBalance)) {
+                } else if (it.count.toDouble() * PriceConverter.unFormatPrice(it.currentPrice) > PriceConverter.unFormatPrice(
+                        it.currentFreeBalance
+                    )
+                ) {
                     "Недостаточно средств"
                 } else {
                     ""

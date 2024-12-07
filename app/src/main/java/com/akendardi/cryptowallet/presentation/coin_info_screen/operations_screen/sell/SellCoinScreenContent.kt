@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.BoxLoading
@@ -121,23 +120,4 @@ fun SellCoinScreenContent(
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-private fun AlertDialogBuyCoinPreview() {
-    SellCoinScreenContent(
-        state = SellCoinScreenState(
-            isFirstLoading = false,
-            name = "Ethereum",
-            currentPrice = "$1000",
-            usersBalanceForCurrentCoin = "$124.34",
-            countValue = "412.34",
-            isCanBuy = false,
-            usersCoinsCount = "0.00043 BTC",
-            error = "a"
-        ),
-        onValueChanged = {}, {}, {}
-    )
 }

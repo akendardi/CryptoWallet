@@ -22,13 +22,13 @@ class TransactionsScreenViewModel @Inject constructor(
 
     private var isLoadingWas = false
 
-     fun loadData() {
+    fun loadData() {
         viewModelScope.launch {
             usersTransactionUseCase.loadUsersTransactions()
         }
     }
 
-    private fun subscribeResult(){
+    private fun subscribeResult() {
         viewModelScope.launch {
             usersTransactionUseCase.getUserTransactions().collect { result ->
                 when (result) {
@@ -66,7 +66,11 @@ class TransactionsScreenViewModel @Inject constructor(
                                 isFirstLoading = false,
                                 isError = false,
                                 isRefreshing = false,
-                                transactions = result.transactions.map { transactionToUi(it) }
+                                transactions = result.transactions.map { transaction ->
+                                    transactionToUi(
+                                        transaction
+                                    )
+                                }
                             )
                         }
                     }

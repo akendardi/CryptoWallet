@@ -12,10 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.akendardi.cryptowallet.R
 
 @Composable
 fun BalanceCardBuying(
@@ -35,7 +36,7 @@ fun BalanceCardBuying(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
-                text = "Текущий баланс: ",
+                text = stringResource(id = R.string.current_balance),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.surfaceVariant
             )
@@ -49,12 +50,4 @@ fun BalanceCardBuying(
             )
         }
     }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    BalanceCardBuying(
-        currentLockedBalanceForCoin = "$200"
-    )
 }

@@ -26,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.presentation.theme.ShimmerColorShades
 
@@ -57,10 +56,12 @@ fun ShimmerBalance(
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.5f)
-                    .background(brush))
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.5f)
+                        .background(brush)
+                )
             }
 
             Column(
@@ -69,10 +70,12 @@ fun ShimmerBalance(
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.4f)
-                    .background(brush))
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.4f)
+                        .background(brush)
+                )
             }
 
         }
@@ -106,14 +109,4 @@ fun ShimmerAnimationBalance(
         modifier = modifier,
         brush = brush
     )
-}
-
-
-@Preview
-@Composable
-private fun ShimmerBalancePreview() {
-    val brush = Brush.linearGradient(
-        colors = ShimmerColorShades
-    )
-    ShimmerBalance(brush)
 }

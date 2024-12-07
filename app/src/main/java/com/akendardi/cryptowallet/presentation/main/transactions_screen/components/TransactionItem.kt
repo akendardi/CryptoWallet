@@ -13,7 +13,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.domain.entity.user_info.transactions.TransactionType
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.ImageWithShimmerEffect
@@ -61,18 +60,5 @@ fun TransactionItem(
 
         }
     }
-}
-
-
-@Preview
-@Composable
-private fun Preview() {
-    TransactionItem(
-        transactionId = "1",
-        type = TransactionType.Sell,
-        coinImage = "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
-        amount = "-$20000000000000000000000000000000000",
-        count = "0.00043 BTC"
-    )
 }
 

@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.data.repositories.coin_operations
 
-import android.util.Log
 import com.akendardi.cryptowallet.data.internet.api.AssetsCoinsApiService
 import com.akendardi.cryptowallet.data.internet.dto.user.BalanceInfoDto
 import com.akendardi.cryptowallet.data.internet.dto.user.PurchasedCoinDto
@@ -63,7 +62,6 @@ class OperationsCoinRepositoryImpl @Inject constructor(
             lockedBalanceForCurrentCoin = lockedBalanceForCoin,
             currentCoinsCount = currentPurchasedCoin?.count ?: 0.0
         )
-        Log.d("REPOSITORY_TEST", "getLockedBalanceForCoin: $result")
 
         _operationResult.emit(result)
 
@@ -106,10 +104,6 @@ class OperationsCoinRepositoryImpl @Inject constructor(
                 count = sumCount, buyPrice = newPrice, symbol = symbol, imageUrl = imageUrl
             )
         }
-
-
-
-
 
         return oldListCoins.toMutableList().apply {
             remove(currentPurchasedCoin)
@@ -191,9 +185,8 @@ class OperationsCoinRepositoryImpl @Inject constructor(
             return
         }
         val currentCoinBalanceItem =
-            balance.purchasedCoins?.find { it.symbol == symbol } ?: PurchasedCoinDto()
-        if ((currentCoinBalanceItem.count ?: 0.0) < count) {
-            Log.d("TEST_SELL", "sellCoin: $currentCoinBalanceItem $amount")
+            balance.purchasedCoins.find { it.symbol == symbol } ?: PurchasedCoinDto()
+        if (currentCoinBalanceItem.count < count) {
             _operationResult.emit(CoinOperationResult.Error)
             return
         }

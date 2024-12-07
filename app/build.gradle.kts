@@ -98,6 +98,7 @@ fun DependencyHandlerScope.androidxDependencies() {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     ksp(libs.androidx.lifecycle.compiler)
+    implementation(libs.androidx.foundation)
 }
 
 fun DependencyHandlerScope.testDependencies() {
@@ -112,10 +113,12 @@ fun DependencyHandlerScope.testDependencies() {
     testImplementation("org.mockito:mockito-junit-jupiter:4.0.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     testImplementation("org.mockito:mockito-inline:3.11.2")
-    testImplementation ("com.squareup.okhttp3:mockwebserver:4.9.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
 
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
+
+    androidTestImplementation(libs.ui.test.junit4)
 
 }
 
@@ -144,6 +147,7 @@ fun DependencyHandlerScope.firebaseDependencies() {
 fun DependencyHandlerScope.accompanistDependencies() {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.swiperefresh)
 }
 
 fun DependencyHandlerScope.coilDependencies() {
@@ -155,15 +159,7 @@ fun DependencyHandlerScope.materialDependencies() {
     implementation(libs.icons)
 }
 
-fun DependencyHandlerScope.googleDependencies() {
-    implementation("com.google.accompanist:accompanist-swiperefresh:0.36.0")
-    implementation ("com.google.accompanist:accompanist-navigation-animation:0.36.0")
-
-
-}
-
 dependencies {
-
 
     retrofitDependencies()
     testDependencies()
@@ -177,10 +173,5 @@ dependencies {
     accompanistDependencies()
     coilDependencies()
     materialDependencies()
-    googleDependencies()
-    implementation ("androidx.compose.foundation:foundation:1.7.5")
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.3")
-
-
 
 }

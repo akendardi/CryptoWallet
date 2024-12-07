@@ -39,7 +39,10 @@ class SellCoinViewModel @AssistedInject constructor(
 
     fun sellCoin() {
         viewModelScope.launch {
-            operationsUseCase.sellCoin(symbol, PriceConverter.unFormatPrice(_state.value.countValue))
+            operationsUseCase.sellCoin(
+                symbol,
+                PriceConverter.unFormatPrice(_state.value.countValue)
+            )
         }
     }
 
@@ -114,7 +117,8 @@ class SellCoinViewModel @AssistedInject constructor(
     }
 
     private fun countTotalCount() {
-        val amount = if (state.value.countValue.isEmpty()) 0.0 else state.value.countValue.toDouble()
+        val amount =
+            if (state.value.countValue.isEmpty()) 0.0 else state.value.countValue.toDouble()
         val value = amount * PriceConverter.unFormatPrice(state.value.currentPrice)
         _state.update {
             it.copy(

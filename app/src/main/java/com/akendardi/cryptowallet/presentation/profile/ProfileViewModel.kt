@@ -33,12 +33,6 @@ class ProfileViewModel @Inject constructor(
         subscribeTheme()
     }
 
-    fun refresh(){
-        viewModelScope.launch {
-            usersInfoUseCase()
-        }
-    }
-
 
     fun openSettingAlertScreen(screen: ProfileScreen) {
         _state.update {

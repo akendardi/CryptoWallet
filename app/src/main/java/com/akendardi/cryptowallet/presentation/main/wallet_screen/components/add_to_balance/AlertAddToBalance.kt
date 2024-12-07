@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.main.wallet_screen.components.add_to_balance
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,7 +15,6 @@ fun AlertAddToBalance(
 
     )
 ) {
-    val TAG = "AlertRemoveFromBalance"
 
     val state by viewModel.state.collectAsState()
 
@@ -24,19 +22,16 @@ fun AlertAddToBalance(
         BalanceOperationUiResult.Error -> {}
 
         BalanceOperationUiResult.Initial -> {
-            Log.d(TAG, "AlertAddToBalance: Initial")
         }
+
         BalanceOperationUiResult.Loading -> {
             LoadingProgressBar()
-            Log.d(TAG, "AlertAddToBalance: Loading")
         }
 
         BalanceOperationUiResult.LoadingBalance -> {
-            Log.d(TAG, "AlertAddToBalance: LoadingBalance")
         }
 
         BalanceOperationUiResult.Success -> {
-            Log.d(TAG, "AlertAddToBalance: Success")
             viewModel.resetInfo()
             closeScreenAfterAdd()
         }

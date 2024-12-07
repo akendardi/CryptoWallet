@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.ImageWithShimmerEffect
 import com.akendardi.cryptowallet.presentation.main.wallet_screen.PriceDifference
@@ -109,7 +108,7 @@ fun CoinPriceAndDifference(
     modifier: Modifier = Modifier
 ) {
 
-    val textColor = when(differenceType){
+    val textColor = when (differenceType) {
         PriceDifference.POSITIVE -> PositiveDifferenceColor
         PriceDifference.NEGATIVE -> NegativeDifferenceColor
         PriceDifference.NONE -> Color.Gray
@@ -152,22 +151,4 @@ fun CoinPriceAndDifference(
 
 
     }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    WalletsCoinItem(
-        coin =
-        PurchasedCoinUI(
-            name = "Bitcoinasdas",
-            imageUrl = "",
-            totalPrice = "$1 000 932.00",
-            percentageDifference = "+100.00%",
-            differenceType = PriceDifference.NONE,
-            count = "1.51 BTC",
-            dollarsDifference = "+$48 952.67"
-        ),
-        { _, _ -> },
-    )
 }

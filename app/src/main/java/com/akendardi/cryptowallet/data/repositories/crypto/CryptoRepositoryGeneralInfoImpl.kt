@@ -7,7 +7,6 @@ import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 import com.akendardi.cryptowallet.domain.repository.CryptoRepositoryGeneralInfo
 import com.akendardi.cryptowallet.mapper.toEntityMainScreen
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope

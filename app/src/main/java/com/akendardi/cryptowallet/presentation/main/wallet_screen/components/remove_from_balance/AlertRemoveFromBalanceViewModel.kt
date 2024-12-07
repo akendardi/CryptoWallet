@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.main.wallet_screen.components.remove_from_balance
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.states.balance_operations.BalanceOperationResult
@@ -27,8 +26,7 @@ class AlertRemoveFromBalanceViewModel @Inject constructor(
         subscribeOperationsResult()
     }
 
-    fun loadBalance(){
-        Log.d("VIEW_MODEL_TEST", "loadBalance: ")
+    fun loadBalance() {
         viewModelScope.launch {
             balanceOperationsUseCase.loadBalance()
         }
@@ -55,7 +53,6 @@ class AlertRemoveFromBalanceViewModel @Inject constructor(
     private fun subscribeOperationsResult() {
         viewModelScope.launch {
             balanceOperationsUseCase.getBalanceOperationsResult().collect { result ->
-                Log.d("AlertRemoveFromBalanceViewModel", "$result")
                 when (result) {
                     is BalanceOperationResult.BalanceLoaded -> {
                         _state.update {

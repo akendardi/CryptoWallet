@@ -132,15 +132,17 @@ fun balanceDtoToEntity(
 }
 
 fun balanceToUi(balance: UsersBalance): BalanceUI {
-    val totalBalance = balance.freeBalance + balance.purchasedCoins.sumOf { it.currentPrice * it.count }
+    val totalBalance =
+        balance.freeBalance + balance.purchasedCoins.sumOf { it.currentPrice * it.count }
     val difference =
         balance.purchasedCoins.sumOf { it.count * (it.currentPrice - it.buyPrice) }
 
-    val percentDifference = if (totalBalance != 0.0) (difference / (balance.purchasedCoins.sumOf { it.count * it.buyPrice } + balance.freeBalance)) * 100 else 0.0
+    val percentDifference =
+        if (totalBalance != 0.0) (difference / (balance.purchasedCoins.sumOf { it.count * it.buyPrice } + balance.freeBalance)) * 100 else 0.0
     val percentToCompare = (percentDifference * 100).toInt() / 100.0
     val differenceType = if (percentToCompare > 0) {
         PriceDifference.POSITIVE
-    } else if (percentToCompare == 0.0){
+    } else if (percentToCompare == 0.0) {
         PriceDifference.NONE
     } else {
         PriceDifference.NEGATIVE
@@ -148,7 +150,7 @@ fun balanceToUi(balance: UsersBalance): BalanceUI {
 
     val formattedDifference = PriceConverter.formatPrice(difference.absoluteValue)
 
-    val differenceSign= when(differenceType){
+    val differenceSign = when (differenceType) {
         PriceDifference.POSITIVE -> "+"
         PriceDifference.NEGATIVE -> "-"
         PriceDifference.NONE -> "~"
@@ -173,7 +175,7 @@ fun purchasedCoinToUI(purchasedCoin: PurchasedCoin): PurchasedCoinUI {
     val dollarsDifference = ((difference.absoluteValue * count) * 100).toInt() / 100.0
     val differenceType = if (dollarsDifference > 0) {
         PriceDifference.POSITIVE
-    } else if (dollarsDifference == 0.0){
+    } else if (dollarsDifference == 0.0) {
         PriceDifference.NONE
     } else {
         PriceDifference.NEGATIVE
@@ -188,12 +190,10 @@ fun purchasedCoinToUI(purchasedCoin: PurchasedCoin): PurchasedCoinUI {
         totalPrice = PriceConverter.formatPrice(purchasedCoin.currentPrice * count),
         percentageDifference = "%.2f".format(percentDifference.absoluteValue) + "%",
         differenceType = differenceType,
-        dollarsDifference = if (differenceType == PriceDifference.POSITIVE) {
-            "+$dollarsDifferenceFormatted"
-        } else if (differenceType == PriceDifference.NONE) {
-            "~$dollarsDifferenceFormatted"
-        } else {
-            "-$dollarsDifferenceFormatted"
+        dollarsDifference = when (differenceType) {
+            PriceDifference.POSITIVE -> "+$dollarsDifferenceFormatted"
+            PriceDifference.NEGATIVE -> "-$dollarsDifferenceFormatted"
+            PriceDifference.NONE -> "~$dollarsDifferenceFormatted"
         },
         imageUrl = purchasedCoin.imageUrl
     )

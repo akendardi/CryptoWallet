@@ -1,7 +1,6 @@
 package com.akendardi.cryptowallet.data.repositories.auth
 
 import android.content.Context
-import android.util.Log
 import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.domain.entity.user_info.balance.UsersBalance
 import com.akendardi.cryptowallet.domain.repository.AuthRepository
@@ -31,11 +30,6 @@ class AuthRepositoryImpl @Inject constructor(
     private val _authState = MutableStateFlow<AuthResult>(AuthResult.Initial)
     override val authState: StateFlow<AuthResult> = _authState.asStateFlow()
 
-    init {
-        Log.d("TEST_DAGGER", this.toString())
-    }
-
-
     override suspend fun createAccountWithEmail(
         name: String,
         email: String,
@@ -60,12 +54,10 @@ class AuthRepositoryImpl @Inject constructor(
         email: String,
         password: String
     ) {
-        Log.d("AUTH_TEST", "createUserBalanceInFirebaseDb:  create acc ")
         auth.createUserWithEmailAndPassword(email, password).await()
         auth.currentUser?.updateProfile(
             UserProfileChangeRequest.Builder().setDisplayName(name).build()
         )?.await()
-        Log.d("AUTH_TEST", "createUserBalanceInFirebaseDb:  ok acc ")
         createUserBalanceInFirebaseDb(auth.currentUser?.uid ?: throw RuntimeException())
     }
 
@@ -73,13 +65,11 @@ class AuthRepositoryImpl @Inject constructor(
         userId: String
     ) {
         val databaseReference = remoteDatabase.reference
-        Log.d("AUTH_TEST", "Database reference initialized: $databaseReference")
 
         val initialBalance = UsersBalance(
             freeBalance = 0.0,
             purchasedCoins = listOf()
         )
-        Log.d("AUTH_TEST", "createUserBalanceInFirebaseDb:  create db $userId ")
 
         databaseReference
             .child("users")

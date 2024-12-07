@@ -77,4 +77,21 @@
     <string name="no_sells">Нет покупок</string>
     <string name="current_balance">Текущий баланс</string>
     <string name="add_to_balance">Пополнить</string>
+    <string name="ok">Понятно</string>
+    <string name="message_sent">Сообщение отправлено на вашу почту</string>
+    <string name="information">Информация</string>
+    <string name="confirm_purchase">Подтвердить покупку</string>
+    <string name="coins_in_profile_price">Стоимость валюты в вашем профиле</string>
+    <string name="confirm_selling">Подтвердить продажу</string>
+    <string name="current_coin_count">Текущей валюты на счете</string>
+    <string name="buy_with_count">Покупка %1$s</string>
+    <string name="transaction_with_number">Транзакция: %1$s</string>
+    <string name="selling_with_count">Продажа %1$s</string>
+    <string name="replenishment">Пополнение</string>
+    <string name="replenishment_sum">Введите сумму пополнения</string>
+    <string name="replenish">Пополнить</string>
+    <string name="withdraw">Вывести</string>
+    <string name="available_balance">Доступный баланс: %1$s</string>
+    <string name="enter_withdrawal_amount">Введите сумму вывода</string>
+    <string name="withdrawal">Вывод</string>
 </resources>

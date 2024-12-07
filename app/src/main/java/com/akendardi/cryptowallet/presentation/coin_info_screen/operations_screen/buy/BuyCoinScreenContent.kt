@@ -21,15 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.presentation.coin_info_screen.information.BoxLoading
 import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.BalanceCardBuying
 import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.components.BuyingButton
-import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.OperationResults
-import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.CoinsOperationsTextField
 import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.CoinCard
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.CoinsOperationsTextField
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.components.OperationResults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,23 +114,4 @@ fun BuyCoinScreenContent(
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-private fun AlertDialogBuyCoinPreview() {
-    BuyCoinScreenContent(
-        state = BuyCoinScreenState(
-            isFirstLoading = false,
-            name = "Ethereum",
-            currentPrice = "$1000",
-            currentFreeBalance = "$124.34",
-            count = "412.34",
-            isCanBuy = false,
-            totalCount = "0.00043 BTC",
-            error = "a"
-        ),
-        onValueChanged = {}, {}, {}
-    )
 }

@@ -5,7 +5,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MailOutline
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.akendardi.cryptowallet.presentation.icons.Shield_lock
 
@@ -24,10 +23,6 @@ sealed class SettingItem(
         text = "Темная тема"
     )
 
-    data object ChangeNotifications : SettingItem(
-        icon = Icons.Filled.Notifications,
-        text = "Вкл/Выкл уведомления"
-    )
 
     data object ChangePassword : SettingItem(
         icon = Shield_lock,

@@ -1,10 +1,8 @@
 package com.akendardi.cryptowallet.presentation.auth.auth_screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.repository.AuthRepository
-import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.akendardi.cryptowallet.domain.usecase.auth.CreateAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.LogInAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.auth.ResetPasswordUseCase
@@ -34,14 +32,13 @@ class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(UiAuthState(authButtonText = "Войти"))
+    private val _state = MutableStateFlow(UiAuthState())
     val state: StateFlow<UiAuthState>
         get() = _state.asStateFlow()
 
     private fun observeAuthResult() {
         viewModelScope.launch {
             repository.authState.collect { result ->
-                Log.d("TEST_TEST", "observeAuthResult: $result")
                 _state.update {
                     it.copy(
                         authResult = result

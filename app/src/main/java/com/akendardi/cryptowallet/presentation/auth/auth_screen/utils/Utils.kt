@@ -12,6 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.akendardi.cryptowallet.R
 import com.akendardi.cryptowallet.domain.states.auth.AuthResult
 import com.akendardi.cryptowallet.presentation.auth.auth_screen.AuthType
 
@@ -37,11 +40,12 @@ fun ShowSnackbarAuthMessage(
     message: String,
     onAuthTypeChanged: (AuthType) -> Unit
 ) {
+    val context = LocalContext.current
     LaunchedEffect(Unit) {
         onAuthTypeChanged(AuthType.SIGN_IN)
         snackbarHostState.showSnackbar(
             message = message,
-            actionLabel = "Понятно",
+            actionLabel = context.getString(R.string.understand),
             duration = SnackbarDuration.Short
         )
     }
@@ -87,7 +91,7 @@ fun HandleAuthResult(
         AuthResult.SuccessSentLink -> {
             ShowSnackbarAuthMessage(
                 snackbarHostState = snackbarHostState,
-                message = "Сообщение отправлено на вашу почту",
+                message = stringResource(R.string.message_sent),
                 onAuthTypeChanged = { changeAuthType(AuthType.SIGN_IN) }
             )
         }

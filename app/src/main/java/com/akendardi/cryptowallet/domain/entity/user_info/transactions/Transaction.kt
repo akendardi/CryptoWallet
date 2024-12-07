@@ -12,10 +12,4 @@ data class Transaction(
     val time: Long
 )
 
-sealed class TransactionType {
 
-    data object Buy : TransactionType()
-
-    data object Sell : TransactionType()
-
-}

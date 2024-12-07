@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.presentation.main.home_screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akendardi.cryptowallet.domain.states.user_info.UsersBalanceResult
