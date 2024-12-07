@@ -54,7 +54,6 @@ fun Profile(
             email = state.generalUserInfo.email,
             photoUri = state.generalUserInfo.profileUri,
             themeMode = state.themeMode,
-            isNotificationEnables = state.isNotificationsEnables,
             onThemeChanged = viewModel::changeTheme,
             onVerificationEmailClick = {
                 viewModel.openSettingAlertScreen(ProfileScreen.VerificationEmail)
@@ -68,7 +67,6 @@ fun Profile(
             onEditPasswordClick = {
                 viewModel.openSettingAlertScreen(ProfileScreen.EditPassword)
             },
-            onChangeNotificationsClick = viewModel::changeNotificationsMode,
             onButtonBackClick = {
                 viewModel.resetRequestAnswer()
                 onButtonBackClick()
@@ -91,9 +89,7 @@ fun Profile(
                 )
             }
         )
-
     }
-
 
     HandleProfileResult(
         snackbarHostState = snackbarHostState,

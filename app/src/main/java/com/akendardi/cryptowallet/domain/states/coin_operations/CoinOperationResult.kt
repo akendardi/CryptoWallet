@@ -9,6 +9,8 @@ sealed class CoinOperationResult {
     data class InfoLoaded(
         val name: String,
         val freeBalance: Double,
+        val lockedBalanceForCurrentCoin: Double,
+        val currentCoinsCount: Double,
         val currentPrice: Double,
         val coinImage: String,
         val isAccountVerificated: Boolean

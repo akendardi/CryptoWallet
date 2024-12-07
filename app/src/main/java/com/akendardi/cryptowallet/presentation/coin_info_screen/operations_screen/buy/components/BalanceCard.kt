@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -20,8 +19,8 @@ import androidx.compose.ui.unit.sp
 import com.akendardi.cryptowallet.R
 
 @Composable
-fun BalanceCard(
-    currentFreeBalance: String,
+fun BalanceCardBuying(
+    currentLockedBalanceForCoin: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -37,12 +36,12 @@ fun BalanceCard(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
-                text = stringResource(R.string.free_balance),
+                text = stringResource(id = R.string.current_balance),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.surfaceVariant
             )
             Text(
-                text = currentFreeBalance,
+                text = currentLockedBalanceForCoin,
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold

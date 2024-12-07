@@ -27,7 +27,6 @@ class CoinInfoInformationViewModel @AssistedInject constructor(
     private val loadCoinInfoUseCase: LoadCoinInfoUseCase
 ) : ViewModel() {
 
-    private val TAG: String = "CoinInfoInformationViewModel"
     private val _state = MutableStateFlow(CoinInfoInformationScreenState())
     val state = _state.asStateFlow()
 

@@ -15,7 +15,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -155,29 +154,6 @@ fun ThemeDropDownMenuItem(
             onThemeChanged(ThemeMode.DARK)
         }
     )
-}
-
-@Composable
-fun SettingsItemWithSwitched(
-    settingItem: SettingItem,
-    isEnabled: Boolean,
-    onCheckedChange: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        SettingsIconWithText(
-            settingItem = settingItem
-        )
-        Switch(checked = isEnabled, onCheckedChange = {
-            onCheckedChange()
-        })
-    }
 }
 
 @Composable

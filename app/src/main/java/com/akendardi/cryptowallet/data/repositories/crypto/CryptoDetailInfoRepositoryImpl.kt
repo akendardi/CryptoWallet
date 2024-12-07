@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.data.repositories.crypto
 
-import android.util.Log
 import com.akendardi.cryptowallet.data.internet.api.AssetsCoinsApiService
 import com.akendardi.cryptowallet.data.internet.api.DataCoinsApiService
 import com.akendardi.cryptowallet.domain.repository.CryptoDetailInfoRepository
@@ -44,7 +43,6 @@ class CryptoDetailInfoRepositoryImpl @Inject constructor(
             val dayResponse = dayDeferred.await()
 
 
-
             val detailCoinInfo = responsesToCoinInfoDetail(
                 infoResponse,
                 hourResponse,
@@ -56,7 +54,6 @@ class CryptoDetailInfoRepositoryImpl @Inject constructor(
     }
 
     private suspend fun startLoading() {
-        Log.d("TEST_FLOW", "startLoading repository")
         _coinInfo.emit(CryptoInfoLoadingResult.Loading)
     }
 

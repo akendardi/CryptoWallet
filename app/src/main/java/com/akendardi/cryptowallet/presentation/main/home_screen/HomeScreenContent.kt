@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.CoinsTitle
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.balance.UserBalanceInfo
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.coin_item.CoinItemMainScreen
+import com.akendardi.cryptowallet.presentation.main.home_screen.components.shimmer_effects.ShimmerAnimationBalance
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.shimmer_effects.ShimmerAnimationCoinItem
 import com.akendardi.cryptowallet.presentation.main.home_screen.components.title.TitleHomeScreen
-import com.akendardi.cryptowallet.presentation.theme.shimmerEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +40,6 @@ fun HomeScreenContent(
     val pullRefreshState = rememberPullToRefreshState()
 
 
-
     PullToRefreshBox(
         isRefreshing = state.isRefreshing,
         state = pullRefreshState,
@@ -57,7 +56,7 @@ fun HomeScreenContent(
             state = listState,
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            userScrollEnabled = !state.coinsListState.isFirstLoading
+            userScrollEnabled = !state.isBalanceLoading && !state.coinsListState.isFirstLoading
         ) {
             item {
                 TitleHomeScreen(
@@ -67,13 +66,18 @@ fun HomeScreenContent(
                 )
             }
 
-            item {
-                UserBalanceInfo(
-                    totalBalance = state.userBalanceState.totalBalance,
-                    differencePercent = state.userBalanceState.differencePercentage,
-                    onDepositButtonClick = onSearchButtonClick
-                )
+            if (state.isBalanceLoading && state.coinsListState.isFirstLoading) {
+                item {
+                    ShimmerAnimationBalance()
+                }
+            } else {
+                item {
+                    UserBalanceInfo(
+                        balanceUI = state.userBalanceState
+                    )
+                }
             }
+
 
             item {
                 CoinsTitle(onSearchButtonClick = onSearchButtonClick)

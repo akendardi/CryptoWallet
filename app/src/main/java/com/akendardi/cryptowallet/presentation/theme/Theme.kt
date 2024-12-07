@@ -12,30 +12,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = PurplePrimary,  // Розовый для заголовков и кнопок
-    secondary = Color.White, // Лиловый для графиков и акцентов
-    tertiary = Pink80,  // Дополнительный розовый для иконок
-    surface = Color(0xFF121212), // Чёрный фон
-    background = Color(0xFF1E1E1E),   // Тёмная поверхность
-    onPrimary = Color.White,       // Белый текст на розовом
-    onSecondary = Color.White,     // Белый текст на лиловом
-    onTertiary = Color.White,      // Белый текст на дополнительном
-    onBackground = Color(0xFFE0E0E0), // Светло-серый текст на чёрном фоне
+    primary = PurplePrimary,
+    surface = Color(0xFF121212),
+    background = Color(0xFF1E1E1E),
+    onPrimary = Color.White,
+    onBackground = Color(0xFFE0E0E0),
     onSurface = Color(0xFFE0E0E0),
     surfaceVariant = Color.DarkGray,
-
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = PurplePrimary,  // Розовый для заголовков и кнопок
-    secondary = Color.Black, // Лиловый для графиков и акцентов
-    tertiary = Pink80,  // Дополнительный розовый для иконок
-    background = Color(0xFFF5F5F5), // Белый фон
-    surface = Color(0xFFFFFFFF),   // Светлая поверхность
-    onPrimary = Color.White,       // Белый текст на розовом
-    onSecondary = Color(0xFF212121), // Чёрный текст на лиловом
-    onTertiary = Color.White,      // Белый текст на розовом
-    onBackground = Color(0xFF212121), // Тёмный текст на белом фоне
+    primary = PurplePrimary,
+    background = Color(0xFFF5F5F5),
+    surface = Color(0xFFFFFFFF),
+    onPrimary = Color.White,
+    onBackground = Color(0xFF212121),
     onSurface = Color(0xFF212121),
     surfaceVariant = Color.Gray.copy(0.3f)
 )

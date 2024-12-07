@@ -2,7 +2,6 @@ package com.akendardi.cryptowallet.domain.usecase.user.userInfo
 
 import com.akendardi.cryptowallet.domain.entity.user_info.UserInfoGeneral
 import com.akendardi.cryptowallet.domain.repository.UserInfoRepository
-import com.akendardi.cryptowallet.domain.states.user_info.UserInfoGeneralInfoResult
 import com.akendardi.cryptowallet.domain.states.user_profile.UserProfileOperationResult
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow

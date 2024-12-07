@@ -25,7 +25,6 @@ fun CoinInfoScreenContent(
         topBar = {
             TitleCoinInfo(
                 coinInfoState = state.coinInfoState,
-                isNotificationsEnabled = state.isNotificationsEnabled,
                 onBackButtonClick = onBackButtonClick
             )
         }

@@ -1,6 +1,5 @@
 package com.akendardi.cryptowallet.navigation
 
-import android.util.Log
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -9,6 +8,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.akendardi.cryptowallet.presentation.coin_info_screen.CoinInfoScreen
 import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.buy.BuyCoinScreen
+import com.akendardi.cryptowallet.presentation.coin_info_screen.operations_screen.sell.SellCoinScreen
 
 
 fun NavGraphBuilder.coinInfoNavGraph(navHostController: NavHostController) {
@@ -34,9 +34,10 @@ fun NavGraphBuilder.coinInfoNavGraph(navHostController: NavHostController) {
                 onBackButtonClick = { navHostController.popBackStack() },
                 onBuyClick = {
                     navHostController.navigate(Screen.CoinInfoBuyingScreen.getRoute(symbol))
-                    Log.d("NAV_TEST", "coinInfoNavGraph: ")
                 },
-                onSellClick = {}
+                onSellClick = {
+                    navHostController.navigate(Screen.CoinInfoSellingScreen.getRoute(symbol))
+                }
             )
         }
 
@@ -45,7 +46,18 @@ fun NavGraphBuilder.coinInfoNavGraph(navHostController: NavHostController) {
         ) { backStackEntry ->
             val symbol = backStackEntry.arguments?.getString("symbolCoinInfo")
                 ?: throw IllegalArgumentException("Symbol is required")
-            BuyCoinScreen(symbol)
+            BuyCoinScreen(symbol = symbol, onBackClick = { navHostController.popBackStack() })
+        }
+
+        composable(
+            route = Screen.CoinInfoSellingScreen.getRouteForDeliverArgs()
+        ) { backStackEntry ->
+            val symbol = backStackEntry.arguments?.getString("symbolCoinInfo")
+                ?: throw IllegalArgumentException("Symbol is required")
+            SellCoinScreen(
+                symbol = symbol,
+                oBackClick = { navHostController.popBackStack() }
+            )
         }
     }
 

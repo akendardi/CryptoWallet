@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.akendardi.cryptowallet.domain.entity.coin_info_general.CoinInfoGeneral
-import com.akendardi.cryptowallet.presentation.theme.NegativeColor
+import com.akendardi.cryptowallet.presentation.theme.NegativeDifferenceColor
 import com.akendardi.cryptowallet.presentation.theme.PositiveDifferenceColor
 
 @Composable
@@ -47,6 +47,6 @@ fun getDifferenceColor(todayDifference: Double): Color {
     return if (todayDifference > 0) {
         PositiveDifferenceColor
     } else {
-        NegativeColor
+        NegativeDifferenceColor
     }
 }

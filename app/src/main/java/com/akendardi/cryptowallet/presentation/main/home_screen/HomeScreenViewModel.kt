@@ -2,6 +2,7 @@ package com.akendardi.cryptowallet.presentation.main.home_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.akendardi.cryptowallet.domain.states.user_info.UsersBalanceResult
 import com.akendardi.cryptowallet.domain.usecase.auth.LogOutFromAccountUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.GetAllCoinsListUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.GetSearchCoinsListUseCase
@@ -9,6 +10,8 @@ import com.akendardi.cryptowallet.domain.usecase.crypto.LoadAllCoinsListUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.RefreshCoinsListUseCase
 import com.akendardi.cryptowallet.domain.usecase.crypto.SearchCoinsUseCase
 import com.akendardi.cryptowallet.domain.usecase.user.userInfo.UsersInfoUseCase
+import com.akendardi.cryptowallet.domain.usecase.user.users_balance.UsersBalanceUseCase
+import com.akendardi.cryptowallet.mapper.balanceToUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +29,8 @@ class HomeScreenViewModel @Inject constructor(
     private val getAllCoinsListUseCase: GetAllCoinsListUseCase,
     private val searchCoinsUseCase: SearchCoinsUseCase,
     private val getSearchCoinsListUseCase: GetSearchCoinsListUseCase,
-    private val refreshCoinsListUseCase: RefreshCoinsListUseCase
+    private val refreshCoinsListUseCase: RefreshCoinsListUseCase,
+    private val usersBalanceUseCase: UsersBalanceUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(HomeScreenUIState())
     val state: StateFlow<HomeScreenUIState> = _state
@@ -36,10 +40,41 @@ class HomeScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             subscribeUserInfoFlow()
+            subscribeUsersBalance()
             subscribeCoinsListFlow()
             subscribeSearchInfoFlow()
             refreshUserInfo()
             startSearch()
+        }
+    }
+
+    private fun subscribeUsersBalance() {
+        viewModelScope.launch {
+            usersBalanceUseCase.loadUsersBalance()
+        }
+        viewModelScope.launch {
+            usersBalanceUseCase.getUsersBalanceResult().collect { result ->
+                when (result) {
+                    UsersBalanceResult.Error -> {}
+                    UsersBalanceResult.Initial -> {}
+                    UsersBalanceResult.Loading -> {
+                        _state.update {
+                            it.copy(
+                                isBalanceLoading = true
+                            )
+                        }
+                    }
+
+                    is UsersBalanceResult.Success -> {
+                        _state.update {
+                            it.copy(
+                                userBalanceState = balanceToUi(result.usersBalance),
+                                isBalanceLoading = false
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -83,12 +118,15 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             refreshUserInfo()
             refreshCoinsList()
+            usersBalanceUseCase.loadUsersBalance()
             _state.update {
                 it.copy(
                     isRefreshing = false
                 )
             }
         }
+
+
     }
 
     private suspend fun refreshCoinsList() {
@@ -100,6 +138,7 @@ class HomeScreenViewModel @Inject constructor(
             )
         }
         refreshCoinsListUseCase()
+
 
     }
 
@@ -203,11 +242,9 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             logOutFromAccountUseCase()
         }
-
     }
 
     private suspend fun refreshUserInfo() {
         usersInfoUseCase()
-
     }
 }

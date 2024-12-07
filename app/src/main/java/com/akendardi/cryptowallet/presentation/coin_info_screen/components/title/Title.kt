@@ -3,14 +3,13 @@ package com.akendardi.cryptowallet.presentation.coin_info_screen.components.titl
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.NotificationsActive
-import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +22,6 @@ import com.akendardi.cryptowallet.presentation.coin_info_screen.CoinInfoState
 @Composable
 fun TitleCoinInfo(
     coinInfoState: CoinInfoState,
-    isNotificationsEnabled: Boolean,
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -47,12 +45,7 @@ fun TitleCoinInfo(
             symbol = coinInfoState.symbol
         )
 
-        TitleNotificationsButton(
-            isNotificationsEnabled = isNotificationsEnabled,
-            onNotificationsButtonClick = {}
-        )
-
-
+        Spacer(modifier = Modifier.size(50.dp))
     }
 }
 
@@ -67,29 +60,6 @@ fun TitleBackButton(
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBackIosNew,
-            tint = MaterialTheme.colorScheme.onBackground,
-            contentDescription = null
-        )
-    }
-}
-
-@Composable
-fun TitleNotificationsButton(
-    isNotificationsEnabled: Boolean,
-    onNotificationsButtonClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    IconButton(
-        modifier = modifier.size(50.dp),
-        onClick = onNotificationsButtonClick
-    ) {
-        val imageVector = if (isNotificationsEnabled) {
-            Icons.Default.NotificationsActive
-        } else {
-            Icons.Default.NotificationsNone
-        }
-        Icon(
-            imageVector = imageVector,
             tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = null
         )

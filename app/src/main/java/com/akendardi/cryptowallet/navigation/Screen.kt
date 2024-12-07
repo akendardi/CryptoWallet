@@ -1,7 +1,9 @@
 package com.akendardi.cryptowallet.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.CompareArrows
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.CompareArrows
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -23,6 +25,12 @@ sealed class Screen(val route: String) {
             .replace("{nameCoinInfo}", name)
     }
     data object CoinInfoBuyingScreen : Screen(ROUTE_COIN_INFO_BUYING_SCREEN){
+        fun getRouteForDeliverArgs() = "$route/{symbolCoinInfo}"
+
+        fun getRoute(symbol: String) = getRouteForDeliverArgs().replace("{symbolCoinInfo}", symbol)
+    }
+
+    data object CoinInfoSellingScreen : Screen(ROUTE_COIN_INFO_SELLING_SCREEN){
         fun getRouteForDeliverArgs() = "$route/{symbolCoinInfo}"
 
         fun getRoute(symbol: String) = getRouteForDeliverArgs().replace("{symbolCoinInfo}", symbol)
@@ -52,9 +60,9 @@ sealed class Screen(val route: String) {
             icon = Icons.Default.Wallet
         )
 
-        data object SendScreen : BottomBarScreen(
-            route = ROUTE_SEND_SCREEN,
-            icon = Icons.Default.AttachMoney
+        data object TransactionsScreen : BottomBarScreen(
+            route = ROUTE_TRANSACTIONS_SCREEN,
+            icon = Icons.AutoMirrored.Filled.CompareArrows
         )
     }
 
@@ -75,9 +83,10 @@ sealed class Screen(val route: String) {
         const val ROUTE_COIN_INFO_SCREEN_NAV_GRAPH = "coinInfoScreenNavGraph"
         const val ROUTE_COIN_INFO_SCREEN = "coinInfoScreen"
         const val ROUTE_COIN_INFO_BUYING_SCREEN = "coinBuyingScreen"
+        const val ROUTE_COIN_INFO_SELLING_SCREEN = "coinSellingScreen"
 
         const val ROUTE_WALLET_SCREEN = "walletScreen"
-        const val ROUTE_SEND_SCREEN = "sendScreen"
+        const val ROUTE_TRANSACTIONS_SCREEN = "transactionScreen"
     }
 }
 

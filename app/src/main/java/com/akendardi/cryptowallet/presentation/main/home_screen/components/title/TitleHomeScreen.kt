@@ -3,8 +3,8 @@ package com.akendardi.cryptowallet.presentation.main.home_screen.components.titl
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
@@ -20,13 +20,14 @@ import com.akendardi.cryptowallet.presentation.main.home_screen.UserInfoState
 fun TitleHomeScreen(
     generalUserInfoState: UserInfoState,
     onProfileClickListener: () -> Unit,
+    logout: () -> Unit,
     modifier: Modifier = Modifier,
-    logout: () -> Unit
 ) {
     val uri = generalUserInfoState.profileUri.toString()
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .height(60.dp)
             .clickable {
                 onProfileClickListener()
             },
@@ -39,10 +40,9 @@ fun TitleHomeScreen(
         )
 
         TitleTextHomeScreen(
-            generalUserInfoState.userName
+            modifier = Modifier.weight(1f),
+            name = generalUserInfoState.userName
         )
-
-        Spacer(modifier = Modifier.weight(1f))
 
         IconButton(
             onClick = {

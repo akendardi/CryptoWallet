@@ -7,7 +7,6 @@ import com.akendardi.cryptowallet.domain.entity.coin_info_search.CoinInfoSearch
 import com.akendardi.cryptowallet.domain.repository.CryptoRepositoryGeneralInfo
 import com.akendardi.cryptowallet.mapper.toEntityMainScreen
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -38,14 +37,13 @@ class CryptoRepositoryGeneralInfoImpl @Inject constructor(
         _topCoins.emit(newCoins)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun loadAllCoinsList(page: Int): List<CoinInfoGeneral> = coroutineScope {
-        val response = dataCoinsApiService.loadAllCoins(limit = 15, page = page)
+        val response = dataCoinsApiService.loadAllCoins(limit = 8, page = page)
 
         response.data
             .filter { it.detailPriceInfoDto != null }
             .map { coinData ->
-                async(Dispatchers.IO.limitedParallelism(10)) {
+                async(Dispatchers.IO) {
                     val plotInformation =
                         dataCoinsApiService.loadHourHistoricalInfo(fsym = coinData.coinInfo.symbol)
 

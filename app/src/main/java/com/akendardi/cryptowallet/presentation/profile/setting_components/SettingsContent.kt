@@ -12,10 +12,8 @@ import com.akendardi.cryptowallet.settings.ThemeMode
 @Composable
 fun SettingsContent(
     themeMode: ThemeMode,
-    isNotificationEnabled: Boolean,
     onChangeThemeClick: (ThemeMode) -> Unit,
     onVerificationEmailClick: () -> Unit,
-    onChangeNotificationsClick: () -> Unit,
     onEditNameClick: () -> Unit,
     onEditEmailClick: () -> Unit,
     onEditPasswordClick: () -> Unit,
@@ -44,15 +42,6 @@ fun SettingsContent(
                 settingItem = SettingItem.VerificationEmail,
                 onItemClick = {
                     onVerificationEmailClick()
-                }
-            )
-        }
-        item {
-            SettingsItemWithSwitched(
-                settingItem = SettingItem.ChangeNotifications,
-                isEnabled = isNotificationEnabled,
-                onCheckedChange = {
-                    onChangeNotificationsClick()
                 }
             )
         }

@@ -53,12 +53,6 @@ class ProfileAlertPasswordViewModel @Inject constructor(
         }
     }
 
-    private fun resetInfo(){
-        _state.update {
-            ProfileAlertPasswordState()
-        }
-    }
-
     fun saveChange(): Boolean {
         if (isPasswordCorrect()) {
             viewModelScope.launch {
