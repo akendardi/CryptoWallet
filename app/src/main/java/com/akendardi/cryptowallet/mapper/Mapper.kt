@@ -172,7 +172,7 @@ fun purchasedCoinToUI(purchasedCoin: PurchasedCoin): PurchasedCoinUI {
     val count = purchasedCoin.count
     val percentDifference = (difference / purchasedCoin.buyPrice) * 100
 
-    val dollarsDifference = ((difference.absoluteValue * count) * 100).toInt() / 100.0
+    val dollarsDifference = ((difference * count) * 100).toInt() / 100.0
     val differenceType = if (dollarsDifference > 0) {
         PriceDifference.POSITIVE
     } else if (dollarsDifference == 0.0) {
@@ -181,7 +181,7 @@ fun purchasedCoinToUI(purchasedCoin: PurchasedCoin): PurchasedCoinUI {
         PriceDifference.NEGATIVE
     }
 
-    val dollarsDifferenceFormatted = PriceConverter.formatPrice(dollarsDifference)
+    val dollarsDifferenceFormatted = PriceConverter.formatPrice(dollarsDifference.absoluteValue)
 
     return PurchasedCoinUI(
         symbol = purchasedCoin.symbol,

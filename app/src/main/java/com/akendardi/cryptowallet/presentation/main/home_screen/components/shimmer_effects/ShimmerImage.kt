@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Brush
 import com.akendardi.cryptowallet.presentation.theme.ShimmerColorShades
 
 @Composable
-fun ShimmerAnimationImage(modifier: Modifier = Modifier) {
+fun ShimmerAnimationImage() {
     val transition = rememberInfiniteTransition(label = "")
     val translateAnim by transition.animateFloat(
 
